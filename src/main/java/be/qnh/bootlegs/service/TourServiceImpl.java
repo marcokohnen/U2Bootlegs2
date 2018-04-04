@@ -15,50 +15,50 @@ import java.util.Optional;
 @Service
 public class TourServiceImpl implements TourService {
 
-    private final TourRepository tourTourRepository;
+    private final TourRepository tourRepository;
 
     @Autowired
     public TourServiceImpl(TourRepository tourTourRepository) {
-        this.tourTourRepository = tourTourRepository;
+        this.tourRepository = tourTourRepository;
     }
 
     @PostConstruct
     private void init() {
         Tour tour1 = new Tour();
-        tour1.setTitle("TitleTour1");
+        tour1.setTitle("Boy");
         tour1.setStartyear(1983);
         tour1.setContinent(Continent.EUROPE);
         Tour tour2 = new Tour();
-        tour2.setTitle("TitleTour2");
+        tour2.setTitle("October");
         tour2.setStartyear(1985);
         tour2.setContinent(Continent.NORTHAMERICA);
         Tour tour3 = new Tour();
-        tour3.setTitle("TitleTour3");
+        tour3.setTitle("Joshua Tree");
         tour3.setStartyear(1987);
         tour3.setContinent(Continent.AUSTRALIA);
         List<Tour> tourList = new ArrayList<>(Arrays.asList(tour1, tour2, tour3));
-        tourTourRepository.saveAll(tourList);
+        tourRepository.saveAll(tourList);
     }
 
     // crud methods
     @Override
     public Tour addOne(Tour tour) {
-        return tour == null ? null : tourTourRepository.save(tour);
+        return tour == null ? null : tourRepository.save(tour);
     }
 
     @Override
     public Iterable<Tour> findAll() {
-        return tourTourRepository.findAll();
+        return tourRepository.findAll();
     }
 
     @Override
-    public Optional<Tour> findOneById(Long id) {
-        return tourTourRepository.findById(id);
+    public Tour findOneById(Long id) {
+        return tourRepository.findById(id).orElse(null);
     }
 
     @Override
     public Tour udpdateOneById(Long id, Tour tour) {
-        Optional<Tour> foundTour = tourTourRepository.findById(id);
+        Optional<Tour> foundTour = tourRepository.findById(id);
         if (foundTour.isPresent()) {
             Tour tourToUpdate = foundTour.get();
             tourToUpdate.setConcerts(tour.getConcerts());
@@ -67,7 +67,7 @@ public class TourServiceImpl implements TourService {
             tourToUpdate.setEndYear(tour.getEndYear());
             tourToUpdate.setLeg(tour.getLeg());
             tourToUpdate.setTitle(tour.getTitle());
-            return tourTourRepository.save(tourToUpdate);
+            return tourRepository.save(tourToUpdate);
         } else {
             return null;
         }
@@ -75,13 +75,35 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public Tour deleteOneById(Long id) {
-        Optional<Tour> foundTour = tourTourRepository.findById(id);
+        Optional<Tour> foundTour = tourRepository.findById(id);
         if (foundTour.isPresent()) {
-            tourTourRepository.deleteById(id);
+            tourRepository.deleteById(id);
             return foundTour.get();
         } else {
             return null;
         }
     }
+
     // end crud methods ///////////////////////////////////////////////////////////////
+
+    @Override
+    public Iterable<Tour> findByTitleLike(String keyWord) {
+        keyWord = "%" + keyWord + "%";
+        return tourRepository.findByTitleLike(keyWord);
+    }
+
+    @Override
+    public Iterable<Tour> findByStartyearGreaterThanEqual(int startYear) {
+        return tourRepository.findByStartyearGreaterThanEqual(startYear);
+    }
+
+    @Override
+    public Iterable<Tour> findByStartyearEquals(int startyear) {
+        return tourRepository.findByStartyearEquals(startyear);
+    }
+
+    @Override
+    public Iterable<Tour> findByContinentEquals(Continent continent) {
+        return tourRepository.findByContinentEquals(continent);
+    }
 }

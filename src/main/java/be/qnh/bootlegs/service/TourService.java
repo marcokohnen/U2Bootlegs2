@@ -1,8 +1,7 @@
 package be.qnh.bootlegs.service;
 
+import be.qnh.bootlegs.domain.Continent;
 import be.qnh.bootlegs.domain.Tour;
-
-import java.util.Optional;
 
 public interface TourService {
 
@@ -11,11 +10,19 @@ public interface TourService {
 
     Iterable<Tour> findAll();
 
-    Optional<Tour> findOneById(Long id);
+    Tour findOneById(Long id);
 
     Tour udpdateOneById(Long id, Tour tour);
 
     Tour deleteOneById(Long id);
 
     // end crud methods ///////////////////////////////////////////
+
+    Iterable<Tour> findByTitleLike(String keyWord);
+
+    Iterable<Tour> findByStartyearGreaterThanEqual(int startYear);
+
+    Iterable<Tour> findByStartyearEquals(int startyear);
+
+    Iterable<Tour> findByContinentEquals(Continent continent);
 }

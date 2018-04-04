@@ -2,7 +2,6 @@ package be.qnh.bootlegs.domain;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;

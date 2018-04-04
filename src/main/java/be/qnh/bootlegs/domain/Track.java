@@ -1,12 +1,11 @@
 package be.qnh.bootlegs.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
-public class Track extends AbstractEntity{
+public class Track extends AbstractEntity {
 
     @NotNull
     private int sequenceNr;

@@ -1,8 +1,6 @@
 package be.qnh.bootlegs.domain;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
@@ -19,6 +17,7 @@ public class Concert extends AbstractEntity {
     private String country;
     private String city;
     private String venue;
+    @Enumerated(EnumType.STRING)
     private RecordingQuality quality;
 
     // field(s) with mapping(s)

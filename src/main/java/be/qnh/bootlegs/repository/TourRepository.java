@@ -5,10 +5,13 @@ import be.qnh.bootlegs.domain.Tour;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.constraints.NotNull;
+
 @Repository
 public interface TourRepository extends JpaRepository<Tour, Long> {
 
-    Iterable<Tour> findByTitleLike(String keyWord);
+
+    Iterable<Tour> findByTitleLikeIgnoreCase (String keyWord);
 
     Iterable<Tour> findByStartyearGreaterThanEqual(int startYear);
 

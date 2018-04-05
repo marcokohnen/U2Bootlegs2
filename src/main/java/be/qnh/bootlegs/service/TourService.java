@@ -18,11 +18,11 @@ public interface TourService {
 
     // end crud methods ///////////////////////////////////////////
 
-    Iterable<Tour> findByTitleLike(String keyWord);
+    Iterable<Tour> findByTitleLikeIgnoreCase(String keyWord);
 
     Iterable<Tour> findByStartyearGreaterThanEqual(int startYear);
 
     Iterable<Tour> findByStartyearEquals(int startyear);
 
-    Iterable<Tour> findByContinentEquals(Continent continent);
+    Iterable<Tour> findByContinentEquals (Continent continent);
 }

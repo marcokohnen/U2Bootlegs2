@@ -1,8 +1,6 @@
 package be.qnh.bootlegs.domain;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +17,7 @@ public class Tour extends AbstractEntity {
     @NotNull
     private int leg;
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Continent continent;
 
     // field(s) with mapping(s)

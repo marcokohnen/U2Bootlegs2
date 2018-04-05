@@ -87,9 +87,9 @@ public class TourServiceImpl implements TourService {
     // end crud methods ///////////////////////////////////////////////////////////////
 
     @Override
-    public Iterable<Tour> findByTitleLike(String keyWord) {
+    public Iterable<Tour> findByTitleLikeIgnoreCase(String keyWord) {
         keyWord = "%" + keyWord + "%";
-        return tourRepository.findByTitleLike(keyWord);
+        return tourRepository.findByTitleLikeIgnoreCase(keyWord);
     }
 
     @Override

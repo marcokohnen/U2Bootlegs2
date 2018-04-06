@@ -78,19 +78,19 @@ public class TourServiceIT {
         testTourIterable = tourService.findByTitleLikeIgnoreCase("Titletesttour");
         assertThat(testTourIterable).contains(testTour1, testTour2, testTour3);
 
-        // findByStartyearGreaterThanEqual
+        // test findByStartyearGreaterThanEqual
         testTourIterable = tourService.findByStartyearGreaterThanEqual(1981);
         assertThat(testTourIterable).isNotEmpty();
         assertThat(testTourIterable).asList().hasOnlyElementsOfTypes(Tour.class);
         assertThat(testTourIterable).asList().size().isGreaterThanOrEqualTo(2);
 
-        // findByStartyearEquals
+        // test findByStartyearEquals
         testTourIterable = tourService.findByStartyearEquals(1981);
         assertThat(testTourIterable).isNotEmpty();
         assertThat(testTourIterable).asList().hasOnlyElementsOfTypes(Tour.class);
         assertThat(testTourIterable).asList().size().isGreaterThanOrEqualTo(1);
 
-        // findByContinentEquals
+        // test findByContinentEquals
         testTourIterable = tourService.findByContinentEquals(Continent.EUROPE);
         assertThat(testTourIterable).isNotEmpty();
         assertThat(testTourIterable).asList().hasOnlyElementsOfTypes(Tour.class);

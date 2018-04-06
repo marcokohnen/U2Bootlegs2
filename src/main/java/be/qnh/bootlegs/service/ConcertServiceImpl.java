@@ -95,25 +95,25 @@ public class ConcertServiceImpl implements ConcertService {
     }
 
     @Override
-    public Iterable<Concert> findByTitleLike(String title) {
+    public Iterable<Concert> findByTitleLikeIgnoreCase(String title) {
         title = "%" + title + "%";
-        return concertRepository.findByTitleLike(title);
+        return concertRepository.findByTitleLikeIgnoreCase(title);
     }
 
     @Override
-    public Iterable<Concert> findByCountryLike(String country) {
+    public Iterable<Concert> findByCountryLikeIgnoreCase(String country) {
         country = "%" + country + "%";
-        return concertRepository.findByCountryLike(country);
+        return concertRepository.findByCountryLikeIgnoreCase(country);
     }
 
     @Override
-    public Iterable<Concert> findByCityLike(String city) {
+    public Iterable<Concert> findByCityLikeIgnoreCase(String city) {
         city = "%" + city + "%";
-        return concertRepository.findByCityLike(city);
+        return concertRepository.findByCityLikeIgnoreCase(city);
     }
 
     @Override
-    public Iterable<Concert> findByQuality(RecordingQuality quality) {
+    public Iterable<Concert> findByRecordingQuality(RecordingQuality quality) {
         return concertRepository.findByQuality(quality);
     }
 }

@@ -12,11 +12,11 @@ public interface ConcertRepository extends JpaRepository<Concert, Long> {
 
     Concert findByDateEquals(LocalDate date);
 
-    Iterable<Concert> findByTitleLike(String title);
+    Iterable<Concert> findByTitleLikeIgnoreCase(String title);
 
-    Iterable<Concert> findByCountryLike(String country);
+    Iterable<Concert> findByCountryLikeIgnoreCase(String country);
 
-    Iterable<Concert> findByCityLike(String city);
+    Iterable<Concert> findByCityLikeIgnoreCase(String city);
 
     Iterable<Concert> findByQuality(RecordingQuality quality);
 }

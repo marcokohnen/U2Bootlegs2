@@ -22,10 +22,6 @@ public class TourControllerIT {
     private TestRestTemplate testRestTemplate;
     private HttpHeaders httpHeaders;
 
-    private Tour testTour1;
-    private Tour testTour2;
-    private Tour testTour3;
-
     @LocalServerPort
     private int port;
 
@@ -33,29 +29,18 @@ public class TourControllerIT {
     public void init() {
         testRestTemplate = new TestRestTemplate();
         httpHeaders = new HttpHeaders();
-
-        testTour1 = new Tour();
-        testTour1.setTitle("TitleTestTour1");
-        testTour1.setStartyear(1979);
-        testTour1.setContinent(Continent.EUROPE);
-
-        testTour2 = new Tour();
-        testTour2.setTitle("TitleTestTour2");
-        testTour2.setStartyear(1981);
-        testTour2.setContinent(Continent.AUSTRALIA);
-
-        testTour3 = new Tour();
-        testTour3.setTitle("TitleTestTour3");
-        testTour3.setStartyear(1992);
-        testTour3.setContinent(Continent.SOUTHAMERICA);
     }
 
     @Test
     public void crudTests() {
+        Tour testTour1 = new Tour();
+        testTour1.setTitle("TitleTestTour1");
+        testTour1.setStartyear(1979);
+        testTour1.setContinent(Continent.EUROPE);
         // test create
         HttpEntity<Tour> httpCreateEntity = new HttpEntity<>(testTour1, httpHeaders);
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        ResponseEntity<Tour> responseEntityCreate = testRestTemplate.postForEntity(createURLWithPort(BASE_URI + "/"), httpCreateEntity, Tour.class );
+        ResponseEntity<Tour> responseEntityCreate = testRestTemplate.postForEntity(createURLWithPort(BASE_URI + "/"), httpCreateEntity, Tour.class);
         assertThat(responseEntityCreate.getBody()).isNotNull();
         assertThat(responseEntityCreate.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(responseEntityCreate.getBody().getTitle()).isEqualToIgnoringCase("TitleTestTour1");
@@ -68,8 +53,8 @@ public class TourControllerIT {
         assertThat(responseEntityFindOneById.getBody().getId()).isEqualTo(newId);
 
         // test update
-        testTour2.setTitle("Updated TourTitle");
-        HttpEntity<Tour> httpEntityUpdateOne = new HttpEntity<>(testTour2, httpHeaders);
+        testTour1.setTitle("Updated TourTitle");
+        HttpEntity<Tour> httpEntityUpdateOne = new HttpEntity<>(testTour1, httpHeaders);
         ResponseEntity<Tour> responseEntityUpdateOne = testRestTemplate.exchange(createURLWithPort(BASE_URI + "/" + newId), HttpMethod.PUT, httpEntityUpdateOne, Tour.class);
         assertThat(responseEntityUpdateOne.getBody()).isNotNull();
         assertThat(responseEntityUpdateOne.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -84,10 +69,39 @@ public class TourControllerIT {
         assertThat(responseEntityDeleteOneById.getBody().getId()).isEqualTo(newId);
     }
 
+    @Test
+    public void additionalFindTests() {
+
+        // test findall
+        ResponseEntity<Iterable> iterableResponseEntityFindAll = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findall"), Iterable.class);
+        assertResponse(iterableResponseEntityFindAll, HttpStatus.OK, 1);
+
+        // test findByTitleLikeIgnoreCase
+        ResponseEntity<Iterable> iterableResponseEntityfindByTitleLikeIgnoreCase = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findtitle/tree"), Iterable.class);
+        assertResponse(iterableResponseEntityfindByTitleLikeIgnoreCase, HttpStatus.OK, 1);
+
+        // findByStartyearGreaterThanEqual
+        ResponseEntity<Iterable> iterableResponseEntityStartYearGreaterThanEqual = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findfromyear/" + 1981), Iterable.class);
+        assertResponse(iterableResponseEntityStartYearGreaterThanEqual, HttpStatus.OK, 2);
+
+        // test findByStartyearEquals
+        ResponseEntity<Iterable> iterableResponseEntityfindByStartyearEquals = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findyear/1987"), Iterable.class);
+        assertResponse(iterableResponseEntityfindByStartyearEquals, HttpStatus.OK, 1);
+
+        // test findByContinentEquals
+        ResponseEntity<Iterable> iterableResponseEntityfindByContinentEquals = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findcontinent/EUROPE"), Iterable.class);
+        assertResponse(iterableResponseEntityfindByContinentEquals, HttpStatus.OK, 1);
+    }
+
     // helper methods
     private String createURLWithPort(String uri) {
         String uriString = "http://localhost:" + port + uri;
         System.out.println(uriString);
         return uriString;
+    }
+
+    private void assertResponse(ResponseEntity<Iterable> iterableResponseEntity, HttpStatus httpStatus, int returnResult) {
+        assertThat(iterableResponseEntity.getStatusCode()).isEqualTo(httpStatus);
+        assertThat(iterableResponseEntity.getBody()).asList().size().isGreaterThanOrEqualTo(returnResult);
     }
 }

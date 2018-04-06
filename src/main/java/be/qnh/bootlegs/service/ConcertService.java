@@ -1,14 +1,24 @@
-package be.qnh.bootlegs.repository;
+package be.qnh.bootlegs.service;
 
 import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.RecordingQuality;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 
-@Repository
-public interface ConcertRepository extends JpaRepository<Concert, Long> {
+public interface ConcertService {
+
+    // crud methods
+    Concert addOne(Concert concert);
+
+    Iterable<Concert> findAll();
+
+    Concert findOneById(Long id);
+
+    Concert udpdateOneById(Long id, Concert concert);
+
+    Concert deleteOneById(Long id);
+
+    // end crud methods ///////////////////////////////////////////
 
     Concert findByDateEquals(LocalDate date);
 

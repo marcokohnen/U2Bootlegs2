@@ -60,7 +60,7 @@ public class ConcertController {
         return createMultipleResultResponse(concertService.findByCityLikeIgnoreCase(city));
     }
 
-    @GetMapping("/findquality/{recordingquality}")
+    @GetMapping("/findquality/{recordingQuality}")
     public ResponseEntity<Iterable<Concert>> findByRecordingQuality(@PathVariable RecordingQuality recordingQuality) {
         return createMultipleResultResponse(concertService.findByRecordingQuality(recordingQuality));
     }

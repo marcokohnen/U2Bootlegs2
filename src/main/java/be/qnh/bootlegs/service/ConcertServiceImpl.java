@@ -30,16 +30,19 @@ public class ConcertServiceImpl implements ConcertService {
         concert1.setDate(LocalDate.of(1981, 3, 26));
         concert1.setCity("Boston");
         concert1.setCountry("USA");
+        concert1.setQuality(RecordingQuality.GOOD);
         Concert concert2 = new Concert();
         concert2.setTitle("When we were young");
         concert2.setDate(LocalDate.of(1984, 10, 30));
         concert2.setCity("Rotterdam");
         concert2.setCountry("Netherlands");
+        concert2.setQuality(RecordingQuality.EXCELENT);
         Concert concert3 = new Concert();
         concert3.setTitle("The First Night On Earth");
         concert3.setDate(LocalDate.of(1997, 4, 25));
         concert3.setCity("Las Vegas");
         concert3.setCountry("USA");
+        concert2.setQuality(RecordingQuality.FAIR);
         List<Concert> concertList = new ArrayList<>(Arrays.asList(concert1, concert2, concert3));
         concertRepository.saveAll(concertList);
     }

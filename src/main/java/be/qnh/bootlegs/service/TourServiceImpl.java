@@ -1,12 +1,17 @@
 package be.qnh.bootlegs.service;
 
+import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.Continent;
+import be.qnh.bootlegs.domain.RecordingQuality;
 import be.qnh.bootlegs.domain.Tour;
+import be.qnh.bootlegs.repository.ConcertRepository;
 import be.qnh.bootlegs.repository.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,16 +21,18 @@ import java.util.Optional;
 public class TourServiceImpl implements TourService {
 
     private final TourRepository tourRepository;
+    private final ConcertRepository concertRepository;
 
     @Autowired
-    public TourServiceImpl(TourRepository tourTourRepository) {
+    public TourServiceImpl(TourRepository tourTourRepository, ConcertRepository concertRepository) {
         this.tourRepository = tourTourRepository;
+        this.concertRepository = concertRepository;
     }
 
     @PostConstruct
-    private void init() {
+    public void init() {
         Tour tour1 = new Tour();
-        tour1.setTitle("Boy");
+        tour1.setTitle("New Boy");
         tour1.setStartyear(1983);
         tour1.setContinent(Continent.EUROPE);
         Tour tour2 = new Tour();
@@ -36,6 +43,48 @@ public class TourServiceImpl implements TourService {
         tour3.setTitle("Joshua Tree");
         tour3.setStartyear(1987);
         tour3.setContinent(Continent.AUSTRALIA);
+
+        Concert concert1 = new Concert();
+        concert1.setTitle("ConcertTitle 1");
+        concert1.setDate(LocalDate.of(1981, 3, 26));
+        concert1.setCity("Boston");
+        concert1.setCountry("USA");
+        concert1.setQuality(RecordingQuality.GOOD);
+        Concert concert2 = new Concert();
+        concert2.setTitle("ConcertTitle 2");
+        concert2.setDate(LocalDate.of(1984, 10, 30));
+        concert2.setCity("Rotterdam");
+        concert2.setCountry("Netherlands");
+        concert2.setQuality(RecordingQuality.EXCELENT);
+        Concert concert3 = new Concert();
+        concert3.setTitle("ConcertTitle 3");
+        concert3.setDate(LocalDate.of(1997, 4, 25));
+        concert3.setCity("Las Vegas");
+        concert3.setCountry("USA");
+        concert3.setQuality(RecordingQuality.FAIR);
+        Concert concert4 = new Concert();
+        concert4.setTitle("ConcertTitle 4");
+        concert4.setDate(LocalDate.of(1981, 3, 26));
+        concert4.setCity("Boston");
+        concert4.setCountry("USA");
+        concert4.setQuality(RecordingQuality.GOOD);
+        Concert concert5 = new Concert();
+        concert5.setTitle("ConcertTitle 5");
+        concert5.setDate(LocalDate.of(1984, 10, 30));
+        concert5.setCity("Rotterdam");
+        concert5.setCountry("Netherlands");
+        concert5.setQuality(RecordingQuality.EXCELENT);
+        Concert concert6 = new Concert();
+        concert6.setTitle("ConcertTitle 6");
+        concert6.setDate(LocalDate.of(1997, 4, 25));
+        concert6.setCity("Las Vegas");
+        concert6.setCountry("USA");
+        concert6.setQuality(RecordingQuality.FAIR);
+
+        tour1.setConcertList(new ArrayList<>(Arrays.asList(concert1, concert2)));
+        tour2.setConcertList(new ArrayList<>(Arrays.asList(concert3, concert4)));
+        tour3.setConcertList(new ArrayList<>(Arrays.asList(concert5, concert6)));
+
         List<Tour> tourList = new ArrayList<>(Arrays.asList(tour1, tour2, tour3));
         tourRepository.saveAll(tourList);
     }
@@ -61,7 +110,7 @@ public class TourServiceImpl implements TourService {
         Optional<Tour> foundTour = tourRepository.findById(id);
         if (foundTour.isPresent()) {
             Tour tourToUpdate = foundTour.get();
-            tourToUpdate.setConcerts(tour.getConcerts());
+            tourToUpdate.setConcertList(tour.getConcertList());
             tourToUpdate.setContinent(tour.getContinent());
             tourToUpdate.setStartyear(tour.getStartyear());
             tourToUpdate.setEndYear(tour.getEndYear());

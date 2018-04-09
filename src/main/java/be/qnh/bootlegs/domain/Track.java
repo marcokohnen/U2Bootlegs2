@@ -1,11 +1,17 @@
 package be.qnh.bootlegs.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class Track extends AbstractEntity {
+public class Track extends AbstractEntity implements Serializable {
+
+    private static final long serialVersionUID = -5290672604543491558L;
 
     @NotNull
     private int sequenceNr;
@@ -19,6 +25,7 @@ public class Track extends AbstractEntity {
     }
 
     // getters and setters
+
     public int getSequenceNr() {
         return sequenceNr;
     }

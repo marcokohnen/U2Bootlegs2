@@ -2,12 +2,15 @@ package be.qnh.bootlegs.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Concert extends AbstractEntity {
+public class Concert extends AbstractEntity implements Serializable {
+
+    private static final long serialVersionUID = -3050653212143377407L;
 
     // object fields
     @NotNull
@@ -23,7 +26,7 @@ public class Concert extends AbstractEntity {
     // field(s) with mapping(s)
 
     // One Concert has many Tracks
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<Track> trackList;
 
     // constructor
@@ -31,6 +34,7 @@ public class Concert extends AbstractEntity {
     }
 
     // getters and setters
+
     public LocalDate getDate() {
         return date;
     }
@@ -102,6 +106,7 @@ public class Concert extends AbstractEntity {
     // equals and hashCode
     @Override
     public boolean equals(Object o) {
+        System.out.println("Entered Concert Equals");
         if (this == o) return true;
         if (!(o instanceof Concert)) return false;
         Concert concert = (Concert) o;

@@ -2,12 +2,14 @@ package be.qnh.bootlegs.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Tour extends AbstractEntity {
+public class Tour extends AbstractEntity implements Serializable {
 
+    private static final long serialVersionUID = 5549479803124945766L;
 
     @NotNull
     private String title;
@@ -23,7 +25,7 @@ public class Tour extends AbstractEntity {
     // field(s) with mapping(s)
 
     // One Tour has many concerts
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Concert> concertList;
 
     // constructor
@@ -71,11 +73,11 @@ public class Tour extends AbstractEntity {
         this.continent = continent;
     }
 
-    public List<Concert> getConcerts() {
+    public List<Concert> getConcertList() {
         return concertList;
     }
 
-    public void setConcerts(List<Concert> concerts) {
+    public void setConcertList(List<Concert> concerts) {
         this.concertList = concerts;
     }
 

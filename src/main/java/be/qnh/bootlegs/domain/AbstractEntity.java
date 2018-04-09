@@ -1,9 +1,6 @@
 package be.qnh.bootlegs.domain;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 public abstract class AbstractEntity {
@@ -11,6 +8,7 @@ public abstract class AbstractEntity {
     // FIELD MET OVERERVING NAAR AL DE ANDERE DOMAIN-OBJECTEN
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
 
     // GETTER

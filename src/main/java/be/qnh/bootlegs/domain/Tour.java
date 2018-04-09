@@ -26,6 +26,7 @@ public class Tour extends AbstractEntity implements Serializable {
 
     // One Tour has many concerts
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "TOUR_ID")
     private List<Concert> concertList;
 
     // constructor

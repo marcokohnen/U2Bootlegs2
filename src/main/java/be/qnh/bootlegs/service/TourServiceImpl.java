@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,7 +81,7 @@ public class TourServiceImpl implements TourService {
         concert6.setQuality(RecordingQuality.FAIR);
 
         tour1.setConcertList(new ArrayList<>(Arrays.asList(concert1, concert2)));
-        tour2.setConcertList(new ArrayList<>(Arrays.asList(concert3, concert4)));
+        tour2.setConcertList(new ArrayList<>(Arrays.asList(concert2, concert4)));
         tour3.setConcertList(new ArrayList<>(Arrays.asList(concert5, concert6)));
 
         List<Tour> tourList = new ArrayList<>(Arrays.asList(tour1, tour2, tour3));

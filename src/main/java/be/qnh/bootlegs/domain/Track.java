@@ -1,14 +1,12 @@
 package be.qnh.bootlegs.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@Table(name = "TRACK")
 public class Track extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = -5290672604543491558L;

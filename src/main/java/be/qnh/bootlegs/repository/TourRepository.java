@@ -1,5 +1,6 @@
 package be.qnh.bootlegs.repository;
 
+import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.Continent;
 import be.qnh.bootlegs.domain.Tour;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,6 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
     Iterable<Tour> findByStartyearEquals(int startyear);
 
     Iterable<Tour> findByContinentEquals(Continent continent);
+
+    void addConcertToTour(Long tour_Id, Concert concert);
 }

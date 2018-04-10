@@ -1,5 +1,6 @@
 package be.qnh.bootlegs.controller;
 
+import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.Continent;
 import be.qnh.bootlegs.domain.Tour;
 import be.qnh.bootlegs.service.TourService;
@@ -28,13 +29,15 @@ public class TourController {
         /api/tour/findcontinent/{continent} : find tours by continent
 
        @PostMapping
-        /api/tour       : add one tour
+        /api/tour                   : add one tour
+        /api/tour/addconcert/{id}   : add one concert to tour with id
 
        @PutMapping
         /api/tour/{id}  : update one tour
 
        @DeleteMapping
-        /api/tour/{id}  : delete one tour
+        /api/tour/{id}              : delete one tour
+        /api/tour/delconcert/{id}   : del one concert from tour with id
 
      */
 
@@ -78,6 +81,16 @@ public class TourController {
         }
     }
 
+    @PostMapping("/addconcert/{id}")
+    public ResponseEntity<Boolean> addConcertToTour(@PathVariable Long id, @RequestBody Concert concert) {
+        boolean result = tourService.addConcertToTour(id, concert);
+        if (result) {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Tour> updateOne(@PathVariable Long id, @RequestBody Tour tour) {
         return createSingleResultResponse(tourService.udpdateOneById(id, tour));
@@ -86,6 +99,16 @@ public class TourController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Tour> deleteOne(@PathVariable Long id) {
         return createSingleResultResponse(tourService.deleteOneById(id));
+    }
+
+    @DeleteMapping("/delconcert/{id}")
+    public ResponseEntity<Boolean> delConcertFromTour(@PathVariable Long id, @RequestBody Concert concert) {
+        boolean result = tourService.delConcertFromTour(id, concert);
+        if (result) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     // helper methods

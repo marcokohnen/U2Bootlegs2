@@ -8,6 +8,7 @@ import be.qnh.bootlegs.repository.ConcertRepository;
 import be.qnh.bootlegs.repository.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
@@ -20,15 +21,14 @@ import java.util.Optional;
 public class TourServiceImpl implements TourService {
 
     private final TourRepository tourRepository;
-    private final ConcertRepository concertRepository;
 
     @Autowired
-    public TourServiceImpl(TourRepository tourTourRepository, ConcertRepository concertRepository) {
+    public TourServiceImpl(TourRepository tourTourRepository) {
         this.tourRepository = tourTourRepository;
-        this.concertRepository = concertRepository;
     }
 
     @PostConstruct
+    @Transactional
     public void init() {
         Tour tour1 = new Tour();
         tour1.setTitle("New Boy");
@@ -81,8 +81,8 @@ public class TourServiceImpl implements TourService {
         concert6.setQuality(RecordingQuality.FAIR);
 
         tour1.setConcertList(new ArrayList<>(Arrays.asList(concert1, concert2)));
-        tour2.setConcertList(new ArrayList<>(Arrays.asList(concert2, concert4)));
-        tour3.setConcertList(new ArrayList<>(Arrays.asList(concert5, concert6)));
+        tour2.setConcertList(new ArrayList<>(Arrays.asList(concert3, concert2)));
+        tour3.setConcertList(new ArrayList<>(Arrays.asList(concert2, concert6)));
 
         List<Tour> tourList = new ArrayList<>(Arrays.asList(tour1, tour2, tour3));
         tourRepository.saveAll(tourList);
@@ -153,5 +153,28 @@ public class TourServiceImpl implements TourService {
     @Override
     public Iterable<Tour> findByContinentEquals(Continent continent) {
         return tourRepository.findByContinentEquals(continent);
+    }
+
+    @Override
+    @Transactional
+    public boolean addConcertToTour(Long tour_Id, Concert concert) {
+        Tour aTour = findOneById(tour_Id);
+        if (aTour != null) {
+            return aTour.getConcertList().add(concert);
+            //addOne(aTour); is hier niet nodig omdat aTour gemanaged is door hibernate als gevolg van de findOneById method en door list.add(concert) al gesaved wordt. Nog eens saven zou een fout genereren : entity already persisted
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean delConcertFromTour(Long tour_Id, Concert concert) {
+        Tour aTour = findOneById(tour_Id);
+        if (aTour != null) {
+            return aTour.getConcertList().remove(concert);
+        } else {
+            return false;
+        }
     }
 }

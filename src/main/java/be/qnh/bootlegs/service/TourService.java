@@ -1,5 +1,6 @@
 package be.qnh.bootlegs.service;
 
+import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.Continent;
 import be.qnh.bootlegs.domain.Tour;
 
@@ -25,4 +26,8 @@ public interface TourService {
     Iterable<Tour> findByStartyearEquals(int startyear);
 
     Iterable<Tour> findByContinentEquals (Continent continent);
+
+    boolean addConcertToTour(Long tour_Id, Concert concert);
+
+    boolean delConcertFromTour(Long tour_Id, Concert concert);
 }

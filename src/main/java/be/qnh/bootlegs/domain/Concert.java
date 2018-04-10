@@ -27,7 +27,7 @@ public class Concert extends AbstractEntity implements Serializable {
     // field(s) with mapping(s)
 
     // One Concert has many Tracks
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "Concert_ID")
     private List<Track> trackList;
 
@@ -112,7 +112,8 @@ public class Concert extends AbstractEntity implements Serializable {
         if (this == o) return true;
         if (!(o instanceof Concert)) return false;
         Concert concert = (Concert) o;
-        return Objects.equals(getDate(), concert.getDate()) &&
+        return Objects.equals(getId(), concert.getId()) &&
+                Objects.equals(getDate(), concert.getDate()) &&
                 Objects.equals(getTitle(), concert.getTitle()) &&
                 Objects.equals(getCountry(), concert.getCountry()) &&
                 Objects.equals(getCity(), concert.getCity()) &&

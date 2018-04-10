@@ -27,5 +27,7 @@ public interface TourService {
 
     Iterable<Tour> findByContinentEquals (Continent continent);
 
-    void addConcertToTour(Long tour_Id, Concert concert);
+    boolean addConcertToTour(Long tour_Id, Concert concert);
+
+    boolean delConcertFromTour(Long tour_Id, Concert concert);
 }

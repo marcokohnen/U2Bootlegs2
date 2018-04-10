@@ -157,11 +157,24 @@ public class TourServiceImpl implements TourService {
 
     @Override
     @Transactional
-    public void addConcertToTour(Long tour_Id, Concert concert) {
+    public boolean addConcertToTour(Long tour_Id, Concert concert) {
         Tour aTour = findOneById(tour_Id);
         if (aTour != null) {
-            aTour.getConcertList().add(concert);
+            return aTour.getConcertList().add(concert);
             //addOne(aTour); is hier niet nodig omdat aTour gemanaged is door hibernate als gevolg van de findOneById method en door list.add(concert) al gesaved wordt. Nog eens saven zou een fout genereren : entity already persisted
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean delConcertFromTour(Long tour_Id, Concert concert) {
+        Tour aTour = findOneById(tour_Id);
+        if (aTour != null) {
+            return aTour.getConcertList().remove(concert);
+        } else {
+            return false;
         }
     }
 }

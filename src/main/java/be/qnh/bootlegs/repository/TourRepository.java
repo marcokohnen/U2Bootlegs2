@@ -20,5 +20,4 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
 
     Iterable<Tour> findByContinentEquals(Continent continent);
 
-    void addConcertToTour(Long tour_Id, Concert concert);
 }

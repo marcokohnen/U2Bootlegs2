@@ -1,6 +1,5 @@
 package be.qnh.bootlegs.service;
 
-import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.Track;
 
 import javax.validation.constraints.NotNull;
@@ -21,4 +20,5 @@ public interface TrackService {
     // end crud methods ///////////////////////////////////////////
 
     Iterable<Track> findByTitleLikeIgnoreCase(@NotNull String title);
+
 }

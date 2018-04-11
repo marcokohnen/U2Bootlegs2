@@ -2,9 +2,11 @@ package be.qnh.bootlegs.service;
 
 import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.RecordingQuality;
+import be.qnh.bootlegs.domain.Track;
 import be.qnh.bootlegs.repository.ConcertRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
@@ -119,4 +121,27 @@ public class ConcertServiceImpl implements ConcertService {
     public Iterable<Concert> findByRecordingQuality(RecordingQuality quality) {
         return concertRepository.findByQuality(quality);
     }
+
+    @Override
+    @Transactional
+    public boolean addTrackToConcert(Long concert_id, Track track) {
+        Concert aConcert = findOneById(concert_id);
+        if (aConcert != null) {
+            return aConcert.getTrackList().add(track);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean delTrackFromConcert(Long concert_id, Track track) {
+        Concert aConcert = findOneById(concert_id);
+        if (aConcert != null) {
+            return aConcert.getTrackList().remove(track);
+        } else {
+            return false;
+        }
+    }
+
 }

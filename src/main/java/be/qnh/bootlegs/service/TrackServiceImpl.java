@@ -1,5 +1,6 @@
 package be.qnh.bootlegs.service;
 
+import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.Track;
 import be.qnh.bootlegs.repository.TrackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,4 +63,5 @@ public class TrackServiceImpl implements TrackService {
         title = "%" + title + "%";
         return trackRepository.findByTitleLikeIgnoreCase(title);
     }
+
 }

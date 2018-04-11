@@ -1,7 +1,6 @@
 package be.qnh.bootlegs.service;
 
 import be.qnh.bootlegs.domain.*;
-import be.qnh.bootlegs.repository.ConcertRepository;
 import be.qnh.bootlegs.repository.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

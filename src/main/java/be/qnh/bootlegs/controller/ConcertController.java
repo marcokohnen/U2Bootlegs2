@@ -2,9 +2,11 @@ package be.qnh.bootlegs.controller;
 
 import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.RecordingQuality;
+import be.qnh.bootlegs.domain.Tour;
 import be.qnh.bootlegs.domain.Track;
 import be.qnh.bootlegs.service.ConcertService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +25,23 @@ public class ConcertController {
     }
 
     /* @GetMapping
-        /api/concert/findall                : find all tours
-        /api/tour/findid/{id}               : find one tour by id
-        /api/tour/findtitle/{title}         : find tours by %title% ignore case
+        /api/concert/findall            : find all tours
+        /api/tour/findid/{id}           : find one tour by id
+        /api/tour/findtitle/{title}     : find tours by %title% ignore case
+
+        @PostMapping
+        /api/concert                    : add one concert
+        /api/concert/addtrack/{id}      : add one track to concert with id
+
+        @PutMapping
+        /api/concert/{id}               : update one concert
+
+       @DeleteMapping
+        /api/concert/{id}               : delete one concert
+        /api/concert/deltrack/{id}      : delete one track from concert with id
      */
 
+    // GETMAPPINGS /////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/findall")
     public ResponseEntity<Iterable<Concert>> findAll() {
         return createMultipleResultResponse(concertService.findAll());
@@ -44,8 +58,8 @@ public class ConcertController {
     }
 
     @GetMapping("/finddate/{date}")
-    public ResponseEntity<Concert> findByDateEquals(@PathVariable LocalDate date) {
-        return createSingleResultResponse(concertService.findByDateEquals(date));
+    public ResponseEntity<Iterable<Concert>> findByDateEquals(@PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date) {
+        return createMultipleResultResponse(concertService.findByDateEquals(date));
     }
 
     @GetMapping("/findcountry/{country}")
@@ -63,6 +77,17 @@ public class ConcertController {
         return createMultipleResultResponse(concertService.findByRecordingQuality(recordingQuality));
     }
 
+    // POSTMAPPINGS /////////////////////////////////////////////////////////////////////////////////////////////////
+    @PostMapping
+    public ResponseEntity<Concert> addOne(@RequestBody Concert concert) {
+        Concert newConcert = concertService.addOne(concert);
+        if (newConcert == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }else {
+            return new ResponseEntity<>(newConcert, HttpStatus.CREATED);
+        }
+    }
+
     @PostMapping("/addtrack/{id}")
     public ResponseEntity<Boolean> addTrackToConcert(@PathVariable Long id, @RequestBody Track track) {
         if (concertService.addTrackToConcert(id, track)) {
@@ -70,6 +95,18 @@ public class ConcertController {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    // PUTMAPPINGS /////////////////////////////////////////////////////////////////////////////////////////////////
+    @PutMapping("/{id}")
+    public ResponseEntity<Concert> updateOne(@PathVariable Long id, @RequestBody Concert concert) {
+        return createSingleResultResponse(concertService.udpdateOneById(id, concert));
+    }
+
+    // DELETEMAPPINGS /////////////////////////////////////////////////////////////////////////////////////////////////
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Concert> deleteOne(@PathVariable Long id) {
+        return createSingleResultResponse(concertService.deleteOneById(id));
     }
 
     @DeleteMapping("/deltrack/{id}")

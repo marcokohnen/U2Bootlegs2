@@ -21,7 +21,7 @@ public interface ConcertService {
 
     // end crud methods ///////////////////////////////////////////
 
-    Concert findByDateEquals(LocalDate date);
+    Iterable<Concert> findByDateEquals(LocalDate date);
 
     Iterable<Concert> findByTitleLikeIgnoreCase(String title);
 

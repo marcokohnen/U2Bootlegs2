@@ -95,7 +95,7 @@ public class ConcertServiceImpl implements ConcertService {
     // end crud methods ///////////////////////////////////////////////////////////////
 
     @Override
-    public Concert findByDateEquals(LocalDate date) {
+    public Iterable<Concert> findByDateEquals(LocalDate date) {
         return concertRepository.findByDateEquals(date);
     }
 

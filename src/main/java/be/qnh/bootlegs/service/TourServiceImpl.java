@@ -186,7 +186,7 @@ public class TourServiceImpl implements TourService {
         Tour aTour = findOneById(tour_Id);
         if (aTour != null) {
             return aTour.getConcertList().add(concert);
-            //addOne(aTour); is hier niet nodig omdat aTour gemanaged is door hibernate als gevolg van de findOneById method en door list.add(concert) al gesaved wordt. Nog eens saven zou een fout genereren : entity already persisted
+            //addOne(aTour); is hier niet nodig omdat aTour gemanaged is door hibernate als gevolg van de findOneById method en door list.add(concert) al gesaved wordt. Nog eens saven zou een fout genereren : entity already persisted. Omdat aTour gemanaged is (bevind zich in de PersistenceContext) worden wijzigingen aan dit object weggeschreven naar de databank zodra de transactie is voltooid = commit (@Transactional) !!
         } else {
             return false;
         }

@@ -29,15 +29,15 @@ public class TourController {
         /api/tour/findcontinent/{continent} : find tours by continent
 
        @PostMapping
-        /api/tour                   : add one tour
-        /api/tour/addconcert/{id}   : add one concert to tour with id
+        /api/tour                           : add one tour
+        /api/tour/addconcert/{id}           : add one concert to tour with id
 
        @PutMapping
-        /api/tour/{id}  : update one tour
+        /api/tour/{id}                      : update one tour
 
        @DeleteMapping
-        /api/tour/{id}              : delete one tour
-        /api/tour/delconcert/{id}   : del one concert from tour with id
+        /api/tour/{id}                      : delete one tour
+        /api/tour/delconcert/{id}           : del one concert from tour with id
 
      */
 

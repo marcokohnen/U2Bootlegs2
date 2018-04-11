@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Repository
 public interface ConcertRepository extends JpaRepository<Concert, Long> {
 
-    Concert findByDateEquals(LocalDate date);
+    Iterable<Concert> findByDateEquals(LocalDate date);
 
     Iterable<Concert> findByTitleLikeIgnoreCase(String title);
 

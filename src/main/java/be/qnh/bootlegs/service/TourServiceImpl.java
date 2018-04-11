@@ -1,9 +1,6 @@
 package be.qnh.bootlegs.service;
 
-import be.qnh.bootlegs.domain.Concert;
-import be.qnh.bootlegs.domain.Continent;
-import be.qnh.bootlegs.domain.RecordingQuality;
-import be.qnh.bootlegs.domain.Tour;
+import be.qnh.bootlegs.domain.*;
 import be.qnh.bootlegs.repository.ConcertRepository;
 import be.qnh.bootlegs.repository.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +76,35 @@ public class TourServiceImpl implements TourService {
         concert6.setCity("Las Vegas");
         concert6.setCountry("USA");
         concert6.setQuality(RecordingQuality.FAIR);
+
+        Track track1 = new Track();
+        track1.setTitle("Track1");
+        track1.setSequenceNr(1);
+        track1.setLocationUrl("url1");
+        Track track2 = new Track();
+        track2.setTitle("Track2");
+        track2.setSequenceNr(2);
+        track2.setLocationUrl("url2");
+        Track track3 = new Track();
+        track3.setTitle("Track3");
+        track3.setSequenceNr(3);
+        track3.setLocationUrl("url3");
+        Track track4 = new Track();
+        track4.setTitle("Track4");
+        track4.setSequenceNr(4);
+        track4.setLocationUrl("url4");
+        Track track5 = new Track();
+        track5.setTitle("Track5");
+        track5.setSequenceNr(5);
+        track5.setLocationUrl("url5");
+        Track track6 = new Track();
+        track6.setTitle("Track6");
+        track6.setSequenceNr(6);
+        track6.setLocationUrl("url6");
+
+        concert1.setTrackList(new ArrayList<>(Arrays.asList(track1, track2)));
+        concert2.setTrackList(new ArrayList<>(Arrays.asList(track3, track4)));
+        concert6.setTrackList(new ArrayList<>(Arrays.asList(track5, track6)));
 
         tour1.setConcertList(new ArrayList<>(Arrays.asList(concert1, concert2)));
         tour2.setConcertList(new ArrayList<>(Arrays.asList(concert3, concert2)));

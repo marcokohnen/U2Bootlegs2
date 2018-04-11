@@ -41,6 +41,7 @@ public class TourController {
 
      */
 
+    // GETMAPPINGS /////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/findall")
     public ResponseEntity<Iterable<Tour>> findAll() {
         return createMultipleResultResponse(tourService.findAll());
@@ -71,6 +72,7 @@ public class TourController {
         return createMultipleResultResponse(tourService.findByContinentEquals(continent));
     }
 
+    // POSTTMAPPINGS /////////////////////////////////////////////////////////////////////////////////////////////////
     @PostMapping
     public ResponseEntity<Tour> addOne(@RequestBody Tour tour) {
         Tour newTour = tourService.addOne(tour);
@@ -83,19 +85,20 @@ public class TourController {
 
     @PostMapping("/addconcert/{id}")
     public ResponseEntity<Boolean> addConcertToTour(@PathVariable Long id, @RequestBody Concert concert) {
-        boolean result = tourService.addConcertToTour(id, concert);
-        if (result) {
+        if (tourService.addConcertToTour(id, concert)) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
+    // PUTMAPPINGS /////////////////////////////////////////////////////////////////////////////////////////////////
     @PutMapping("/{id}")
     public ResponseEntity<Tour> updateOne(@PathVariable Long id, @RequestBody Tour tour) {
         return createSingleResultResponse(tourService.udpdateOneById(id, tour));
     }
 
+    // DELETEMAPPINGS /////////////////////////////////////////////////////////////////////////////////////////////////
     @DeleteMapping("/{id}")
     public ResponseEntity<Tour> deleteOne(@PathVariable Long id) {
         return createSingleResultResponse(tourService.deleteOneById(id));
@@ -103,15 +106,15 @@ public class TourController {
 
     @DeleteMapping("/delconcert/{id}")
     public ResponseEntity<Boolean> delConcertFromTour(@PathVariable Long id, @RequestBody Concert concert) {
-        boolean result = tourService.delConcertFromTour(id, concert);
-        if (result) {
+        if (tourService.delConcertFromTour(id, concert) ){
             return new ResponseEntity<>(HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    // END MAPPINGS ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // helper methods
+    // helper methods /////////////////////////////////////////////////////////////////////////////////////////////////
     private ResponseEntity<Iterable<Tour>> createMultipleResultResponse(Iterable<Tour> resultOfFind) {
         if (resultOfFind.iterator().hasNext()) {
             return new ResponseEntity<>(resultOfFind, HttpStatus.OK);

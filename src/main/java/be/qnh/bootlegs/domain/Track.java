@@ -1,6 +1,7 @@
 package be.qnh.bootlegs.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;

@@ -1,5 +1,7 @@
 package be.qnh.bootlegs.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -15,6 +17,7 @@ public class Concert extends AbstractEntity implements Serializable {
 
     // object fields
     @NotNull
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
     @NotNull
     private String title;

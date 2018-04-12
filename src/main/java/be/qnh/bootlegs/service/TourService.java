@@ -25,7 +25,7 @@ public interface TourService {
 
     Iterable<Tour> findByStartyearEquals(int startyear);
 
-    Iterable<Tour> findByContinentEquals (Continent continent);
+    Iterable<Tour> findByContinentEquals(Continent continent);
 
     boolean addConcertToTour(Long tour_Id, Concert concert);
 

@@ -112,8 +112,7 @@ public class Concert extends AbstractEntity implements Serializable {
         if (this == o) return true;
         if (!(o instanceof Concert)) return false;
         Concert concert = (Concert) o;
-        return Objects.equals(getId(), concert.getId()) &&
-                Objects.equals(getDate(), concert.getDate()) &&
+        return Objects.equals(getDate(), concert.getDate()) &&
                 Objects.equals(getTitle(), concert.getTitle()) &&
                 Objects.equals(getCountry(), concert.getCountry()) &&
                 Objects.equals(getCity(), concert.getCity()) &&

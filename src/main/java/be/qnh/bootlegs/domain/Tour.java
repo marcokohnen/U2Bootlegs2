@@ -3,7 +3,6 @@ package be.qnh.bootlegs.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,7 +27,8 @@ public class Tour extends AbstractEntity implements Serializable {
 
     // One Tour has many concerts
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "TOUR_ID") //@Joincolumn zorgt voor een foreignkey in de tabel concert, zonder deze annotatie wordt er een tussentabel Tour_Concerts gemaakt
+    @JoinColumn(name = "TOUR_ID")
+    //@Joincolumn zorgt voor een foreignkey in de tabel concert, zonder deze annotatie wordt er een tussentabel Tour_Concerts gemaakt
     private List<Concert> concertList;
 
     // constructor

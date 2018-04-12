@@ -2,7 +2,6 @@ package be.qnh.bootlegs.controller;
 
 import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.RecordingQuality;
-import be.qnh.bootlegs.domain.Tour;
 import be.qnh.bootlegs.domain.Track;
 import be.qnh.bootlegs.service.ConcertService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +82,7 @@ public class ConcertController {
         Concert newConcert = concertService.addOne(concert);
         if (newConcert == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }else {
+        } else {
             return new ResponseEntity<>(newConcert, HttpStatus.CREATED);
         }
     }

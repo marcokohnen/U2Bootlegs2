@@ -53,7 +53,7 @@ public class TourController {
     }
 
     @GetMapping("/findtitle/{title}")
-    public ResponseEntity<Iterable<Tour>> findByTitleLikeIgnoreCase( @PathVariable String title) {
+    public ResponseEntity<Iterable<Tour>> findByTitleLikeIgnoreCase(@PathVariable String title) {
         return createMultipleResultResponse(tourService.findByTitleLikeIgnoreCase(title));
     }
 
@@ -78,7 +78,7 @@ public class TourController {
         Tour newTour = tourService.addOne(tour);
         if (newTour == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }else {
+        } else {
             return new ResponseEntity<>(newTour, HttpStatus.CREATED);
         }
     }
@@ -87,7 +87,7 @@ public class TourController {
     public ResponseEntity<Boolean> addConcertToTour(@PathVariable Long id, @RequestBody Concert concert) {
         if (tourService.addConcertToTour(id, concert)) {
             return new ResponseEntity<>(HttpStatus.CREATED);
-        }else {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -106,9 +106,9 @@ public class TourController {
 
     @DeleteMapping("/delconcert/{id}")
     public ResponseEntity<Boolean> delConcertFromTour(@PathVariable Long id, @RequestBody Concert concert) {
-        if (tourService.delConcertFromTour(id, concert) ){
+        if (tourService.delConcertFromTour(id, concert)) {
             return new ResponseEntity<>(HttpStatus.OK);
-        }else {
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -119,7 +119,7 @@ public class TourController {
         if (resultOfFind.iterator().hasNext()) {
             return new ResponseEntity<>(resultOfFind, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND );
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

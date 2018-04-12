@@ -2,10 +2,7 @@ package be.qnh.bootlegs.controller;
 
 import be.qnh.bootlegs.BootlegsApplication;
 import be.qnh.bootlegs.domain.Concert;
-import be.qnh.bootlegs.domain.Continent;
-import be.qnh.bootlegs.domain.Tour;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = BootlegsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
@@ -95,14 +92,14 @@ public class ConcertControllerIT {
         assertResponse(iterableResponseEntityfindByCountryLikeIgnoreCase, HttpStatus.OK, 2);
 
 
-    // test findByCityLikeIgnoreCase
-    ResponseEntity<Iterable> iterableResponseEntityfindByCityLikeIgnoreCase = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findcity/rotterd"), Iterable.class);
-    assertResponse(iterableResponseEntityfindByCityLikeIgnoreCase, HttpStatus.OK, 2);
+        // test findByCityLikeIgnoreCase
+        ResponseEntity<Iterable> iterableResponseEntityfindByCityLikeIgnoreCase = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findcity/rotterd"), Iterable.class);
+        assertResponse(iterableResponseEntityfindByCityLikeIgnoreCase, HttpStatus.OK, 2);
 
         // test findByRecordingQuality
         ResponseEntity<Iterable> iterableResponseEntityfindByRecordingQuality = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findquality/FAIR"), Iterable.class);
         assertResponse(iterableResponseEntityfindByRecordingQuality, HttpStatus.OK, 1);
-}
+    }
 
     // helper methods
     private String createURLWithPort(String uri) {

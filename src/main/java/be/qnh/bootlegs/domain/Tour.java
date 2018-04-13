@@ -3,6 +3,8 @@ package be.qnh.bootlegs.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -77,6 +79,7 @@ public class Tour extends AbstractEntity implements Serializable {
     }
 
     public List<Concert> getConcertList() {
+        Collections.sort(concertList, Comparator.comparing(Concert::getDate));
         return concertList;
     }
 

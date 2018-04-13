@@ -41,13 +41,13 @@ public class TourServiceImpl implements TourService {
 
         Concert concert1 = new Concert();
         concert1.setTitle("ConcertTitle 1");
-        concert1.setDate(LocalDate.of(1981, 3, 26));
+        concert1.setDate(LocalDate.of(1987, 3, 26));
         concert1.setCity("Boston");
         concert1.setCountry("USA");
         concert1.setQuality(RecordingQuality.GOOD);
         Concert concert2 = new Concert();
         concert2.setTitle("ConcertTitle 2");
-        concert2.setDate(LocalDate.of(1984, 10, 30));
+        concert2.setDate(LocalDate.of(2004, 10, 30));
         concert2.setCity("Rotterdam");
         concert2.setCountry("Netherlands");
         concert2.setQuality(RecordingQuality.EXCELENT);
@@ -59,7 +59,7 @@ public class TourServiceImpl implements TourService {
         concert3.setQuality(RecordingQuality.FAIR);
         Concert concert4 = new Concert();
         concert4.setTitle("ConcertTitle 4");
-        concert4.setDate(LocalDate.of(1981, 3, 26));
+        concert4.setDate(LocalDate.of(1987, 3, 26));
         concert4.setCity("Boston");
         concert4.setCountry("USA");
         concert4.setQuality(RecordingQuality.GOOD);

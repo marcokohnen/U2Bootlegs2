@@ -126,4 +126,5 @@ public class Concert extends AbstractEntity implements Serializable {
     public int hashCode() {
         return Objects.hash(getDate(), getTitle(), getCountry(), getCity(), getVenue());
     }
+
 }

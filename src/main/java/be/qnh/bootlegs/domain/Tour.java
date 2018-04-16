@@ -3,6 +3,8 @@ package be.qnh.bootlegs.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,7 +18,7 @@ public class Tour extends AbstractEntity implements Serializable {
     private String title;
     @NotNull
     private int startyear;
-    private int endYear;
+    private int endyear;
     @NotNull
     private int leg;
     @NotNull
@@ -52,12 +54,12 @@ public class Tour extends AbstractEntity implements Serializable {
         this.startyear = startyear;
     }
 
-    public int getEndYear() {
-        return endYear;
+    public int getEndyear() {
+        return endyear;
     }
 
-    public void setEndYear(int endYear) {
-        this.endYear = endYear;
+    public void setEndyear(int endyear) {
+        this.endyear = endyear;
     }
 
     public int getLeg() {
@@ -77,6 +79,7 @@ public class Tour extends AbstractEntity implements Serializable {
     }
 
     public List<Concert> getConcertList() {
+        Collections.sort(concertList, Comparator.comparing(Concert::getDate));
         return concertList;
     }
 
@@ -90,7 +93,7 @@ public class Tour extends AbstractEntity implements Serializable {
         return "Tour{" +
                 "title='" + title + '\'' +
                 ", startyear=" + startyear +
-                ", endYear=" + endYear +
+                ", endYear=" + endyear +
                 ", leg=" + leg +
                 ", continent=" + continent +
                 '}';
@@ -103,7 +106,7 @@ public class Tour extends AbstractEntity implements Serializable {
         if (!(o instanceof Tour)) return false;
         Tour tour = (Tour) o;
         return getStartyear() == tour.getStartyear() &&
-                getEndYear() == tour.getEndYear() &&
+                getEndyear() == tour.getEndyear() &&
                 getLeg() == tour.getLeg() &&
                 Objects.equals(getTitle(), tour.getTitle()) &&
                 getContinent() == tour.getContinent();
@@ -111,6 +114,6 @@ public class Tour extends AbstractEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTitle(), getStartyear(), getEndYear(), getLeg(), getContinent());
+        return Objects.hash(getTitle(), getStartyear(), getEndyear(), getLeg(), getContinent());
     }
 }

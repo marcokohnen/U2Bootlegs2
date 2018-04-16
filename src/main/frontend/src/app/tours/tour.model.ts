@@ -1,4 +1,5 @@
 export class Tour {
+    //access-modifiers van membervariabelen moeten altijd public zijn anders kan Angular ze niet gebruiken voor binding
     public id : number;
     public title : string;
     public startyear : number;

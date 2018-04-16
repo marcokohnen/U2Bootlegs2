@@ -29,14 +29,20 @@ public class TourServiceImpl implements TourService {
         Tour tour1 = new Tour();
         tour1.setTitle("New Boy");
         tour1.setStartyear(1983);
+        tour1.setEndyear(1984);
+        tour1.setLeg(3);
         tour1.setContinent(Continent.EUROPE);
         Tour tour2 = new Tour();
         tour2.setTitle("October");
         tour2.setStartyear(1985);
+        tour2.setEndyear(1985);
+        tour2.setLeg(2);
         tour2.setContinent(Continent.NORTHAMERICA);
         Tour tour3 = new Tour();
         tour3.setTitle("Joshua Tree");
         tour3.setStartyear(1987);
+        tour3.setEndyear(1988);
+        tour3.setLeg(1);
         tour3.setContinent(Continent.AUSTRALIA);
 
         Concert concert1 = new Concert();
@@ -137,7 +143,7 @@ public class TourServiceImpl implements TourService {
             tourToUpdate.setConcertList(tour.getConcertList());
             tourToUpdate.setContinent(tour.getContinent());
             tourToUpdate.setStartyear(tour.getStartyear());
-            tourToUpdate.setEndYear(tour.getEndYear());
+            tourToUpdate.setEndyear(tour.getEndyear());
             tourToUpdate.setLeg(tour.getLeg());
             tourToUpdate.setTitle(tour.getTitle());
             return tourRepository.save(tourToUpdate);

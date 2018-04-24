@@ -1,12 +1,12 @@
 package be.qnh.bootlegs.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.sun.istack.internal.Nullable;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "TOUR")
@@ -15,11 +15,13 @@ public class Tour extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 5549479803124945766L;
 
     @NotNull
+    @Size(min = 4, max = 35)
     private String title;
-    @NotNull
+    @Min(1978)
     private int startyear;
     private int endyear;
-    @NotNull
+    @Min(1)
+    @Max(6)
     private int leg;
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -29,9 +31,9 @@ public class Tour extends AbstractEntity implements Serializable {
 
     // One Tour has many concerts
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "TOUR_ID")
+    @JoinColumn(name = "TOUR_ID", nullable = false)
     //@Joincolumn zorgt voor een foreignkey in de tabel concert, zonder deze annotatie wordt er een tussentabel Tour_Concerts gemaakt
-    private List<Concert> concertList;
+    private List<Concert> concertList = new ArrayList<>();
 
     // constructor
     public Tour() {

@@ -44,6 +44,7 @@ public class TourController {
     // GETMAPPINGS /////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/findall")
     public ResponseEntity<Iterable<Tour>> findAll() {
+        System.out.println("Entered TourController.findAll()");
         return createMultipleResultResponse(tourService.findAll());
     }
 
@@ -75,8 +76,9 @@ public class TourController {
     // POSTTMAPPINGS /////////////////////////////////////////////////////////////////////////////////////////////////
     @PostMapping
     public ResponseEntity<Tour> addOne(@RequestBody Tour tour) {
+        System.out.println("Entered TourController.addOne()");
         Tour newTour = tourService.addOne(tour);
-        if (newTour == null) {
+           if (newTour == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(newTour, HttpStatus.CREATED);

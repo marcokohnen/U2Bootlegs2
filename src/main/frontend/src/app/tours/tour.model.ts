@@ -6,14 +6,21 @@ export class Tour {
     public endyear : number;
     public leg : number;
     public continent : string;
+    public concertList = [];
 
 
-    constructor(id: number, title: string, startyear: number, endyear: number, leg: number, continent: string) {
+    constructor(id : number, title: string, startyear: number, endyear: number, leg: number, continent: string, concertList : any[] ) {
         this.id = id;
         this.title = title;
         this.startyear = startyear;
         this.endyear = endyear;
         this.leg = leg;
         this.continent = continent;
+        this.concertList = concertList;
+    }
+
+
+    toString() {
+        return this.id + "," + this.title + "," + this.leg + "," + this.continent + "," + this.startyear + "," + this.endyear;
     }
 }

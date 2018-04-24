@@ -1,0 +1,22 @@
+.ng-valid[required], .ng-valid.required {
+    border-left: 10px solid green;
+}
+
+.ng-invalid:not(form) {
+    border-left: 10px solid red;
+}
+
+.form-control {
+    border : 1px solid black;
+}
+
+.card-body {
+    border: 1px solid red;
+    box-shadow: gray 10px 10px;
+}
+
+.card-header {
+    border: 1px solid white;
+    color: white;
+    background-color: red;
+}

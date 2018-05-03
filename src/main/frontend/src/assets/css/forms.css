@@ -1,22 +1,28 @@
-.ng-valid[required], .ng-valid.required {
-    border-left: 10px solid green;
-}
-
-.ng-invalid:not(form) {
-    border-left: 10px solid red;
-}
-
-.form-control {
-    border : 1px solid black;
-}
-
-.card-body {
-    border: 1px solid red;
+/*Form Layout*/
+.card {
+    margin: 20px;
     box-shadow: gray 10px 10px;
 }
 
-.card-header {
-    border: 1px solid white;
-    color: white;
-    background-color: red;
+.card-body {
+    border: 1px solid black;
+}
+
+.form-icon {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    fill: white;
+    width: 16px;
+    height: 16px;
+}
+
+/* Form Validating */
+
+.form-control.ng-valid.ng-dirty {
+    border-left: 10px solid green;
+}
+
+.form-control.ng-invalid.ng-dirty {
+    border-left: 10px solid red;
 }

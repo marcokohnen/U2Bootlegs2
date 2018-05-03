@@ -1,5 +1,10 @@
+enum AppColors {
+    blue,
+    yellow
+}
+
 export class Tour {
-    //access-modifiers van membervariabelen moeten altijd public zijn anders kan Angular ze niet gebruiken voor binding
+    //access-modifiers van membervariabelen moeten altijd public zijn anders kan Angular ze niet gebruiken voor binding in html
     public id : number;
     public title : string;
     public startyear : number;
@@ -7,7 +12,7 @@ export class Tour {
     public leg : number;
     public continent : string;
     public concertList = [];
-
+    public testColors : AppColors;
 
     constructor(id : number, title: string, startyear: number, endyear: number, leg: number, continent: string, concertList : any[] ) {
         this.id = id;
@@ -18,7 +23,6 @@ export class Tour {
         this.continent = continent;
         this.concertList = concertList;
     }
-
 
     toString() {
         return this.id + "," + this.title + "," + this.leg + "," + this.continent + "," + this.startyear + "," + this.endyear;

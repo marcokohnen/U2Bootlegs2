@@ -50,6 +50,7 @@ public class TourServiceImpl implements TourService {
         concert1.setDate(LocalDate.of(1987, 3, 26));
         concert1.setCity("Boston");
         concert1.setCountry("USA");
+        concert1.setVenue("London School of Economics");
         concert1.setQuality(RecordingQuality.GOOD);
         Concert concert2 = new Concert();
         concert2.setTitle("ConcertTitle 2");

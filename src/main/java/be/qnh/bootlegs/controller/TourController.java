@@ -21,12 +21,12 @@ public class TourController {
     }
 
     /* @GetMapping
-        /api/tour/findall                   : find all tours
+        /api/tour/findall                   : find all tourList
         /api/tour/findid/{id}               : find one tour by id
-        /api/tour/findtitle/{title}         : find tours by %title% ignore case
-        /api/tour/findfromyear/{startYear}  : find tours by startYear and later
-        /api/tour/findyear/{startYear}      : find tours by startYear
-        /api/tour/findcontinent/{continent} : find tours by continent
+        /api/tour/findtitle/{title}         : find tourList by %title% ignore case
+        /api/tour/findfromyear/{startYear}  : find tourList by startYear and later
+        /api/tour/findyear/{startYear}      : find tourList by startYear
+        /api/tour/findcontinent/{continent} : find tourList by continent
 
        @PostMapping
         /api/tour                           : add one tour

@@ -24,9 +24,9 @@ public class ConcertController {
     }
 
     /* @GetMapping
-        /api/concert/findall            : find all tours
+        /api/concert/findall            : find all tourList
         /api/tour/findid/{id}           : find one tour by id
-        /api/tour/findtitle/{title}     : find tours by %title% ignore case
+        /api/tour/findtitle/{title}     : find tourList by %title% ignore case
 
         @PostMapping
         /api/concert                    : add one concert

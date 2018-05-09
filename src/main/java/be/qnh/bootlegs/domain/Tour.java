@@ -81,7 +81,7 @@ public class Tour extends AbstractEntity implements Serializable {
     }
 
     public List<Concert> getConcertList() {
-        Collections.sort(concertList, Comparator.comparing(Concert::getDate));
+        concertList.sort(Comparator.comparing(Concert::getDate));
         return concertList;
     }
 

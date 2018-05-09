@@ -1,3 +1,5 @@
+import {Concert} from "../concerts/concert.model";
+
 enum AppColors {
     blue,
     yellow
@@ -11,7 +13,7 @@ export class Tour {
     public endyear : number;
     public leg : number;
     public continent : string;
-    public concertList = [];
+    public concertList : Concert[] = [];
     public testColors : AppColors;
 
     constructor(id : number, title: string, startyear: number, endyear: number, leg: number, continent: string, concertList : any[] ) {

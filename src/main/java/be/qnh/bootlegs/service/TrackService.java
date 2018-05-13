@@ -13,7 +13,7 @@ public interface TrackService {
 
     Track findOneById(Long id);
 
-    Track udpdateOneById(Long id, Track concert);
+    Track updateOneById(Long id, Track concert);
 
     Track deleteOneById(Long id);
 

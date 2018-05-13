@@ -49,6 +49,15 @@ public class Track extends AbstractEntity implements Serializable {
         this.locationUrl = locationUrl;
     }
 
+    @Override
+    public String toString() {
+        return "Track{" +
+                "sequenceNr=" + sequenceNr +
+                ", title='" + title + '\'' +
+                ", locationUrl='" + locationUrl + '\'' +
+                '}';
+    }
+
     // equals and hashCode
     @Override
     public boolean equals(Object o) {

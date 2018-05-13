@@ -96,12 +96,16 @@ public class ConcertServiceImpl implements ConcertService {
 
     @Override
     @Transactional
-    public boolean addTrackToConcert(Long concert_id, Track track) {
+    public Track addTrackToConcert(Long concert_id, Track newTrack) {
         Concert aConcert = findOneById(concert_id);
         if (aConcert != null) {
-            return aConcert.getTrackList().add(track);
+            if (aConcert.getTrackList().add(newTrack)) {
+                return newTrack;
+            } else {
+                return null;
+            }
         } else {
-            return false;
+            return null;
         }
     }
 

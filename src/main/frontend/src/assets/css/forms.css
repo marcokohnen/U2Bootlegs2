@@ -1,7 +1,8 @@
 /*Form Layout*/
 .card {
-    margin: 20px;
+    margin: 20px auto;
     box-shadow: gray 10px 10px;
+    width: 50%;
 }
 
 .card-body {

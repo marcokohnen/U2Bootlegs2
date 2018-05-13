@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,8 +32,8 @@ public class Concert extends AbstractEntity implements Serializable {
 
     // One Concert has many Tracks
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "Concert_ID")
-    private List<Track> trackList;
+    @JoinColumn(name = "Concert_ID", nullable = false)
+    private List<Track> trackList = new ArrayList<>();
 
     // constructor
     public Concert() {

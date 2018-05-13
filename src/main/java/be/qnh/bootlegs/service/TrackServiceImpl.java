@@ -34,7 +34,7 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public Track udpdateOneById(Long id, Track track) {
+    public Track updateOneById(Long id, Track track) {
         Optional<Track> foundTrack = trackRepository.findById(id);
         if (foundTrack.isPresent()) {
             Track trackToUpdate = foundTrack.get();

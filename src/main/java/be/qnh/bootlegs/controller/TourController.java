@@ -30,7 +30,7 @@ public class TourController {
 
        @PostMapping
         /api/tour                           : add one tour
-        /api/tour/addconcert/{id}           : add one concert to tour with id
+        /api/tour/addconcerttotour/{tourid} : add one concert to tour with tourid
 
        @PutMapping
         /api/tour/{id}                      : update one tour
@@ -85,10 +85,11 @@ public class TourController {
         }
     }
 
-    @PostMapping("/addconcert/{id}")
-    public ResponseEntity<Boolean> addConcertToTour(@PathVariable Long id, @RequestBody Concert concert) {
-        if (tourService.addConcertToTour(id, concert)) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
+    @PostMapping("/addconcerttotour/{tourId}")
+    public ResponseEntity<Concert> addConcertToTour(@PathVariable Long tourId, @RequestBody Concert concert) {
+        Concert updatedConcert = tourService.addConcertToTour(tourId, concert);
+        if (updatedConcert != null) {
+            return new ResponseEntity<>(updatedConcert, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

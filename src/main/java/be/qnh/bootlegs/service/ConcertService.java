@@ -31,7 +31,7 @@ public interface ConcertService {
 
     Iterable<Concert> findByRecordingQuality(RecordingQuality quality);
 
-    boolean addTrackToConcert(Long concert_id, Track track);
+    Track addTrackToConcert(Long concert_id, Track track);
 
     boolean delTrackFromConcert(Long concert_id, Track track);
 }

@@ -29,8 +29,8 @@ public class ConcertController {
         /api/tour/findtitle/{title}     : find tourList by %title% ignore case
 
         @PostMapping
-        /api/concert                    : add one concert
-        /api/concert/addtrack/{id}      : add one track to concert with id
+        /api/concert                        : add one concert
+        /api/concert/addtrack/{concertid}   : add one track to concert with id
 
         @PutMapping
         /api/concert/{id}               : update one concert
@@ -87,10 +87,11 @@ public class ConcertController {
         }
     }
 
-    @PostMapping("/addtrack/{id}")
-    public ResponseEntity<Boolean> addTrackToConcert(@PathVariable Long id, @RequestBody Track track) {
-        if (concertService.addTrackToConcert(id, track)) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
+    @PostMapping("/addtrack/{concertid}")
+    public ResponseEntity<Track> addTrackToConcert(@PathVariable Long concertid, @RequestBody Track track) {
+        Track newTrack = concertService.addTrackToConcert(concertid, track);
+        if (newTrack != null) {
+            return new ResponseEntity<>(newTrack, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

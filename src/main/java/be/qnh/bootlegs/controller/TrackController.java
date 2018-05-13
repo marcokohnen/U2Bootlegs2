@@ -65,7 +65,7 @@ public class TrackController {
     // PUTMAPPINGS /////////////////////////////////////////////////////////////////////////////////////////////////
     @PutMapping("/{id}")
     public ResponseEntity<Track> updateOne(@PathVariable Long id, @RequestBody Track track) {
-        return createSingleResultResponse(trackService.udpdateOneById(id, track));
+        return createSingleResultResponse(trackService.updateOneById(id, track));
     }
 
     // DELETEMAPPINGS /////////////////////////////////////////////////////////////////////////////////////////////////

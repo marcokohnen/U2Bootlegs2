@@ -128,6 +128,14 @@ export class SearchConcertComponent implements OnInit {
 
     onUpdateClick(concertId: number) {
       console.log("onUpdateClick");
+      // get tour_id from this concertId
+        this.concertService.findTourIdByConcertId(concertId)
+            .subscribe(
+                (tourId : number) => {
+                    console.log("Concert met Id = " + concertId + " heeft tour_id = " + tourId)
+                    this.router.navigate(["addupdateconcert", tourId, concertId] )
+                }
+            )
     }
 
 }

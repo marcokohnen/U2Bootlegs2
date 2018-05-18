@@ -21,6 +21,6 @@ public interface ConcertRepository extends JpaRepository<Concert, Long> {
 
     Iterable<Concert> findByQuality(RecordingQuality quality);
 
-    @Query(value = "SELECT id from concert where id = 'USA'", nativeQuery = true)
+    @Query(value = "SELECT tour_id from concerts where id =?1", nativeQuery = true)
     Long findTourIdByConcertId(Long concertId);
 }

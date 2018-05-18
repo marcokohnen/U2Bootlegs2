@@ -20,6 +20,10 @@ export class TourService {
         return this.http.get("/api/tour/findall");
     }
 
+    findOne(tourId: number) {
+        return  this.http.get("api/tour/findid/" + tourId);
+    }
+
     // voeg een nieuwe tour toe via http-request post naar TourController in de backend
     addOne(tour: Tour) {
         return this.http.post("api/tour/", tour);

@@ -120,4 +120,8 @@ public class ConcertServiceImpl implements ConcertService {
         }
     }
 
+    @Override
+    public Long findTourIdByConcertId(Long concertId) {
+        return concertRepository.findTourIdByConcertId(concertId);
+    }
 }

@@ -1,0 +1,21 @@
+<div class="card-header">Searchresult(s) for Concerts : {{searchParam}} = "{{searchValue}}"
+</div>
+
+<div class="row concert-item"  #resultList *ngFor="let concert of resultList">
+    <div class="col-2">{{concert.date}}</div>
+    <div class="col-3">{{concert.title}}</div>
+    <div class="col-1">{{concert.country}}</div>
+    <div class="col-2">{{concert.city}}</div>
+    <!--<div class="col-3">{{concert.venue}}</div>-->
+    <div class="col-1">{{concert.quality}}</div>
+
+    <a>
+        <span class="fa fa-times col" title="Delete this concert" (click)="onDeleteClick(concert)"></span>
+    </a>
+    <a>
+        <span class="fa fa-pencil col" title="Edit this concer    t" (click)="onUpdateClick(concert.id)"></span>
+    </a>
+    <!--<a>-->
+        <!--<span class="fa fa-arrow-down col" title="Tracklist" (click)="onTrackListClick(activeTour.id,concert.id )" *ngIf="concert.trackList.length > 0"></span>-->
+    <!--</a>-->
+</div>

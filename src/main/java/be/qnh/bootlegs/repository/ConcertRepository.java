@@ -3,6 +3,7 @@ package be.qnh.bootlegs.repository;
 import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.RecordingQuality;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -19,4 +20,7 @@ public interface ConcertRepository extends JpaRepository<Concert, Long> {
     Iterable<Concert> findByCityLikeIgnoreCase(String city);
 
     Iterable<Concert> findByQuality(RecordingQuality quality);
+
+    @Query(value = "SELECT id from concert where id = 'USA'", nativeQuery = true)
+    Long findTourIdByConcertId(Long concertId);
 }

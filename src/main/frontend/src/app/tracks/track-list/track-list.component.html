@@ -1,0 +1,35 @@
+<div class="card-header">tracklist
+    <a >
+        <span class="fa fa-plus" title="Add new track" style="text-align: right" (click)="onAddClick()"></span>
+    </a>
+</div>
+<div class="row tour-item" *ngIf="activeTour != undefined">
+    <div class="col-4">{{activeTour.title | uppercase}}</div>
+    <div class="col-1">leg:{{activeTour.leg}}</div>
+    <div class="col-2">{{activeTour.continent | titlecase}}</div>
+    <div class="col-1">{{activeTour.startyear}}</div>
+    -
+    <div class="col-1">{{activeTour.endyear}}</div>
+</div>
+<div class="row concert-item" *ngIf="tracksByConcert!= undefined">
+    <div class="col-2">{{tracksByConcert.date}}</div>
+    <div class="col-3">{{tracksByConcert.title}}</div>
+    <div class="col-2">{{tracksByConcert.country}}</div>
+    <div class="col-2">{{tracksByConcert.city}}</div>
+    <!--<div class="col-3">{{concert.venue}}</div>-->
+    <div class="col-1">{{tracksByConcert.quality}}</div>
+</div>
+<div class="row track-item" *ngFor="let track of trackList">
+    <div class="col-1">{{track.sequenceNr}}</div>
+    <div class="col-3">{{track.title | titlecase}}</div>
+    <div class="col-6">{{track.locationUrl}}</div>
+    <a>
+        <span class="fa fa-times col" title="Delete this track" (click)="onDeleteClick(track)"></span>
+    </a>
+    <a>
+        <span class="fa fa-pencil col" title="Edit this track" (click)="onUpdateClick(track.id)"></span>
+    </a>
+    <a>
+    <span id="trackplay-icon" class="fa fa-music" title="play this track" (click)="onPlayClick(track.locationUrl)"></span>
+    </a>
+</div>

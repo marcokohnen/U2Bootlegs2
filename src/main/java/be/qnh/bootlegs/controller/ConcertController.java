@@ -24,12 +24,16 @@ public class ConcertController {
     }
 
     /* @GetMapping
-        /api/concert/findall            : find all tourList
-        /api/tour/findid/{id}           : find one tour by id
-        /api/tour/findtitle/{title}     : find tourList by %title% ignore case
+        /api/concert/findall            : find all concerts
+        /api/concert/findid/{id}        : find one concert by id
+        /api/concert/findtitle/{title}  : find concerts by %title% ignore case
+        /api/concert/findcountry/{country}  : find concerts by %country% ignore case
+        /api/concert/findcity/{city}    : find concerts by %city% ignore case
+        /api/concert/findcity/{city}    : find concerts by %city% ignore case
+
 
         @PostMapping
-        /api/concert                        : add one concert
+        /api/concert                    : add one concert
         /api/concert/addtrack/{concertid}   : add one track to concert with id
 
         @PutMapping
@@ -74,6 +78,16 @@ public class ConcertController {
     @GetMapping("/findquality/{recordingQuality}")
     public ResponseEntity<Iterable<Concert>> findByRecordingQuality(@PathVariable RecordingQuality recordingQuality) {
         return createMultipleResultResponse(concertService.findByRecordingQuality(recordingQuality));
+    }
+
+    @GetMapping("/findtour/{concertId}")
+    public ResponseEntity<Long> findTourIdByConcertId(@PathVariable Long concertId) {
+        Long tourId = concertService.findTourIdByConcertId(concertId);
+        if (tourId == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(tourId, HttpStatus.OK);
+        }
     }
 
     // POSTMAPPINGS /////////////////////////////////////////////////////////////////////////////////////////////////

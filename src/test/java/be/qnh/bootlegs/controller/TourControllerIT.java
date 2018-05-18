@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 public class TourControllerIT {
 
-    private static final String BASE_URI = "/api/tour";
+    private static final String BASE_URI = "/api/activeTour";
     private TestRestTemplate testRestTemplate;
     private HttpHeaders httpHeaders;
 

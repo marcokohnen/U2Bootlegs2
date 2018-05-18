@@ -21,23 +21,23 @@ public class TourController {
     }
 
     /* @GetMapping
-        /api/tour/findall                   : find all tourList
-        /api/tour/findid/{id}               : find one tour by id
-        /api/tour/findtitle/{title}         : find tourList by %title% ignore case
-        /api/tour/findfromyear/{startYear}  : find tourList by startYear and later
-        /api/tour/findyear/{startYear}      : find tourList by startYear
-        /api/tour/findcontinent/{continent} : find tourList by continent
+        /api/activeTour/findall                   : find all tourList
+        /api/activeTour/findid/{id}               : find one activeTour by id
+        /api/activeTour/findtitle/{title}         : find tourList by %title% ignore case
+        /api/activeTour/findfromyear/{startYear}  : find tourList by startYear and later
+        /api/activeTour/findyear/{startYear}      : find tourList by startYear
+        /api/activeTour/findcontinent/{continent} : find tourList by continent
 
        @PostMapping
-        /api/tour                           : add one tour
-        /api/tour/addconcerttotour/{tourid} : add one concert to tour with tourid
+        /api/activeTour                           : add one activeTour
+        /api/activeTour/addconcerttotour/{tourid} : add one concert to activeTour with tourid
 
        @PutMapping
-        /api/tour/{id}                      : update one tour
+        /api/activeTour/{id}                      : update one activeTour
 
        @DeleteMapping
-        /api/tour/{id}                      : delete one tour
-        /api/tour/delconcert/{id}           : del one concert from tour with id
+        /api/activeTour/{id}                      : delete one activeTour
+        /api/activeTour/delconcert/{id}           : del one concert from activeTour with id
 
      */
 
@@ -72,6 +72,7 @@ public class TourController {
     public ResponseEntity<Iterable<Tour>> findByContinentEquals(@PathVariable Continent continent) {
         return createMultipleResultResponse(tourService.findByContinentEquals(continent));
     }
+
 
     // POSTTMAPPINGS /////////////////////////////////////////////////////////////////////////////////////////////////
     @PostMapping

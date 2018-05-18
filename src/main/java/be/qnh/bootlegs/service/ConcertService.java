@@ -34,4 +34,6 @@ public interface ConcertService {
     Track addTrackToConcert(Long concert_id, Track track);
 
     boolean delTrackFromConcert(Long concert_id, Track track);
+
+    Long findTourIdByConcertId(Long concertId);
 }

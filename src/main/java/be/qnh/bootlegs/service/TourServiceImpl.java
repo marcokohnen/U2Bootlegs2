@@ -57,7 +57,7 @@ public class TourServiceImpl implements TourService {
         concert2.setDate(LocalDate.of(2004, 10, 30));
         concert2.setCity("Rotterdam");
         concert2.setCountry("Netherlands");
-        concert2.setQuality(RecordingQuality.EXCELENT);
+        concert2.setQuality(RecordingQuality.EXCELLENT);
         Concert concert3 = new Concert();
         concert3.setTitle("ConcertTitle 3");
         concert3.setDate(LocalDate.of(1997, 4, 25));
@@ -75,7 +75,7 @@ public class TourServiceImpl implements TourService {
         concert5.setDate(LocalDate.of(1984, 10, 30));
         concert5.setCity("Rotterdam");
         concert5.setCountry("Netherlands");
-        concert5.setQuality(RecordingQuality.EXCELENT);
+        concert5.setQuality(RecordingQuality.EXCELLENT);
         Concert concert6 = new Concert();
         concert6.setTitle("ConcertTitle 6");
         concert6.setDate(LocalDate.of(1997, 4, 25));
@@ -213,4 +213,5 @@ public class TourServiceImpl implements TourService {
             return false;
         }
     }
+
 }

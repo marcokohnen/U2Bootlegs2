@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "CONCERT")
+@Table(name = "CONCERTS")
 public class Concert extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = -3050653212143377407L;

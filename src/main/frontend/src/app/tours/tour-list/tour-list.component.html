@@ -1,0 +1,28 @@
+<div class="card-header">Tourlist
+    <a>
+        <span class="fa fa-plus" title="Add new tour" style="text-align: right" (click)="onAddClick()"></span>
+    </a>
+</div>
+<div class="row tour-item" *ngFor="let tour of tourList">
+    <!--<div id="{{activeTour.id}}">{{activeTour.id}}</div>-->
+    <div class="col-4">{{tour.title | uppercase}}</div>
+    <div class="col-1">leg:{{tour.leg}}</div>
+    <div class="col-2">{{tour.continent | titlecase}}</div>
+    <div class="col-1">{{tour.startyear}}</div>
+    -
+    <div class="col-1">{{tour.endyear}}</div>
+    <a>
+        <span class="fa fa-plus col" title="Add new concert" (click)="onAddConcertClick(tour.id)"></span>
+    </a>
+    <a>
+        <span class="fa fa-times col" title="Delete this tour" (click)="onDeleteClick(tour)"></span>
+    </a>
+    <a>
+        <span class="fa fa-pencil col" title="Edit this tour" (click)="onUpdateClick(tour.id)"></span>
+    </a>
+    <a>
+        <span class="fa fa-arrow-down col" title="Concertlist" (click)="onConcertListClick(tour.id)"
+              *ngIf="tour.concertList.length > 0"></span>
+    </a>
+</div>
+

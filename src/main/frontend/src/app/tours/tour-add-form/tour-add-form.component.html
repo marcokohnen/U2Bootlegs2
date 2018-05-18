@@ -1,0 +1,56 @@
+<div class="card-header">Edit Tour</div>
+<div class="card" *ngIf="initialTour != undefined">
+<form #touraddForm="ngForm" (ngSubmit)="addOrUpdateTour($event)" class="card-body app-form">
+    <pre>{{touraddForm.value | json}}</pre>
+
+    <div class="form-group">
+        <input id="id" [(ngModel)]="initialTour.id" name="id" #id type="number" class="form-control" hidden>
+    </div>
+    <div class="form-group">
+        <label for="title">Title *</label>
+        <input id="title" [ngModel]="initialTour.title" name="title" #title type="text" class="form-control" minlength="4" maxlength="35" required>
+        <p class="small">max. 35 characters</p>
+    </div>
+
+    <div class="form-group">
+        <label for="leg">Leg *</label>
+        <input id="leg" [(ngModel)]="initialTour.leg" name="leg" #leg type="number" class="form-control" min="1" max="6" pattern="[1-6]{1}" maxlength="1" required>
+        <p class="small">1-6</p>
+    </div>
+
+    <label for="continent">Continent *</label>
+    <div class="form-group">
+        <select id="continent" [ngModel]="initialTour.continent" name="continent" #continent class="form-control" required>
+            <!--<option selected disabled>Continent</option>-->
+            <option>ASIA</option>
+            <option>AUSTRALIA</option>
+            <option>EUROPE</option>
+            <option>NEWZEALAND</option>
+            <option>NORTHAMERICA</option>
+            <option>SOUTHAMERICA</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="startyear">Start Year *</label>
+        <input id="startyear" [(ngModel)]="initialTour.startyear" name="startyear" #startyear type="number" class="form-control" min="1978" max="2030" pattern="\b(1[9][7][8-9]|1[9][8-9][0-9]|2[0-9][0-9][0-9])\b" required>
+        <p class="small">1978 and later</p>
+    </div>
+
+    <div class="form-group">
+        <label for="endyear">End Year</label>
+        <input id="endyear" [(ngModel)]="initialTour.endyear" name="endyear" #endyear type="number" class="form-control" min="1978" max="2030" pattern="\b(1[9][7][8-9]|1[9][8-9][0-9]|2[0-9][0-9][0-9])\b">
+        <p class="small">1978 and later</p>
+    </div>
+    <div>* = required</div>
+    <div class="form-group">
+        <input id="concertlist" [(ngModel)]="initialTour.concertList" name="concertList" #concertlist type="number" class="form-control" hidden>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-success" [disabled]="!touraddForm.form.valid">Save</button>
+    <button type="button" class="btn btn-danger" (click)="onFormCancel()">Cancel
+    </button>
+    <button type="button" class="btn btn-info" (click)="formReset()">Reset
+    </button>
+</form>
+</div>

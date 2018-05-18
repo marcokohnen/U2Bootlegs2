@@ -1,0 +1,61 @@
+<!--<div class="row header app-header" style="text-align: center">-->
+    <!--<div class="col-md-6 col-xs-12">-->
+        <!--<h2>U2 Bootbase App</h2>-->
+    <!--</div>-->
+    <!--<div class="col-md-6 col-xs-12">-->
+        <!--<img class ="applogo img-fluid" alt="U2BootBase Logo" src="../../assets/img/banner_u2.gif"/>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<nav class="navbar top navbar-dark bg-dark navbar-expand-lg">-->
+    <!--<a class="navbar-brand img-fluid" [routerLink]="['home']">-->
+        <!--&lt;!&ndash;<img src="../../assets/img/banner_u2.gif" width="200" height="30" class="d-inline-block align-top" alt="U2BootBase Logo">&ndash;&gt;-->
+        <!--U2BootBase App-->
+    <!--</a>-->
+    <!--<div>-->
+        <!--<ul class="nav navbar-nav navbar-right">-->
+            <!--<li class="nav-item" [routerLinkActive]="['active']">-->
+                <!--<a class="nav-link" [routerLink]="['home']">Home</a>-->
+            <!--</li>-->
+            <!--<li class="nav-item" [routerLinkActive]="['active']">-->
+                <!--<a class="nav-link" [routerLink]="['listtour']">Tourlist</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+        <!--<form  #searchForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="onSearchSubmit(searchValue.value)">-->
+            <!--<div class="form-group">-->
+                <!--<pre>{{searchForm.form.value | json}}</pre>-->
+            <!--<input id="search-field" class="form-control mr-sm-2" type="search" placeholder="Search concerts ....." aria-label="Search" minlength="2" maxlength="20" name="searchValue" #searchValue>-->
+            <!--</div>-->
+            <!--BY-->
+            <!--<select class="mr-sm-4" name="concert-params" id="concert-params">-->
+                <!--<option value="title" selected>title</option>-->
+                <!--<option value="country">country</option>-->
+                <!--<option value="city">city</option>-->
+            <!--</select>-->
+            <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit" *ngIf="searchValue.value.length > 2" >Search</button>-->
+        <!--</form>-->
+    <!--</div>-->
+<!--</nav>-->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" [routerLink]="['home']" >U2BootBase App</a>
+    <div class="collapse navbar-collapse" id="navbarToggler">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item " [routerLinkActive]="['active']">
+                <a class="nav-link" [routerLink]="['home']">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item" [routerLinkActive]="['active']">
+                <a class="nav-link" [routerLink]="['listtour']">Tourlist</a>
+            </li>
+        </ul>
+        <form #searchForm="ngForm" class="form-inline my-2 my-lg-0" (submit)="onSearchSubmit(searchValue.value, selectParam.value)">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" [disabled]="searchValue.length < 2">Search concert</button>
+            <input class="form-control ml-sm-2" type="search" placeholder="search ..." #searchValue minlength="2" maxlength="20">
+            <select class="ml-sm-2" name="selectParam" id="selectParam" #selectParam>
+                <option value="city" selected>city</option>
+                <option value="country">country</option>
+                <option value="quality">quality</option>
+                <option value="title">title</option>
+            </select>
+        </form>
+    </div>
+</nav>

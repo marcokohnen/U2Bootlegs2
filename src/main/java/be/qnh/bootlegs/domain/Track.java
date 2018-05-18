@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "TRACK")
+@Table(name = "TRACKS")
 public class Track extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = -5290672604543491558L;

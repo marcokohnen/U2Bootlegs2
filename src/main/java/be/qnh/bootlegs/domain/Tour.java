@@ -1,15 +1,18 @@
 package be.qnh.bootlegs.domain;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.sun.istack.internal.Nullable;
-
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Table(name = "TOUR")
+@Table(name = "TOURS")
 public class Tour extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 5549479803124945766L;

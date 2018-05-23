@@ -29,6 +29,4 @@ public interface TourService {
 
     Concert addConcertToTour(Long tour_Id, Concert concert);
 
-    boolean delConcertFromTour(Long tour_Id, Concert concert);
-
 }

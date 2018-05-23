@@ -37,7 +37,6 @@ public class TourController {
 
        @DeleteMapping
         /api/activeTour/{id}                      : delete one activeTour
-        /api/activeTour/delconcert/{id}           : del one concert from activeTour with id
 
      */
 
@@ -79,7 +78,7 @@ public class TourController {
     public ResponseEntity<Tour> addOne(@RequestBody Tour tour) {
         System.out.println("Entered TourController.addOne()");
         Tour newTour = tourService.addOne(tour);
-           if (newTour == null) {
+        if (newTour == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(newTour, HttpStatus.CREATED);
@@ -108,14 +107,6 @@ public class TourController {
         return createSingleResultResponse(tourService.deleteOneById(id));
     }
 
-    @DeleteMapping("/delconcert/{id}")
-    public ResponseEntity<Boolean> delConcertFromTour(@PathVariable Long id, @RequestBody Concert concert) {
-        if (tourService.delConcertFromTour(id, concert)) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
     // END MAPPINGS ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     // helper methods /////////////////////////////////////////////////////////////////////////////////////////////////

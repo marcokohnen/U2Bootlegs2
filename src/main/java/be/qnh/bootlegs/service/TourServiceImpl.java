@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class TourServiceImpl implements TourService {
 
     private final TourRepository tourRepository;
@@ -188,29 +189,17 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    @Transactional
     public Concert addConcertToTour(Long tour_Id, Concert newConcert) {
         Tour aTour = findOneById(tour_Id);
         if (aTour != null) {
-            if (aTour.getConcertList().add(newConcert)){
+            if (aTour.getConcertList().add(newConcert)) {
                 return newConcert;
             } else {
                 return null;
             }
-            //addOne(aTour); is hier niet nodig omdat aTour gemanaged is door hibernate als gevolg van de findOneById method en door list.add(concert) al gesaved wordt. Nog eens saven zou een fout genereren : entity already persisted. Omdat aTour gemanaged is (bevind zich in de PersistenceContext) worden wijzigingen aan dit object weggeschreven naar de databank zodra de transactie is voltooid = commit (@Transactional) !!
+            //addOne(aTour); is hier niet nodig omdat aTour gemanaged is door hibernate als gevolg van de findOneById method en door list.add(concert) al gesaved wordt. Nog eens saven zou een fout genereren :"entity already persisted". Omdat aTour gemanaged is (bevind zich in de PersistenceContext) worden wijzigingen aan dit object weggeschreven naar de databank zodra de transactie is voltooid = commit (@Transactional) !!
         } else {
             return null;
-        }
-    }
-
-    @Override
-    @Transactional
-    public boolean delConcertFromTour(Long tour_Id, Concert concert) {
-        Tour aTour = findOneById(tour_Id);
-        if (aTour != null) {
-            return aTour.getConcertList().remove(concert);
-        } else {
-            return false;
         }
     }
 

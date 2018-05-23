@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 public class TourControllerIT {
 
-    private static final String BASE_URI = "/api/activeTour";
+    private static final String BASE_URI = "/api/tour";
     private TestRestTemplate testRestTemplate;
     private HttpHeaders httpHeaders;
 
@@ -35,6 +36,7 @@ public class TourControllerIT {
     public void crudTests() {
         Tour testTour1 = new Tour();
         testTour1.setTitle("TitleTestTour1");
+        testTour1.setLeg(2);
         testTour1.setStartyear(1979);
         testTour1.setContinent(Continent.EUROPE);
         // test create
@@ -82,7 +84,7 @@ public class TourControllerIT {
 
         // findByStartyearGreaterThanEqual
         ResponseEntity<Iterable> iterableResponseEntityStartYearGreaterThanEqual = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findfromyear/" + 1981), Iterable.class);
-        assertResponse(iterableResponseEntityStartYearGreaterThanEqual, HttpStatus.OK, 2);
+        assertResponse(iterableResponseEntityStartYearGreaterThanEqual, HttpStatus.OK, 1);
 
         // test findByStartyearEquals
         ResponseEntity<Iterable> iterableResponseEntityfindByStartyearEquals = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findyear/1987"), Iterable.class);

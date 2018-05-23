@@ -30,6 +30,7 @@ public class ConcertController {
         /api/concert/findcountry/{country}  : find concerts by %country% ignore case
         /api/concert/findcity/{city}    : find concerts by %city% ignore case
         /api/concert/findcity/{city}    : find concerts by %city% ignore case
+        /api/concert/findtour/{concertId} : find tourId by concertId
 
 
         @PostMapping

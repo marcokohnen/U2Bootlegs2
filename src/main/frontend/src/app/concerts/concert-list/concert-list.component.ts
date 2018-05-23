@@ -22,10 +22,10 @@ export class ConcertListComponent implements OnInit {
   }
 
   ngOnInit() {
-      // this.activatedRoute.params
-      //     .subscribe(params => {console.log("activatedRoute-params = " + JSON.stringify(params));
-      //         this.concertsByTourId = params['tourId'];
-      //     });
+      this.activatedRoute.params
+          .subscribe(params => {console.log("activatedRoute-params = " + JSON.stringify(params));
+              this.concertsByTourId = params['tourId'];
+          });
       this.concertsByTourId = +this.activatedRoute.snapshot.paramMap.get("tourId");
       //this.concertsByTour = this.appData.tourObjectStorage;
       this.tourService.findOne(this.concertsByTourId)

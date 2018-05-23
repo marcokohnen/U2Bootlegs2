@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ConcertServiceImpl implements ConcertService {
 
     private final ConcertRepository concertRepository;
@@ -95,7 +96,11 @@ public class ConcertServiceImpl implements ConcertService {
     }
 
     @Override
-    @Transactional
+    public Long findTourIdByConcertId(Long concertId) {
+        return concertRepository.findTourIdByConcertId(concertId);
+    }
+
+    @Override
     public Track addTrackToConcert(Long concert_id, Track newTrack) {
         Concert aConcert = findOneById(concert_id);
         if (aConcert != null) {
@@ -110,7 +115,6 @@ public class ConcertServiceImpl implements ConcertService {
     }
 
     @Override
-    @Transactional
     public boolean delTrackFromConcert(Long concert_id, Track track) {
         Concert aConcert = findOneById(concert_id);
         if (aConcert != null) {
@@ -118,10 +122,5 @@ public class ConcertServiceImpl implements ConcertService {
         } else {
             return false;
         }
-    }
-
-    @Override
-    public Long findTourIdByConcertId(Long concertId) {
-        return concertRepository.findTourIdByConcertId(concertId);
     }
 }

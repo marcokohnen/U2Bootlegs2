@@ -4,11 +4,13 @@ import be.qnh.bootlegs.domain.Track;
 import be.qnh.bootlegs.repository.TrackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class TrackServiceImpl implements TrackService {
 
     private final TrackRepository trackRepository;

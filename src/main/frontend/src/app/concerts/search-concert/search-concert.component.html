@@ -1,7 +1,22 @@
-<div class="card-header">Searchresult(s) for Concerts : {{searchParam}} = "{{searchValue}}"
+<div class="card-header">Searchresult(s) for Concerts
+    <span *ngIf="resultList != undefined">
+        ({{resultList.length}})
+    </span>
+    : {{searchParam}} = "{{searchValue}}"
+    <form #searchForm="ngForm" class="form-inline my-2 my-lg-0">
+        <label for="selectQuality">Quality</label>
+        <select class="ml-sm-2" name="selectQuality" id="selectQuality" #selectQuality
+                (change)="onChangeQuality(selectQuality.value)" [disabled]="resultList == undefined">
+            <option value="ALL" selected>ALL</option>
+            <option value="EXCELLENT">EXCELLENT</option>
+            <option value="FAIR">FAIR</option>
+            <option value="GOOD">GOOD</option>
+            <option value="POOR">POOR</option>
+        </select>
+    </form>
 </div>
 
-<div class="row concert-item"  #resultList *ngFor="let concert of resultList">
+<div class="row concert-item" #resultList *ngFor="let concert of resultList">
     <div class="col-2">{{concert.date}}</div>
     <div class="col-3">{{concert.title}}</div>
     <div class="col-1">{{concert.country}}</div>
@@ -15,7 +30,8 @@
     <a>
         <span class="fa fa-pencil col" title="Edit this concert" (click)="onUpdateClick(concert.id)"></span>
     </a>
-    <!--<a>-->
-        <!--<span class="fa fa-arrow-down col" title="Tracklist" (click)="onTrackListClick(activeTour.id,concert.id )" *ngIf="concert.trackList.length > 0"></span>-->
-    <!--</a>-->
+    <a>
+        <span class="fa fa-arrow-down col" title="Tracklist" (click)="onTrackListClick(concert.id )"
+              *ngIf="concert.trackList.length > 0"></span>
+    </a>
 </div>

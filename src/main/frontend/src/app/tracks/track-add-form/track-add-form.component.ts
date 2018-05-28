@@ -19,6 +19,7 @@ export class TrackAddFormComponent implements OnInit {
 
     @ViewChild("trackaddForm") trackForm: NgForm;
 
+
     constructor(private trackService: TrackService, private router: Router, private appData: AppData, private location: Location, private activatedRoute: ActivatedRoute) {
     }
 
@@ -75,6 +76,11 @@ export class TrackAddFormComponent implements OnInit {
                 }
             );
     };
+
+    onFileSelectClick(event) {
+        console.log("onFileSelectClick");
+        alert("File Selected = " + event.target.getAll)
+    }
 
     formReset() {
         this.trackForm.reset();

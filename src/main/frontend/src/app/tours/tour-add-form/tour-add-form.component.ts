@@ -27,7 +27,7 @@ export class TourAddFormComponent implements OnInit {
         //this.initialTour = this.data.tourObjectStorage;
         this.activeTourId = +this.activatedRoute.snapshot.paramMap.get("tourId");
         if (this.activeTourId == 0) { // new tour
-            this.initialTour = new Tour(null, null, null, null, null, null, []);
+            this.initialTour = new Tour(null, null, null, null, null, null, null);
         } else {
             this.tourService.findOne(this.activeTourId)
                 .subscribe(

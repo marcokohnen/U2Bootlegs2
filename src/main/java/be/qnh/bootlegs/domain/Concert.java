@@ -6,15 +6,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "CONCERTS")
 public class Concert extends AbstractEntity implements Serializable {
 
-    private static final long serialVersionUID = -3050653212143377407L;
+    private static final long serialVersionUID = -4389413702933759822L;
 
     // object fields
     @NotNull
@@ -90,6 +88,9 @@ public class Concert extends AbstractEntity implements Serializable {
     }
 
     public List<Track> getTrackList() {
+        if (trackList != null && !trackList.isEmpty()) {
+            trackList.sort(Comparator.comparingInt(Track::getSequenceNr));
+        }
         return trackList;
     }
 

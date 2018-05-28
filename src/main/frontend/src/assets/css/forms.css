@@ -27,3 +27,27 @@
 .form-control.ng-invalid.ng-dirty {
     border-left: 10px solid red;
 }
+
+/*#select-track-file-input {*/
+    /*!*display: none;*!*/
+/*}*/
+
+/*#select-track-file-button {*/
+    /*background: lightgray;*/
+    /*padding: 5px;*/
+    /*position: absolute;*/
+    /*border: 1px solid gray;*/
+/*}*/
+
+input[type=file] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #EEE;
+    background: linear-gradient(to top, #FFF, #DDD);
+    border: thin solid rgba(0,0,0, .5);
+    border-radius: .25em;
+    box-shadow: inset .25em .25em .25em rgba(255,255,255, .5), inset -.1em -.1em .1em rgba(0,0,0, 0.1);
+    cursor: text;
+    padding: .25em;
+}

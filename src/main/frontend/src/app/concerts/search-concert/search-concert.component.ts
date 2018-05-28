@@ -10,8 +10,8 @@ import {ConcertService} from "../concert.service";
 })
 export class SearchConcertComponent implements OnInit {
 
-    resultList: Concert[] = null;
-    copyResultList: Concert[] = null;
+    resultList: Concert[] = null; // array containing found concerts
+    copyResultList: Concert[] = null; // back-up of original searcg result
     searchParam: string;
     searchValue: string;
 
@@ -54,12 +54,6 @@ export class SearchConcertComponent implements OnInit {
             case "city".toLowerCase() : {
                 //console.log("Switch searchParam : case = city");
                 this.findConcertsByCity(lookUpValue);
-                break;
-            }
-
-            case "quality".toLowerCase() : {
-                //console.log("Switch searchParam : case = quality");
-                this.findConcertsByQuality(lookUpValue);
                 break;
             }
 
@@ -111,20 +105,6 @@ export class SearchConcertComponent implements OnInit {
             )
     }
 
-    findConcertsByQuality(lookUpValue: string) {
-        this.concertService.findConcertsByQuality(lookUpValue.toUpperCase())
-            .subscribe(
-                (concerts: Concert[]) => {
-                    this.resultList = concerts;
-                    this.copyResultList = concerts
-                },
-                (error) => {
-                    console.log(error);
-                    this.resultList = null;
-                }
-            )
-    }
-
     onDeleteClick(concert: Concert) {
         console.log("onDeleteClick");
         if (confirm("Weet u zeker dat u dit concert wilt verwijderen ?\n\n"
@@ -155,7 +135,8 @@ export class SearchConcertComponent implements OnInit {
                 (tourId: number) => {
                     //console.log("Concert met Id = " + concertId + " heeft tour_id = " + tourId);
                     this.router.navigate(["addupdateconcert", tourId, concertId])
-                }
+                },
+                (error => console.log(error))
             )
     }
 
@@ -166,7 +147,8 @@ export class SearchConcertComponent implements OnInit {
                 (tourId: number) => {
                     //console.log("Concert met Id = " + concertId + " heeft tour_id = " + tourId);
                     this.router.navigate(["listtracksbyconcert", tourId, concertId])
-                }
+                },
+                (error => console.log(error))
             )
     }
 

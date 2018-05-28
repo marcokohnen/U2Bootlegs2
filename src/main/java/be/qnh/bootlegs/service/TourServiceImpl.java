@@ -2,6 +2,8 @@ package be.qnh.bootlegs.service;
 
 import be.qnh.bootlegs.domain.*;
 import be.qnh.bootlegs.repository.TourRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,8 @@ import java.util.Optional;
 @Service
 @Transactional
 public class TourServiceImpl implements TourService {
+
+    private final Logger logger = LoggerFactory.getLogger(TourServiceImpl.class);
 
     private final TourRepository tourRepository;
 
@@ -124,7 +128,9 @@ public class TourServiceImpl implements TourService {
     // crud methods
     @Override
     public Tour addOne(Tour tour) {
-        return tour == null ? null : tourRepository.save(tour);
+        Tour newTour = tourRepository.save(tour);
+        logger.info("New Tour added : [{}]", newTour);
+        return newTour;
     }
 
     @Override

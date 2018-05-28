@@ -1,5 +1,7 @@
 package be.qnh.bootlegs.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -84,7 +86,9 @@ public class Tour extends AbstractEntity implements Serializable {
     }
 
     public List<Concert> getConcertList() {
-        concertList.sort(Comparator.comparing(Concert::getDate));
+        if (concertList != null && !concertList.isEmpty()) {
+            concertList.sort(Comparator.comparing(Concert::getDate));
+        }
         return concertList;
     }
 
@@ -96,12 +100,14 @@ public class Tour extends AbstractEntity implements Serializable {
     @Override
     public String toString() {
         return "Tour{" +
-                "title='" + title + '\'' +
+                "id=" + super.getId() +
+                ", title='" + title + '\'' +
                 ", startyear=" + startyear +
                 ", endYear=" + endyear +
                 ", leg=" + leg +
                 ", continent=" + continent +
-                '}';
+                ", concertList=" + concertList +
+                "}";
     }
 
     // equals and hashCode

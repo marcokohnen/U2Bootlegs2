@@ -8,7 +8,7 @@
         </div>
         <div class="form-group">
             <label for="sequencenr">SequenceNr *</label>
-            <input id="sequencenr" [(ngModel)]="initialTrack.sequenceNr" name="sequenceNr" #sequenceNr type="number" class="form-control" min="1" max="35" required>
+            <input id="sequencenr" [(ngModel)]="initialTrack.sequenceNr" name="sequenceNr" #sequenceNr type="number" class="form-control" min="1" max="30" pattern="[1-30]{2}" required>
             <p class="small">1 - 35</p>
         </div>
 
@@ -19,14 +19,14 @@
         </div>
 
         <div class="form-group">
-            <label for="locationurl">Location *</label>
-            <input id="locationurl" [(ngModel)]="initialTrack.locationUrl" name="locationUrl" #locationUrl type="text" class="form-control" minlength="20" max="60" required>
+            <label for="select-track-file-input" id="select-track-file-button">File *</label>
+            <input id="select-track-file-input" [(ngModel)]="initialTrack.locationUrl" name="locationUrl" #locationUrl type="text" accept="audio/*" class="form-control file" minlength="20" maxlength="60" required (change)="onFileSelectClick($event)">
             <p class="small">20 - 60 characters</p>
         </div>
 
         <br>
         <button type="submit" class="btn btn-success" [disabled]="!trackaddForm.form.valid">Save</button>
-        <button type="button" class="btn btn-danger" (click)="onFormCancel()">Cancel
+        <button type="button" class="btn btn-danger" (click)="onFormCancel($event)">Cancel
         </button>
         <button type="button" class="btn btn-info" (click)="formReset()">Reset
         </button>

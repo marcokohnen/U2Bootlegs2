@@ -31,7 +31,7 @@ export class ConcertAddFormComponent implements OnInit {
         console.log(JSON.stringify(this.activatedRoute.params));
 
         if (this.activeConcertId == 0) { // new concert
-            this.initialConcert = new Concert(null, null, null, null, null, null, null, []);
+            this.initialConcert = new Concert(null, null, null, null, null, null, null, null);
         } else { // find existing concert
             this.concertService.findOne(this.activeConcertId)
                 .subscribe(

@@ -46,10 +46,6 @@ export class ConcertService {
         return this.http.get("api/concert/findcity/" + searchTerm);
     }
 
-    findConcertsByQuality(searchTerm: string) {
-        return this.http.get("api/concert/findquality/" + searchTerm);
-    }
-
     findTourIdByConcertId(concertId : number) {
         return this.http.get("api/concert/findtour/" + concertId);
     }

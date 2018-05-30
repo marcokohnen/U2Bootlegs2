@@ -52,6 +52,7 @@ public class Track extends AbstractEntity implements Serializable {
     @Override
     public String toString() {
         return "Track{" +
+                "id=" + super.getId() +
                 "sequenceNr=" + sequenceNr +
                 ", title='" + title + '\'' +
                 ", locationUrl='" + locationUrl + '\'' +

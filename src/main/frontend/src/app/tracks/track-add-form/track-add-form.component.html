@@ -20,7 +20,7 @@
 
         <div class="form-group">
             <label for="select-track-file-input" id="select-track-file-button">File *</label>
-            <input id="select-track-file-input" [(ngModel)]="initialTrack.locationUrl" name="locationUrl" #locationUrl type="text" accept="audio/*" class="form-control file" minlength="20" maxlength="60" required (change)="onFileSelectClick($event)">
+            <input id="select-track-file-input" [(ngModel)]="initialTrack.locationUrl" name="locationUrl" #locationUrl type="file" accept="audio/*" class="form-control file" minlength="20" maxlength="60" required (change)="onFileSelectClick($event)">
             <p class="small">20 - 60 characters</p>
         </div>
 

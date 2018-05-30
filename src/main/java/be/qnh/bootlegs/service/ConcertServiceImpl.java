@@ -113,14 +113,4 @@ public class ConcertServiceImpl implements ConcertService {
             return null;
         }
     }
-
-    @Override
-    public boolean delTrackFromConcert(Long concert_id, Track track) {
-        Concert aConcert = findOneById(concert_id);
-        if (aConcert != null) {
-            return aConcert.getTrackList().remove(track);
-        } else {
-            return false;
-        }
-    }
 }

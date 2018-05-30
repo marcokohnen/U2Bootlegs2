@@ -6,7 +6,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "CONCERTS")
@@ -102,18 +105,20 @@ public class Concert extends AbstractEntity implements Serializable {
     @Override
     public String toString() {
         return "Concert{" +
-                "date=" + date +
+                "id=" + super.getId() +
+                ", date=" + date +
                 ", title='" + title + '\'' +
                 ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", venue='" + venue + '\'' +
+                ", trackList=" + trackList +
                 '}';
     }
 
     // equals and hashCode
     @Override
     public boolean equals(Object o) {
-        System.out.println("Entered Concert Equals");
+        //System.out.println("Entered Concert Equals");
         if (this == o) return true;
         if (!(o instanceof Concert)) return false;
         Concert concert = (Concert) o;

@@ -85,7 +85,6 @@ export class ConcertAddFormComponent implements OnInit {
 
     formReset() {
         this.concertForm.reset();
-        this.initialConcert.trackList = [];
     }
 
 }

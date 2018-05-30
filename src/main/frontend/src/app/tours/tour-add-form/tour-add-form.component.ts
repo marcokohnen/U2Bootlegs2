@@ -77,8 +77,6 @@ export class TourAddFormComponent implements OnInit {
 
     formReset() {
         this.tourForm.reset();
-        this.initialTour.title = "";
-        this.initialTour.concertList = [];
     }
 
     onFormCancel() {

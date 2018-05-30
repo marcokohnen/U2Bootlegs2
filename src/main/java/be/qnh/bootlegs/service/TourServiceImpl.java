@@ -129,13 +129,15 @@ public class TourServiceImpl implements TourService {
     @Override
     public Tour addOne(Tour tour) {
         Tour newTour = tourRepository.save(tour);
-        logger.info("New Tour added : [{}]", newTour);
+        logger.info("New Tour added = [{}]", newTour);
         return newTour;
     }
 
     @Override
     public Iterable<Tour> findAll() {
-        return tourRepository.findAll();
+        List<Tour> result = tourRepository.findAll();
+        //logger.info("result findAll = " + result);
+        return result;
     }
 
     @Override
@@ -175,6 +177,7 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public Iterable<Tour> findByTitleLikeIgnoreCase(String keyWord) {
+        //logger.info("keyword = " + keyWord);
         keyWord = "%" + keyWord + "%";
         return tourRepository.findByTitleLikeIgnoreCase(keyWord);
     }
@@ -199,6 +202,7 @@ public class TourServiceImpl implements TourService {
         Tour aTour = findOneById(tour_Id);
         if (aTour != null) {
             if (aTour.getConcertList().add(newConcert)) {
+                logger.info("New Concert = " + newConcert + " added to Tour =" + aTour);
                 return newConcert;
             } else {
                 return null;

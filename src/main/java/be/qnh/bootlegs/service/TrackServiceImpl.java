@@ -2,6 +2,8 @@ package be.qnh.bootlegs.service;
 
 import be.qnh.bootlegs.domain.Track;
 import be.qnh.bootlegs.repository.TrackRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +15,8 @@ import java.util.Optional;
 @Transactional
 public class TrackServiceImpl implements TrackService {
 
+    private final Logger logger = LoggerFactory.getLogger(TourServiceImpl.class);
+
     private final TrackRepository trackRepository;
 
     @Autowired
@@ -22,7 +26,9 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public Track addOne(Track track) {
-        return track == null ? null : trackRepository.save(track);
+        Track newTrack = trackRepository.save(track);
+        logger.info("addedTrack = [{}]", newTrack);
+        return newTrack;
     }
 
     @Override
@@ -32,7 +38,14 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public Track findOneById(Long id) {
-        return trackRepository.findById(id).orElse(null);
+        Optional<Track> foundTrack = trackRepository.findById(id);
+        if (foundTrack.isPresent()) {
+            Track result = foundTrack.get();
+            logger.info("foundTrack = [{}]", foundTrack.get());
+            return result;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -43,7 +56,9 @@ public class TrackServiceImpl implements TrackService {
             trackToUpdate.setSequenceNr(track.getSequenceNr());
             trackToUpdate.setTitle(track.getTitle());
             trackToUpdate.setLocationUrl(track.getLocationUrl());
-            return trackRepository.save(trackToUpdate);
+            Track result = trackRepository.save(track);
+            logger.info("updatedTrack = [{}]", result);
+            return result;
         }
         return null;
     }
@@ -53,6 +68,7 @@ public class TrackServiceImpl implements TrackService {
         Optional<Track> foundTrack = trackRepository.findById(id);
         if (foundTrack.isPresent()) {
             trackRepository.deleteById(id);
+            logger.info("deletedTrack = [{}]", foundTrack.get());
             return foundTrack.get();
         } else {
             return null;

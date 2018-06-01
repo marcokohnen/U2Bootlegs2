@@ -1,8 +1,6 @@
 package be.qnh.bootlegs.service;
 
-import be.qnh.bootlegs.domain.Concert;
-import be.qnh.bootlegs.domain.Continent;
-import be.qnh.bootlegs.domain.Tour;
+import be.qnh.bootlegs.domain.*;
 import be.qnh.bootlegs.repository.TourRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 

@@ -104,27 +104,27 @@ public class ConcertControllerIT {
         assertResponse(iterableResponseEntityFindAll, HttpStatus.OK, 1);
 
         // test findByTitleLikeIgnoreCase
-        ResponseEntity<Iterable> iterableResponseEntityfindByTitleLikeIgnoreCase = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findtitle/today"), Iterable.class);
+        ResponseEntity<Iterable> iterableResponseEntityfindByTitleLikeIgnoreCase = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findtitle/title 1"), Iterable.class);
         assertResponse(iterableResponseEntityfindByTitleLikeIgnoreCase, HttpStatus.OK, 1);
 
 
         // test findByDateEquals
-        ResponseEntity<Iterable> iterableResponseEntityfindByDateEquals = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/finddate/18-05-2018"), Iterable.class);
+        ResponseEntity<Iterable> iterableResponseEntityfindByDateEquals = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/finddate/30-10-2004"), Iterable.class);
         assertResponse(iterableResponseEntityfindByDateEquals, HttpStatus.OK, 1);
 
 
         // test findByCountryLikeIgnoreCase
-        ResponseEntity<Iterable> iterableResponseEntityfindByCountryLikeIgnoreCase = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findcountry/belgium"), Iterable.class);
+        ResponseEntity<Iterable> iterableResponseEntityfindByCountryLikeIgnoreCase = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findcountry/netherl"), Iterable.class);
         assertResponse(iterableResponseEntityfindByCountryLikeIgnoreCase, HttpStatus.OK, 1);
 
 
         // test findByCityLikeIgnoreCase
-        ResponseEntity<Iterable> iterableResponseEntityfindByCityLikeIgnoreCase = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findcity/hass"), Iterable.class);
-        assertResponse(iterableResponseEntityfindByCityLikeIgnoreCase, HttpStatus.OK, 1);
+        ResponseEntity<Iterable> iterableResponseEntityfindByCityLikeIgnoreCase = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findcity/vegas"), Iterable.class);
+        assertResponse(iterableResponseEntityfindByCityLikeIgnoreCase, HttpStatus.OK, 2);
 
         // test findByRecordingQuality
-        ResponseEntity<Iterable> iterableResponseEntityfindByRecordingQuality = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findquality/GOOD"), Iterable.class);
-        assertResponse(iterableResponseEntityfindByRecordingQuality, HttpStatus.OK, 1);
+        ResponseEntity<Iterable> iterableResponseEntityfindByRecordingQuality = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findquality/FAIR"), Iterable.class);
+        assertResponse(iterableResponseEntityfindByRecordingQuality, HttpStatus.OK, 2);
     }
 
     // helper methods

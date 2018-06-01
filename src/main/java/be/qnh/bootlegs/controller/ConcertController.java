@@ -42,7 +42,6 @@ public class ConcertController {
 
        @DeleteMapping
         /api/concert/{id}               : delete one concert
-        /api/concert/deltrack/{id}      : delete one track from concert with id
      */
 
     // GETMAPPINGS /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,15 +121,6 @@ public class ConcertController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Concert> deleteOne(@PathVariable Long id) {
         return createSingleResultResponse(concertService.deleteOneById(id));
-    }
-
-    @DeleteMapping("/deltrack/{id}")
-    public ResponseEntity<Boolean> delTrackFromConcert(@PathVariable Long id, @RequestBody Track track) {
-        if (concertService.delTrackFromConcert(id, track)) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
     }
 
     // helper methods

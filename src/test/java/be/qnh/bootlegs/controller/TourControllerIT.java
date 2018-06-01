@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,6 +22,10 @@ public class TourControllerIT {
     private TestRestTemplate testRestTemplate;
     private HttpHeaders httpHeaders;
 
+    // test objects
+    private Tour testTour1, testTour2, testTour3;
+    private Long tourId1, tourId2, tourId3;
+
     @LocalServerPort
     private int port;
 
@@ -30,22 +33,25 @@ public class TourControllerIT {
     public void init() {
         testRestTemplate = new TestRestTemplate();
         httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
     }
 
     @Test
     public void crudTests() {
-        Tour testTour1 = new Tour();
-        testTour1.setTitle("TitleTestTour1");
-        testTour1.setLeg(2);
-        testTour1.setStartyear(1979);
+        // creating test object
+        testTour1 = new Tour();
+        testTour1.setTitle("New Boy");
+        testTour1.setStartyear(1983);
+        testTour1.setEndyear(1984);
+        testTour1.setLeg(3);
         testTour1.setContinent(Continent.EUROPE);
+
         // test create
         HttpEntity<Tour> httpCreateEntity = new HttpEntity<>(testTour1, httpHeaders);
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
         ResponseEntity<Tour> responseEntityCreate = testRestTemplate.postForEntity(createURLWithPort(BASE_URI + "/"), httpCreateEntity, Tour.class);
         assertThat(responseEntityCreate.getBody()).isNotNull();
         assertThat(responseEntityCreate.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(responseEntityCreate.getBody().getTitle()).isEqualToIgnoringCase("TitleTestTour1");
+        assertThat(responseEntityCreate.getBody().getTitle()).isEqualToIgnoringCase("new boy");
         Long newId = responseEntityCreate.getBody().getId();
 
         // test read
@@ -69,10 +75,52 @@ public class TourControllerIT {
         assertThat(responseEntityDeleteOneById.getBody()).isNotNull();
         assertThat(responseEntityDeleteOneById.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntityDeleteOneById.getBody().getId()).isEqualTo(newId);
+
+        // delete test object
+        testTour1 = null;
     }
 
     @Test
     public void additionalFindTests() {
+        // creating test objects
+        testTour1 = new Tour();
+        testTour1.setTitle("New Boy");
+        testTour1.setStartyear(1983);
+        testTour1.setEndyear(1984);
+        testTour1.setLeg(3);
+        testTour1.setContinent(Continent.EUROPE);
+
+        testTour2 = new Tour();
+        testTour2.setTitle("October");
+        testTour2.setStartyear(1985);
+        testTour2.setEndyear(1985);
+        testTour2.setLeg(2);
+        testTour2.setContinent(Continent.NORTHAMERICA);
+
+        testTour3 = new Tour();
+        testTour3.setTitle("Joshua Tree");
+        testTour3.setStartyear(1987);
+        testTour3.setEndyear(1988);
+        testTour3.setLeg(1);
+        testTour3.setContinent(Continent.AUSTRALIA);
+
+        HttpEntity<Tour> httpCreateEntity = new HttpEntity<>(testTour1, httpHeaders);
+        ResponseEntity<Tour> responseEntityCreate = testRestTemplate.postForEntity(createURLWithPort(BASE_URI + "/"), httpCreateEntity, Tour.class);
+        if (responseEntityCreate.getBody() != null) {
+            tourId1 = responseEntityCreate.getBody().getId();
+        }
+
+        httpCreateEntity = new HttpEntity<>(testTour2, httpHeaders);
+        responseEntityCreate = testRestTemplate.postForEntity(createURLWithPort(BASE_URI + "/"), httpCreateEntity, Tour.class);
+        if (responseEntityCreate.getBody() != null) {
+            tourId2 = responseEntityCreate.getBody().getId();
+        }
+
+        httpCreateEntity = new HttpEntity<>(testTour3, httpHeaders);
+        responseEntityCreate = testRestTemplate.postForEntity(createURLWithPort(BASE_URI + "/"), httpCreateEntity, Tour.class);
+        if (responseEntityCreate.getBody() != null) {
+            tourId3 = responseEntityCreate.getBody().getId();
+        }
 
         // test findall
         ResponseEntity<Iterable> iterableResponseEntityFindAll = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findall"), Iterable.class);
@@ -83,8 +131,8 @@ public class TourControllerIT {
         assertResponse(iterableResponseEntityfindByTitleLikeIgnoreCase, HttpStatus.OK, 1);
 
         // findByStartyearGreaterThanEqual
-        ResponseEntity<Iterable> iterableResponseEntityStartYearGreaterThanEqual = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findfromyear/" + 1981), Iterable.class);
-        assertResponse(iterableResponseEntityStartYearGreaterThanEqual, HttpStatus.OK, 1);
+        ResponseEntity<Iterable> iterableResponseEntityStartYearGreaterThanEqual = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findfromyear/" + 1985), Iterable.class);
+        assertResponse(iterableResponseEntityStartYearGreaterThanEqual, HttpStatus.OK, 2);
 
         // test findByStartyearEquals
         ResponseEntity<Iterable> iterableResponseEntityfindByStartyearEquals = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findyear/1987"), Iterable.class);
@@ -93,6 +141,19 @@ public class TourControllerIT {
         // test findByContinentEquals
         ResponseEntity<Iterable> iterableResponseEntityfindByContinentEquals = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findcontinent/EUROPE"), Iterable.class);
         assertResponse(iterableResponseEntityfindByContinentEquals, HttpStatus.OK, 1);
+
+        // deleting test objects
+        HttpEntity<Tour> httpEntityDeleteOneById = new HttpEntity<>(httpHeaders);
+        ResponseEntity<Tour> responseEntityDeleteOneById = testRestTemplate.exchange(createURLWithPort(BASE_URI + "/" + tourId1), HttpMethod.DELETE, httpEntityDeleteOneById, Tour.class);
+        assertThat(responseEntityDeleteOneById).isNotNull();
+        responseEntityDeleteOneById = testRestTemplate.exchange(createURLWithPort(BASE_URI + "/" + tourId2), HttpMethod.DELETE, httpEntityDeleteOneById, Tour.class);
+        assertThat(responseEntityDeleteOneById).isNotNull();
+        responseEntityDeleteOneById = testRestTemplate.exchange(createURLWithPort(BASE_URI + "/" + tourId3), HttpMethod.DELETE, httpEntityDeleteOneById, Tour.class);
+        assertThat(responseEntityDeleteOneById).isNotNull();
+
+        testTour1 = null;
+        testTour2 = null;
+        testTour3 = null;
     }
 
     // helper methods

@@ -46,7 +46,7 @@ public class TourControllerIT {
         testTour1.setLeg(3);
         testTour1.setContinent(Continent.EUROPE);
 
-        // test create
+        // test create in database
         HttpEntity<Tour> httpCreateEntity = new HttpEntity<>(testTour1, httpHeaders);
         ResponseEntity<Tour> responseEntityCreate = testRestTemplate.postForEntity(createURLWithPort(BASE_URI + "/"), httpCreateEntity, Tour.class);
         assertThat(responseEntityCreate.getBody()).isNotNull();
@@ -54,13 +54,13 @@ public class TourControllerIT {
         assertThat(responseEntityCreate.getBody().getTitle()).isEqualToIgnoringCase("new boy");
         Long newId = responseEntityCreate.getBody().getId();
 
-        // test read
+        // test read from database
         ResponseEntity<Tour> responseEntityFindOneById = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findid/" + newId), Tour.class);
         assertThat(responseEntityFindOneById.getBody()).isNotNull();
         assertThat(responseEntityFindOneById.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntityFindOneById.getBody().getId()).isEqualTo(newId);
 
-        // test update
+        // test update in database
         testTour1.setTitle("Updated TourTitle");
         HttpEntity<Tour> httpEntityUpdateOne = new HttpEntity<>(testTour1, httpHeaders);
         ResponseEntity<Tour> responseEntityUpdateOne = testRestTemplate.exchange(createURLWithPort(BASE_URI + "/" + newId), HttpMethod.PUT, httpEntityUpdateOne, Tour.class);
@@ -69,7 +69,7 @@ public class TourControllerIT {
         assertThat(responseEntityUpdateOne.getBody().getId()).isEqualTo(newId);
         assertThat(responseEntityUpdateOne.getBody().getTitle()).isEqualToIgnoringCase("updated tourtitle");
 
-        // test delete
+        // test delete from database
         HttpEntity<Tour> httpEntityDeleteOneById = new HttpEntity<>(httpHeaders);
         ResponseEntity<Tour> responseEntityDeleteOneById = testRestTemplate.exchange(createURLWithPort(BASE_URI + "/" + newId), HttpMethod.DELETE, httpEntityDeleteOneById, Tour.class);
         assertThat(responseEntityDeleteOneById.getBody()).isNotNull();
@@ -104,6 +104,7 @@ public class TourControllerIT {
         testTour3.setLeg(1);
         testTour3.setContinent(Continent.AUSTRALIA);
 
+        // adding test-tours tot database
         HttpEntity<Tour> httpCreateEntity = new HttpEntity<>(testTour1, httpHeaders);
         ResponseEntity<Tour> responseEntityCreate = testRestTemplate.postForEntity(createURLWithPort(BASE_URI + "/"), httpCreateEntity, Tour.class);
         if (responseEntityCreate.getBody() != null) {
@@ -142,7 +143,7 @@ public class TourControllerIT {
         ResponseEntity<Iterable> iterableResponseEntityfindByContinentEquals = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findcontinent/EUROPE"), Iterable.class);
         assertResponse(iterableResponseEntityfindByContinentEquals, HttpStatus.OK, 1);
 
-        // deleting test objects
+        // deleting test-objects(testTour1, testTour12, testTour13) from database
         HttpEntity<Tour> httpEntityDeleteOneById = new HttpEntity<>(httpHeaders);
         ResponseEntity<Tour> responseEntityDeleteOneById = testRestTemplate.exchange(createURLWithPort(BASE_URI + "/" + tourId1), HttpMethod.DELETE, httpEntityDeleteOneById, Tour.class);
         assertThat(responseEntityDeleteOneById).isNotNull();
@@ -151,6 +152,7 @@ public class TourControllerIT {
         responseEntityDeleteOneById = testRestTemplate.exchange(createURLWithPort(BASE_URI + "/" + tourId3), HttpMethod.DELETE, httpEntityDeleteOneById, Tour.class);
         assertThat(responseEntityDeleteOneById).isNotNull();
 
+        // deleting test-objects
         testTour1 = null;
         testTour2 = null;
         testTour3 = null;

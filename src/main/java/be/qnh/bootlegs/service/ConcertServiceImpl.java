@@ -4,6 +4,8 @@ import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.RecordingQuality;
 import be.qnh.bootlegs.domain.Track;
 import be.qnh.bootlegs.repository.ConcertRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,8 @@ import java.util.Optional;
 @Transactional
 public class ConcertServiceImpl implements ConcertService {
 
+    private final Logger logger = LoggerFactory.getLogger(TourServiceImpl.class);
+
     private final ConcertRepository concertRepository;
 
     @Autowired
@@ -25,7 +29,9 @@ public class ConcertServiceImpl implements ConcertService {
     // crud methods
     @Override
     public Concert addOne(Concert concert) {
-        return concert == null ? null : concertRepository.save(concert);
+        Concert newConcert = concertRepository.save(concert);
+        logger.info("addedConcert = [{}]", newConcert);
+        return newConcert;
     }
 
     @Override
@@ -35,7 +41,14 @@ public class ConcertServiceImpl implements ConcertService {
 
     @Override
     public Concert findOneById(Long id) {
-        return concertRepository.findById(id).orElse(null);
+        Optional<Concert> foundConcert = concertRepository.findById(id);
+        if (foundConcert.isPresent()) {
+            Concert result = foundConcert.get();
+            logger.info("foundConcert = [{}]", foundConcert.get());
+            return result;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -49,7 +62,9 @@ public class ConcertServiceImpl implements ConcertService {
             concertToUpdate.setTitle(concert.getTitle());
             concertToUpdate.setQuality(concert.getQuality());
             concertToUpdate.setVenue(concert.getVenue());
-            return concertRepository.save(concertToUpdate);
+            Concert result = concertRepository.save(concertToUpdate);
+            logger.info("updatedConcert = [{}]", result);
+            return result;
         }
         return null;
     }
@@ -59,6 +74,7 @@ public class ConcertServiceImpl implements ConcertService {
         Optional<Concert> foundConcert = concertRepository.findById(id);
         if (foundConcert.isPresent()) {
             concertRepository.deleteById(id);
+            logger.info("deletedConcert = [{}]", foundConcert);
             return foundConcert.get();
         } else {
             return null;
@@ -105,6 +121,7 @@ public class ConcertServiceImpl implements ConcertService {
         Concert aConcert = findOneById(concert_id);
         if (aConcert != null) {
             if (aConcert.getTrackList().add(newTrack)) {
+                logger.info("New Track = [{}]", newTrack + " added to Concert = [{}]", aConcert);
                 return newTrack;
             } else {
                 return null;

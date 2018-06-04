@@ -56,7 +56,7 @@ public class TrackServiceImpl implements TrackService {
             trackToUpdate.setSequenceNr(track.getSequenceNr());
             trackToUpdate.setTitle(track.getTitle());
             trackToUpdate.setLocationUrl(track.getLocationUrl());
-            Track result = trackRepository.save(track);
+            Track result = trackRepository.save(trackToUpdate);
             logger.info("updatedTrack = [{}]", result);
             return result;
         }

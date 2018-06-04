@@ -35,7 +35,7 @@ public class ConcertController {
 
         @PostMapping
         /api/concert                    : add one concert
-        /api/concert/addtrack/{concertid}   : add one track to concert with id
+        /api/concert/addtracktoconcert/{concertid}   : add one track to concert with id
 
         @PutMapping
         /api/concert/{id}               : update one concert
@@ -101,7 +101,7 @@ public class ConcertController {
         }
     }
 
-    @PostMapping("/addtrack/{concertid}")
+    @PostMapping("/addtracktoconcert/{concertid}")
     public ResponseEntity<Track> addTrackToConcert(@PathVariable Long concertid, @RequestBody Track track) {
         Track newTrack = concertService.addTrackToConcert(concertid, track);
         if (newTrack != null) {

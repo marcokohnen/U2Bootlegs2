@@ -121,7 +121,7 @@ public class ConcertServiceImpl implements ConcertService {
         Concert aConcert = findOneById(concert_id);
         if (aConcert != null) {
             if (aConcert.getTrackList().add(newTrack)) {
-                logger.info("New Track = [{}]", newTrack + " added to Concert = [{}]", aConcert);
+                logger.info("New Track = [{}] added to Concert = [{}]", newTrack, aConcert);
                 return newTrack;
             } else {
                 return null;

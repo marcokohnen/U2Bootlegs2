@@ -28,9 +28,9 @@ public class ConcertControllerIT {
     private HttpHeaders httpHeaders;
 
     // test objects
-    private Tour testTour1;
+    private Tour testTour;
     private Concert testConcert1, testConcert2, testConcert3;
-    private Long tourId1, concertId1, concertId2, concertId3;
+    private Long tourId, concertId1, concertId2, concertId3;
 
     @LocalServerPort
     private int port;
@@ -43,34 +43,34 @@ public class ConcertControllerIT {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         // een concert kan alleen worden toegevoegd aan een bestaande tour
-        testTour1 = new Tour();
-        testTour1.setTitle("TitleTestTour1");
-        testTour1.setLeg(1);
-        testTour1.setStartyear(2018);
-        testTour1.setEndyear(2018);
-        testTour1.setContinent(Continent.NORTHAMERICA);
+        testTour = new Tour();
+        testTour.setTitle("TitleTestTour1");
+        testTour.setLeg(1);
+        testTour.setStartyear(2018);
+        testTour.setEndyear(2018);
+        testTour.setContinent(Continent.NORTHAMERICA);
 
-        // create tour = testTour1 in database
-        HttpEntity<Tour> httpCreateTourEntity = new HttpEntity<>(testTour1, httpHeaders);
+        // create tour = testTour in database
+        HttpEntity<Tour> httpCreateTourEntity = new HttpEntity<>(testTour, httpHeaders);
         ResponseEntity<Tour> responseEntityCreateTour = testRestTemplate.postForEntity(createURLWithPort("/api/tour/"), httpCreateTourEntity, Tour.class);
         assertThat(responseEntityCreateTour.getBody()).isNotNull();
         assertThat(responseEntityCreateTour.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(responseEntityCreateTour.getBody().getTitle()).isEqualToIgnoringCase("TitleTestTour1");
-        tourId1 = responseEntityCreateTour.getBody().getId();
+        tourId = responseEntityCreateTour.getBody().getId();
     }
 
     @After
     public void deleteTestTourInDatabase() {
         System.out.println("Entered @After : deleteTestTourInDatabase");
-        // delete testTour1 from database
+        // delete testTour from database
         HttpEntity<Tour> httpEntityDeleteOneTourById = new HttpEntity<>(httpHeaders);
-        ResponseEntity<Tour> responseEntityDeleteOneTourById = testRestTemplate.exchange(createURLWithPort("/api/tour/" + tourId1), HttpMethod.DELETE, httpEntityDeleteOneTourById, Tour.class);
+        ResponseEntity<Tour> responseEntityDeleteOneTourById = testRestTemplate.exchange(createURLWithPort("/api/tour/" + tourId), HttpMethod.DELETE, httpEntityDeleteOneTourById, Tour.class);
         assertThat(responseEntityDeleteOneTourById.getBody()).isNotNull();
         assertThat(responseEntityDeleteOneTourById.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntityDeleteOneTourById.getBody().getId()).isEqualTo(tourId1);
+        assertThat(responseEntityDeleteOneTourById.getBody().getId()).isEqualTo(tourId);
 
-        // delete testTour1-object
-        testTour1 = null;
+        // delete testTour-object
+        testTour = null;
     }
 
     @Test
@@ -81,10 +81,11 @@ public class ConcertControllerIT {
         testConcert1.setCity("CityTestConcert1");
         testConcert1.setCountry("USA");
         testConcert1.setDate(LocalDate.of(2018, 4, 11));
+        testConcert1.setQuality(RecordingQuality.FAIR);
 
-        // create concert = testConcert1 and add to new tour = testTour1
+        // create concert = testConcert1 and add to new tour = testTour
         HttpEntity<Concert> httpCreateConcertEntity = new HttpEntity<>(testConcert1, httpHeaders);
-        ResponseEntity<Concert> responseEntityCreateConcert = testRestTemplate.postForEntity(createURLWithPort("api/tour/addconcerttotour/" + tourId1), httpCreateConcertEntity, Concert.class);
+        ResponseEntity<Concert> responseEntityCreateConcert = testRestTemplate.postForEntity(createURLWithPort("api/tour/addconcerttotour/" + tourId), httpCreateConcertEntity, Concert.class);
         assertThat(responseEntityCreateConcert.getBody()).isNotNull();
         assertThat(responseEntityCreateConcert.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(responseEntityCreateConcert.getBody().getTitle()).isEqualToIgnoringCase("TitleTestConcert1");
@@ -112,7 +113,7 @@ public class ConcertControllerIT {
         assertThat(responseEntityDeleteOneById.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntityDeleteOneById.getBody().getId()).isEqualTo(concertId1);
 
-        // delete test objects
+        // delete test object
         testConcert1 = null;
     }
 
@@ -143,19 +144,19 @@ public class ConcertControllerIT {
         // adding testConcerts to testTour in database
 
         HttpEntity<Concert> httpCreateEntity = new HttpEntity<>(testConcert1, httpHeaders);
-        ResponseEntity<Concert> responseEntityCreate = testRestTemplate.postForEntity(createURLWithPort("api/tour/addconcerttotour/" + tourId1), httpCreateEntity, Concert.class);
+        ResponseEntity<Concert> responseEntityCreate = testRestTemplate.postForEntity(createURLWithPort("/api/tour/addconcerttotour/" + tourId), httpCreateEntity, Concert.class);
         if (responseEntityCreate.getBody() != null) {
             concertId1 = responseEntityCreate.getBody().getId();
         }
 
         httpCreateEntity = new HttpEntity<>(testConcert2, httpHeaders);
-        responseEntityCreate = testRestTemplate.postForEntity(createURLWithPort("api/tour/addconcerttotour/" + tourId1), httpCreateEntity, Concert.class);
+        responseEntityCreate = testRestTemplate.postForEntity(createURLWithPort("/api/tour/addconcerttotour/" + tourId), httpCreateEntity, Concert.class);
         if (responseEntityCreate.getBody() != null) {
             concertId2 = responseEntityCreate.getBody().getId();
         }
 
         httpCreateEntity = new HttpEntity<>(testConcert3, httpHeaders);
-        responseEntityCreate = testRestTemplate.postForEntity(createURLWithPort("api/tour/addconcerttotour/" + tourId1), httpCreateEntity, Concert.class);
+        responseEntityCreate = testRestTemplate.postForEntity(createURLWithPort("/api/tour/addconcerttotour/" + tourId), httpCreateEntity, Concert.class);
         if (responseEntityCreate.getBody() != null) {
             concertId3 = responseEntityCreate.getBody().getId();
         }
@@ -189,10 +190,13 @@ public class ConcertControllerIT {
         // deleting test-objects(testConcert1, testConcert2, testConcert3) from database
 
         HttpEntity<Concert> httpEntityDeleteOneById = new HttpEntity<>(httpHeaders);
+
         ResponseEntity<Concert> responseEntityDeleteOneById = testRestTemplate.exchange(createURLWithPort(BASE_URI + "/" + concertId1), HttpMethod.DELETE, httpEntityDeleteOneById, Concert.class);
         assertThat(responseEntityDeleteOneById).isNotNull();
+
         responseEntityDeleteOneById = testRestTemplate.exchange(createURLWithPort(BASE_URI + "/" + concertId2), HttpMethod.DELETE, httpEntityDeleteOneById, Concert.class);
         assertThat(responseEntityDeleteOneById).isNotNull();
+
         responseEntityDeleteOneById = testRestTemplate.exchange(createURLWithPort(BASE_URI + "/" + concertId3), HttpMethod.DELETE, httpEntityDeleteOneById, Concert.class);
         assertThat(responseEntityDeleteOneById).isNotNull();
 

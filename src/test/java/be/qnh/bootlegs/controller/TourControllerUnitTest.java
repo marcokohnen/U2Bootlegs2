@@ -1,9 +1,13 @@
 package be.qnh.bootlegs.controller;
 
+import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.Continent;
+import be.qnh.bootlegs.domain.RecordingQuality;
 import be.qnh.bootlegs.domain.Tour;
 import be.qnh.bootlegs.service.TourService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,8 +27,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -35,6 +39,7 @@ public class TourControllerUnitTest {
     private static final String BASE_URI = "/api/tour";
 
     private Tour testTour1, testTour2, testTour3;
+    private Concert testConcert;
     private List<Tour> tours;
 
     @Autowired
@@ -72,6 +77,14 @@ public class TourControllerUnitTest {
 
         tours = new ArrayList<>();
         tours.addAll(Arrays.asList(testTour1, testTour2, testTour3));
+
+        testConcert = new Concert();
+        testConcert.setId(10L);
+        testConcert.setDate(LocalDate.of(2018, 6, 5));
+        testConcert.setTitle("testConcert");
+        testConcert.setCity("Hasselt");
+        testConcert.setCountry("Belgium");
+        testConcert.setQuality(RecordingQuality.GOOD);
     }
 
     /*
@@ -79,14 +92,17 @@ public class TourControllerUnitTest {
      */
     private static String asJsonString(final Object obj) {
         try {
-            return new ObjectMapper().writeValueAsString(obj);
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new JavaTimeModule());
+            objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            return objectMapper.writeValueAsString(obj);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Test
-    public void findAll() throws Exception {
+    public void testFindAll() throws Exception {
         when(tourService.findAll()).thenReturn(tours);
 
         mockMvc.perform(get(BASE_URI + "/findall"))
@@ -103,20 +119,21 @@ public class TourControllerUnitTest {
     }
 
     @Test
-    public void findOneById() throws Exception {
+    public void testFindOneById() throws Exception {
         when(tourService.findOneById(3L)).thenReturn(testTour3);
         mockMvc.perform(get(BASE_URI + "/findid/{id}", 3))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.id", is(103)))
-                .andExpect(jsonPath("$.endyear", is(2006)));
+                .andExpect(jsonPath("$.endyear", is(2006)))
+                .andDo(print());
 
         verify(tourService, times(1)).findOneById(3L);
         verifyNoMoreInteractions(tourService);
     }
 
     @Test
-    public void findByTitleLikeIgnoreCase() throws Exception {
+    public void testFindByTitleLikeIgnoreCase() throws Exception {
         when(tourService.findByTitleLikeIgnoreCase("title2")).thenReturn(Collections.singletonList(testTour2));
 
         mockMvc.perform(get(BASE_URI + "/findtitle/{title}", "title2"))
@@ -130,7 +147,7 @@ public class TourControllerUnitTest {
     }
 
     @Test
-    public void findByStartyearGreaterThanEqual() throws Exception {
+    public void testFindByStartyearGreaterThanEqual() throws Exception {
         when(tourService.findByStartyearGreaterThanEqual(2002)).thenReturn(Arrays.asList(testTour2, testTour3));
 
         mockMvc.perform(get(BASE_URI + "/findfromyear/{startYear}", 2002))
@@ -145,7 +162,7 @@ public class TourControllerUnitTest {
     }
 
     @Test
-    public void findByStartyearEquals() throws Exception {
+    public void testFindByStartyearEquals() throws Exception {
         when(tourService.findByStartyearEquals(1987)).thenReturn(Collections.singletonList(testTour1));
 
         mockMvc.perform(get(BASE_URI + "/findyear/{startYear}", 1987))
@@ -159,7 +176,7 @@ public class TourControllerUnitTest {
     }
 
     @Test
-    public void findByContinentEquals() throws Exception {
+    public void testFindByContinentEquals() throws Exception {
         when(tourService.findByContinentEquals(Continent.NEWZEALAND)).thenReturn(Collections.singletonList(testTour2));
 
         mockMvc.perform(get(BASE_URI + "/findcontinent/{continent}", "NEWZEALAND"))
@@ -174,8 +191,9 @@ public class TourControllerUnitTest {
     }
 
     @Test
-    public void addOne() throws Exception {
+    public void testAddOne() throws Exception {
         when(tourService.addOne(testTour1)).thenReturn(testTour1);
+
         mockMvc.perform(
                 post(BASE_URI)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -183,19 +201,53 @@ public class TourControllerUnitTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title", is("TestTourTitle1")))
                 .andDo(print());
+
         verify(tourService, times(1)).addOne(testTour1);
         verifyNoMoreInteractions(tourService);
     }
 
     @Test
-    public void addConcertToTour() {
+    public void testAddConcertToTour() throws Exception {
+        when(tourService.addConcertToTour(1L, testConcert)).thenReturn(testConcert);
+
+        mockMvc.perform(post(BASE_URI + "/addconcerttotour/{tourId}", 1L)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(testConcert))
+        )
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id", is(10)))
+                .andDo(print());
+
+        verify(tourService, times(1)).addConcertToTour(1L, testConcert);
+        verifyNoMoreInteractions(tourService);
     }
 
     @Test
-    public void updateOne() {
+    public void testUpdateOne() throws Exception {
+        when(tourService.udpdateOneById(101L, testTour1)).thenReturn(testTour2);
+
+        mockMvc.perform(
+                put(BASE_URI + "/{id}", 101L)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(asJsonString(testTour1)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", is("TestTourTitle2")))
+                .andDo(print());
+
+        verify(tourService, times(1)).udpdateOneById(101L, testTour1);
+        verifyNoMoreInteractions(tourService);
     }
 
     @Test
-    public void deleteOne() {
+    public void testDeleteOne() throws Exception {
+        when(tourService.deleteOneById(103L)).thenReturn(testTour3);
+
+        mockMvc.perform(
+                delete(BASE_URI + "/{id}", 103L))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(103)));
+
+        verify(tourService, times(1)).deleteOneById(103L);
+        verifyNoMoreInteractions(tourService);
     }
 }

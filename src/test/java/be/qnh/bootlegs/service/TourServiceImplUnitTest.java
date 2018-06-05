@@ -33,6 +33,7 @@ public class TourServiceImplUnitTest {
 
     @Before
     public void init() {
+        // create test-objects
         testTour1 = new Tour();
         testTour1.setTitle("TestTourTitle1");
         testTour1.setLeg(1);
@@ -42,7 +43,7 @@ public class TourServiceImplUnitTest {
 
         testTour2 = new Tour();
         testTour2.setTitle("TestTourTitle2");
-        testTour2.setLeg(2);
+        testTour2.setLeg(3);
         testTour2.setStartyear(2002);
         testTour2.setEndyear(2003);
         testTour2.setContinent(Continent.NEWZEALAND);

@@ -12,7 +12,7 @@ export class TrackService {
 
     // voeg een nieuwe track toe aan een concert met concertId via http-request post naar ConcertController in de backend
     addOneToConcert(track: Track, concertId : number) {
-        return this.http.post("api/concert/addtrack/"+ concertId, track);
+        return this.http.post("api/concert/addtracktoconcert/"+ concertId, track);
     }
 
     // update een track via http-request naar Trackcontroller in de backend

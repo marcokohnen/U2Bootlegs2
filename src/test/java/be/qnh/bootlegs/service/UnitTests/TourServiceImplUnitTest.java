@@ -1,9 +1,10 @@
-package be.qnh.bootlegs.service;
+package be.qnh.bootlegs.service.UnitTests;
 
 import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.Continent;
 import be.qnh.bootlegs.domain.Tour;
 import be.qnh.bootlegs.repository.TourRepository;
+import be.qnh.bootlegs.service.TourServiceImpl;
 import com.google.common.collect.Lists;
 import org.junit.After;
 import org.junit.Before;

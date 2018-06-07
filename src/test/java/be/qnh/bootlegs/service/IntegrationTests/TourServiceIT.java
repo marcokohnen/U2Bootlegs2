@@ -1,7 +1,8 @@
-package be.qnh.bootlegs.service;
+package be.qnh.bootlegs.service.IntegrationTests;
 
 import be.qnh.bootlegs.domain.Continent;
 import be.qnh.bootlegs.domain.Tour;
+import be.qnh.bootlegs.service.TourService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

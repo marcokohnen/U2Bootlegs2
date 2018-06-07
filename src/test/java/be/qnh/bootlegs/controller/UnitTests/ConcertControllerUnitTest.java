@@ -1,5 +1,6 @@
-package be.qnh.bootlegs.controller;
+package be.qnh.bootlegs.controller.UnitTests;
 
+import be.qnh.bootlegs.controller.ConcertController;
 import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.RecordingQuality;
 import be.qnh.bootlegs.domain.Track;

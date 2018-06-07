@@ -1,4 +1,4 @@
-package be.qnh.bootlegs.controller;
+package be.qnh.bootlegs.controller.IntegrationTests;
 
 import be.qnh.bootlegs.BootlegsApplication;
 import be.qnh.bootlegs.domain.Concert;

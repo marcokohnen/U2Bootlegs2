@@ -1,7 +1,8 @@
-package be.qnh.bootlegs.service;
+package be.qnh.bootlegs.service.UnitTests;
 
 import be.qnh.bootlegs.domain.Track;
 import be.qnh.bootlegs.repository.TrackRepository;
+import be.qnh.bootlegs.service.TrackServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

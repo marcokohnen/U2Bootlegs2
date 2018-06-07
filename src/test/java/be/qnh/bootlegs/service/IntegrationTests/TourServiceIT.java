@@ -17,8 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Transactional //zorgt voor automatische rollback na elke test-method
-public class TourServiceIT  {
-//extends AbstractTransactionalJUnit4SpringContextTests
+public class TourServiceIT {
+    //extends AbstractTransactionalJUnit4SpringContextTests
     @Autowired
     private TourService tourService;
 

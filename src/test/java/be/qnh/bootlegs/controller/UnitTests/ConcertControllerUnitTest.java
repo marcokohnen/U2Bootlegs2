@@ -10,13 +10,12 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -32,8 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(value = SpringRunner.class)
-@WebMvcTest(ConcertController.class)
+// see --> https://docs.spring.io/spring/docs/current/spring-framework-reference/testing.html#testcontext-framework (3.6.1. Server-Side Tests)
 public class ConcertControllerUnitTest {
 
     private static final String BASE_URI = "/api/concert";
@@ -42,14 +40,21 @@ public class ConcertControllerUnitTest {
     private Track testTrack;
     private List<Concert> concerts;
 
-    @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Mock
     private ConcertService concertService;
+
+    @InjectMocks
+    private ConcertController concertController;
 
     @Before
     public void init() {
+        MockitoAnnotations.initMocks(this);
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(concertController) // for testing only one controller
+                .build();
+
         // create test-objects
         testConcert1 = new Concert();
         testConcert1.setId(1L);

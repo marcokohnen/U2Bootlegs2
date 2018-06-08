@@ -1,35 +1,28 @@
 package be.qnh.bootlegs.controller.UnitTests;
 
 import be.qnh.bootlegs.controller.TrackController;
-import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.Track;
-import be.qnh.bootlegs.service.ConcertService;
 import be.qnh.bootlegs.service.TrackService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 // see --> https://docs.spring.io/spring/docs/current/spring-framework-reference/testing.html#testcontext-framework (3.6.1. Server-Side Tests)
@@ -108,22 +101,74 @@ public class TrackControllerUnitTest {
     }
 
     @Test
-    public void testFindOneById() {
+    public void testFindOneById() throws Exception {
+        when(trackService.findOneById(3L)).thenReturn(testTrack3);
+
+        mockMvc.perform(get(BASE_URI + "/findid/{id}", 3))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$.id", is(3)))
+                .andExpect(jsonPath("$.sequenceNr", is(3)));
+
+        verify(trackService, times(1)).findOneById(3L);
+        verifyNoMoreInteractions(trackService);
     }
 
     @Test
-    public void testFindByTitleLikeIgnoreCase() {
+    public void testFindByTitleLikeIgnoreCase() throws Exception {
+        when(trackService.findByTitleLikeIgnoreCase("title1")).thenReturn(Collections.singletonList(testTrack1));
+
+        mockMvc.perform(get(BASE_URI + "/findtitle/{title}", "title1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].title", is("TestTrackTitle1")));
+
+        verify(trackService, times(1)).findByTitleLikeIgnoreCase("title1");
+        verifyNoMoreInteractions(trackService);
     }
 
     @Test
-    public void TestAddOne() {
+    public void TestAddOne() throws Exception {
+        when(trackService.addOne(testTrack2)).thenReturn(testTrack2);
+
+        mockMvc.perform(post(BASE_URI)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(testTrack2)))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.id", is(2)))
+                .andExpect(jsonPath("$.locationUrl", is("url2")));
+
+        verify(trackService, times(1)).addOne(testTrack2);
+        verifyNoMoreInteractions(trackService);
     }
 
     @Test
-    public void TestUpdateOne() {
+    public void TestUpdateOne() throws Exception {
+        when(trackService.updateOneById(2L, testTrack2)).thenReturn(testTrack3);
+
+        mockMvc.perform(put(BASE_URI + "/{id}", 2)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(testTrack2))) // = RequestBody in controller
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(3)));
+
+        verify(trackService, times(1)).updateOneById(2L, testTrack2);
+        verifyNoMoreInteractions(trackService);
+
     }
 
     @Test
-    public void TestDeleteOne() {
+    public void TestDeleteOne() throws Exception {
+        when(trackService.deleteOneById(3L)).thenReturn(testTrack3);
+
+        mockMvc.perform(delete(BASE_URI + "/{id}", 3))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$.id", is(3)));
+
+        verify(trackService, times(1)).deleteOneById(3L);
+        verifyNoMoreInteractions(trackService);
     }
 }

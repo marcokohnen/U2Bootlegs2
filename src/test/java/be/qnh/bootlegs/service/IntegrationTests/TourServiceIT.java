@@ -1,7 +1,8 @@
-package be.qnh.bootlegs.service;
+package be.qnh.bootlegs.service.IntegrationTests;
 
 import be.qnh.bootlegs.domain.Continent;
 import be.qnh.bootlegs.domain.Tour;
+import be.qnh.bootlegs.service.TourService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,8 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Transactional //zorgt voor automatische rollback na elke test-method
-public class TourServiceIT  {
-//extends AbstractTransactionalJUnit4SpringContextTests
+public class TourServiceIT {
+    //extends AbstractTransactionalJUnit4SpringContextTests
     @Autowired
     private TourService tourService;
 

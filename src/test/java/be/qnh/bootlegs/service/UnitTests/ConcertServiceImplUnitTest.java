@@ -1,9 +1,10 @@
-package be.qnh.bootlegs.service;
+package be.qnh.bootlegs.service.UnitTests;
 
 import be.qnh.bootlegs.domain.Concert;
 import be.qnh.bootlegs.domain.RecordingQuality;
 import be.qnh.bootlegs.domain.Track;
 import be.qnh.bootlegs.repository.ConcertRepository;
+import be.qnh.bootlegs.service.ConcertServiceImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

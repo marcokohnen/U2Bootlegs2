@@ -1,7 +1,8 @@
-package be.qnh.bootlegs.service;
+package be.qnh.bootlegs.service.UnitTests;
 
 import be.qnh.bootlegs.domain.Track;
 import be.qnh.bootlegs.repository.TrackRepository;
+import be.qnh.bootlegs.service.TrackServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -11,8 +12,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TrackServiceImplUnitTest {

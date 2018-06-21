@@ -40,6 +40,7 @@
         <div class="form-group">
             <select id="quality" [ngModel]="initialConcert.quality" name="quality" #quality class="form-control" required>
                 <!--<option selected disabled>Quality</option>-->
+                <option [ngValue]=null>select quality</option>
                 <option>EXCELLENT</option>
                 <option>FAIR</option>
                 <option>GOOD</option>

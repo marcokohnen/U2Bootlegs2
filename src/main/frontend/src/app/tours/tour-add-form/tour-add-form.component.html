@@ -22,6 +22,7 @@
     <div class="form-group">
         <select id="continent" [ngModel]="initialTour.continent" name="continent" #continent class="form-control" required>
             <!--<option selected disabled>Continent</option>-->
+            <option [ngValue]="null">select continent</option>
             <option>ASIA</option>
             <option>AUSTRALIA</option>
             <option>EUROPE</option>

@@ -1,7 +1,8 @@
-package be.qnh.bootlegs.service;
+package be.qnh.bootlegs.service.UnitTests;
 
 import be.qnh.bootlegs.domain.AppUser;
 import be.qnh.bootlegs.repository.UserRepository;
+import be.qnh.bootlegs.service.UserServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +30,7 @@ public class UserServiceImplUnitTest {
     @Before
     public void init() {
         user1 = new AppUser("Flippe", "geheim", "flippie@ergens.com", "USER");
-        user2 = new AppUser("Jopie", "wachtwoord", "joppie@gmail.com", "ADMIN");
+        user2 = new AppUser("Jopie", "wachtwoord", "jopie@gmail.com", "ADMIN");
         user3 = new AppUser("Frans", "onbekend", "frans@yahoo.com", "GUEST");
     }
 

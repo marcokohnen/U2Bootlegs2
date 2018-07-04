@@ -36,15 +36,15 @@ public class UserServiceImplUnitTest {
 
     // test methods
     @Test
-    public void testFindAppUserByNameAndEmail() {
-        when(userRepository.findAppUserByNameAndEmail("Jopie", "joppie@gmail.com")).thenReturn(user2);
+    public void testFindAppUserByEmail() {
+        when(userRepository.findAppUserByEmail("jopie@gmail.com")).thenReturn(user2);
 
-        AppUser founduser = userService.findAppUserByNameAndEmail("Jopie", "joppie@gmail.com");
+        AppUser founduser = userService.findAppUserByEmail("jopie@gmail.com");
 
         assertThat(founduser).isEqualTo(user2);
         assertThat(founduser.getRole()).isEqualTo("ADMIN");
 
-        verify(userRepository, times(1)).findAppUserByNameAndEmail("Jopie", "joppie@gmail.com");
+        verify(userRepository, times(1)).findAppUserByEmail("jopie@gmail.com");
 
 
     }

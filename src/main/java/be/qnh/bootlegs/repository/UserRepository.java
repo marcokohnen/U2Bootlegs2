@@ -11,9 +11,5 @@ import javax.validation.constraints.Size;
 @Repository
 public interface UserRepository extends JpaRepository<AppUser, Long> {
 
-    AppUser findAppUserByName(String name);
-
-    AppUser findAppUserByNameAndEmail(String name, String email);
-
     AppUser findAppUserByEmail(String email);
 }

@@ -13,18 +13,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @SpringBootApplication
 public class BootlegsApplication {
 
+    // for creating initial users in database
+
 //    public static void main(String[] args) {
 //        ConfigurableApplicationContext applicationContext = SpringApplication.run(BootlegsApplication.class, args);
 //        UserService userService = applicationContext.getBean("userServiceImpl", UserServiceImpl.class);
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//        UserRepository userRepository = applicationContext.getBean("userRepository", UserRepository.class);
 //
-//        userService.addOne(new AppUser("Jopie", encoder.encode("wachtwoord"), "jopie@gmail.com", "ROLE_ADMIN"));
+//        userService.addOne(new AppUser("Jopie", "wachtwoord", "jopie@gmail.com", "ROLE_ADMIN"));
 //
-//        userService.addOne(new AppUser("Flippe", encoder.encode("geheim"), "flippie@ergens.com", "ROLE_USER"));
+//        userService.addOne(new AppUser("Flippe", "geheim", "flippie@ergens.com", "ROLE_USER"));
 //
-//        userService.addOne(new AppUser("Frans", encoder.encode("onbekend"), "frans@yahoo.com", "ROLE_GUEST"));
-//
+//        userService.addOne(new AppUser("Frans", "onbekend", "frans@yahoo.com", "ROLE_GUEST"));
 //    }
 
     public static void main(String[] args) {

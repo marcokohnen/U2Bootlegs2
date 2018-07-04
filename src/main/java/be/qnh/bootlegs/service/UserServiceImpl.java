@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,31 +24,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override // from UserService
     public AppUser addOne(AppUser appUser) {
+        appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
         AppUser newAppUser = userRepository.save(appUser);
         LOGGER.info("New AppUser [{}]", newAppUser);
         return newAppUser;
-    }
-
-    @Override // from UserService
-    public AppUser findAppUserByName(String name) {
-        AppUser foundUser = userRepository.findAppUserByName(name);
-        LOGGER.info("findAppUserByName(String name) parameter name = " + name);
-        return foundUser;
-    }
-
-    @Override // from UserService
-    public AppUser findAppUserByNameAndEmail(String name, String email) {
-        LOGGER.info("findAppUserByNameAndEmail parameter name + email = " + name + "-" + email);
-        AppUser foundUser = userRepository.findAppUserByNameAndEmail(name, email);
-        LOGGER.info("found appUser : {}", foundUser);
-        return foundUser;
     }
 
     @Override // from UserService
@@ -59,12 +49,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override // from UserDetailsService
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        AppUser founduser = findAppUserByName(name);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        AppUser founduser = findAppUserByEmail(email);
         if (founduser == null) {
             throw new UsernameNotFoundException("Invalid Username");
         }
-        UserDetails userDetails = new User(founduser.getName(), founduser.getPassword(), Collections.singletonList(new SimpleGrantedAuthority(founduser.getRole())));
+        UserDetails userDetails = new User(founduser.getEmail(), founduser.getPassword(), Collections.singletonList(new SimpleGrantedAuthority(founduser.getRole())));
         LOGGER.info("loadUserByUsername new userDetails = " + userDetails);
         return userDetails;
 

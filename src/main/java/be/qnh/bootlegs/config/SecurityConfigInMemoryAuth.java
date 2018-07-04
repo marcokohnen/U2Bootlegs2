@@ -55,7 +55,7 @@
 //    //zie : https://spring.io/blog/2017/11/01/spring-security-5-0-0-rc1-released en
 //    //https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/crypto/password/DelegatingPasswordEncoder.html
 //    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+//    public void configureAuthenticationManager(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 //        configEncoders();
 //        passwordEncoder = new DelegatingPasswordEncoder("bcrypt", encoders);
 //        String passwordUser = passwordEncoder.encode("user");

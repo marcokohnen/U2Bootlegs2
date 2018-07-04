@@ -65,3 +65,7 @@ h1 {
     border: 4px white solid;
     text-align: center;
 }
+
+.tour-item:hover, .concert-item:hover, .track-item:hover {
+    border-color: yellow;
+}

@@ -1,19 +1,16 @@
 package be.qnh.bootlegs;
 
 import be.qnh.bootlegs.domain.AppUser;
-import be.qnh.bootlegs.repository.UserRepository;
 import be.qnh.bootlegs.service.UserService;
 import be.qnh.bootlegs.service.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class BootlegsApplication {
 
-    // for creating initial users in database
+    //creating initial users in database
 
 //    public static void main(String[] args) {
 //        ConfigurableApplicationContext applicationContext = SpringApplication.run(BootlegsApplication.class, args);
@@ -24,6 +21,10 @@ public class BootlegsApplication {
 //        userService.addOne(new AppUser("Flippe", "geheim", "flippie@ergens.com", "ROLE_USER"));
 //
 //        userService.addOne(new AppUser("Frans", "onbekend", "frans@yahoo.com", "ROLE_GUEST"));
+//
+//        userService.addOne(new AppUser("TestAdminUser", "AdminWachtwoord", "testadmin@test.com", "ROLE_ADMIN"));
+//
+//        userService.addOne(new AppUser("TestUser", "UserWachtwoord", "testuser@test.com", "ROLE_USER"));
 //    }
 
     public static void main(String[] args) {

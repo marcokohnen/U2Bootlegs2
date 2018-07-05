@@ -21,22 +21,22 @@ public class TourController {
     }
 
     /* @GetMapping
-        /api/activeTour/findall                   : find all tourList
-        /api/activeTour/findid/{id}               : find one activeTour by id
-        /api/activeTour/findtitle/{title}         : find tourList by %title% ignore case
-        /api/activeTour/findfromyear/{startYear}  : find tourList by startYear and later
-        /api/activeTour/findyear/{startYear}      : find tourList by startYear
-        /api/activeTour/findcontinent/{continent} : find tourList by continent
+        /api/tour/findall                   : find all tourList
+        /api/tour/findid/{id}               : find one tour by id
+        /api/tour/findtitle/{title}         : find tourList by %title% ignore case
+        /api/tour/findfromyear/{startYear}  : find tourList by startYear and later
+        /api/tour/findyear/{startYear}      : find tourList by startYear
+        /api/tour/findcontinent/{continent} : find tourList by continent
 
        @PostMapping
-        /api/activeTour                           : add one activeTour
-        /api/activeTour/addconcerttotour/{tourid} : add one concert to activeTour with tourid
+        /api/tour                           : add one Tour
+        /api/tour/addconcerttotour/{tourid} : add one concert to tour with tourid
 
        @PutMapping
-        /api/activeTour/{id}                      : update one activeTour
+        /api/tour/{id}                      : update one tour
 
        @DeleteMapping
-        /api/activeTour/{id}                      : delete one activeTour
+        /api/tour/{id}                      : delete one tour
 
      */
 

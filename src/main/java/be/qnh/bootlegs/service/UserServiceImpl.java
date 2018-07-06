@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -46,6 +47,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         AppUser foundUser = userRepository.findAppUserByEmail(email);
         LOGGER.info("found appUser : {}", foundUser);
         return foundUser;
+    }
+
+    @Override
+    public AppUser deleteOneById(Long id) {
+        Optional<AppUser> foundUser = userRepository.findById(id);
+        if (foundUser.isPresent()) {
+            userRepository.deleteById(id);
+            LOGGER.info("deleted AppUser = [{}]", foundUser);
+            return foundUser.get();
+        } else {
+            return null;
+        }
     }
 
     @Override // from UserDetailsService

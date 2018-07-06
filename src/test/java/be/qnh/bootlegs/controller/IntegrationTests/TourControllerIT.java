@@ -1,6 +1,7 @@
 package be.qnh.bootlegs.controller.IntegrationTests;
 
 import be.qnh.bootlegs.BootlegsApplication;
+import be.qnh.bootlegs.config.SecurityConfigDAO;
 import be.qnh.bootlegs.domain.Continent;
 import be.qnh.bootlegs.domain.Tour;
 import org.junit.Before;
@@ -10,12 +11,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = BootlegsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
+@ContextConfiguration(classes = SecurityConfigDAO.class)
 public class TourControllerIT {
 
     private static final String BASE_URI = "/api/tour";
@@ -31,9 +34,18 @@ public class TourControllerIT {
 
     @Before
     public void init() {
-        testRestTemplate = new TestRestTemplate();
+        //om integratie-testen te kunnen doen met spring security geven we geldige credentials van een test-user met 'ROLE_ADMIN' mee met de testRestTemplate, die bij elke test worden gebruikt. Deze test-user moet wel al bestaan in de database !!!
+        testRestTemplate = new TestRestTemplate().withBasicAuth("testadmin@test.com", "AdminWachtwoord");
         httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+        System.out.println("httpHeaders = " + httpHeaders);
+
+        // om integratie-testen te kunnen doen me spring security geven we de credentials mee met de http-header
+//        String credential = "jopie@gmail.com:wachtwoord";
+//        String encodedCredential = new String(Base64.getEncoder().encode(credential.getBytes()));
+//        httpHeaders.add("Authorization", "Basic " + encodedCredential);
+
     }
 
     @Test
@@ -55,7 +67,13 @@ public class TourControllerIT {
         Long newId = responseEntityCreate.getBody().getId();
 
         // test read from database
+        HttpEntity httpEntityFindOne = new HttpEntity(httpHeaders);
         ResponseEntity<Tour> responseEntityFindOneById = testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findid/" + newId), Tour.class);
+        //testRestTemplate.exchange(createURLWithPort(BASE_URI + "/findid/" + newId), HttpMethod.GET, httpCreateEntity, Tour.class);
+        //testRestTemplate.getForEntity(createURLWithPort(BASE_URI + "/findid/" + newId), Tour.class) gaat niet om te testen als security opstaat. Je moet dan namelijk de credentials in de http-header meegeven en .getForEntity heeft geen parameter HttpEntity.
+        //Je kan dan TestRestTemplate.exchage(URI url, HttpMethod method, HttpEntity<?> requestEntity, Class<T> responseType) gebruiken.
+        //Je kan .getForEntity wel blijven gebruiken als je de credentials al meegeeft met TestRestTemplate :
+        //testRestTemplate = new TestRestTemplate().withBasicAuth("username", "wachtwoord"); Bij elke test worden dan dezelfde credentials gebruikt !
         assertThat(responseEntityFindOneById.getBody()).isNotNull();
         assertThat(responseEntityFindOneById.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntityFindOneById.getBody().getId()).isEqualTo(newId);
@@ -104,7 +122,7 @@ public class TourControllerIT {
         testTour3.setLeg(1);
         testTour3.setContinent(Continent.AUSTRALIA);
 
-        // adding test-tours tot database
+        // adding test-tours to database
         HttpEntity<Tour> httpCreateEntity = new HttpEntity<>(testTour1, httpHeaders);
         ResponseEntity<Tour> responseEntityCreate = testRestTemplate.postForEntity(createURLWithPort(BASE_URI + "/"), httpCreateEntity, Tour.class);
         if (responseEntityCreate.getBody() != null) {

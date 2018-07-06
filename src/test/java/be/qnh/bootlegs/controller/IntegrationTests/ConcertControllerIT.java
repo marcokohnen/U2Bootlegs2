@@ -38,8 +38,8 @@ public class ConcertControllerIT {
     @Before
     public void init() {
         System.out.println("Entered @Before : init");
-        //om integratie-testen te kunnen doen met spring security geven we geldige credentials mee met de testRestTemplate, die bij elke test kunnen worden gebruikt
-        testRestTemplate = new TestRestTemplate().withBasicAuth("jopie@gmail.com", "wachtwoord");
+        //om integratie-testen te kunnen doen met spring security geven we geldige credentials van een test-user met 'ROLE_ADMIN' mee met de testRestTemplate, die bij elke test worden gebruikt. Deze test-user moet wel al bestaan in de database !!!
+        testRestTemplate = new TestRestTemplate().withBasicAuth("testadmin@test.com", "AdminWachtwoord");
         httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
 

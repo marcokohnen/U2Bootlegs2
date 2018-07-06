@@ -42,7 +42,7 @@ public class TourControllerIT {
         System.out.println("httpHeaders = " + httpHeaders);
 
         // om integratie-testen te kunnen doen me spring security geven we de credentials mee met de http-header
-//        String credential = "jopie@gmail.com:wachtwoord";
+//        String credential = "testadmin@test.com:AdminWachtwoord";
 //        String encodedCredential = new String(Base64.getEncoder().encode(credential.getBytes()));
 //        httpHeaders.add("Authorization", "Basic " + encodedCredential);
 

@@ -37,19 +37,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public AppUser addOne(AppUser appUser) {
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
         AppUser newAppUser = userRepository.save(appUser);
-        LOGGER.info("New AppUser [{}]", newAppUser);
+        LOGGER.info("new AppUser [{}]", newAppUser);
         return newAppUser;
     }
 
     @Override // from UserService
     public AppUser findAppUserByEmail(String email) {
-        LOGGER.info("findAppUserByEmail parameter email = " + email);
         AppUser foundUser = userRepository.findAppUserByEmail(email);
         LOGGER.info("found appUser : {}", foundUser);
         return foundUser;
     }
 
-    @Override
+    @Override // from UserService
     public AppUser deleteOneById(Long id) {
         Optional<AppUser> foundUser = userRepository.findById(id);
         if (foundUser.isPresent()) {

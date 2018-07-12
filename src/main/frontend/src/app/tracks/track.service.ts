@@ -5,6 +5,8 @@ import {Track} from "./track";
 @Injectable()
 export class TrackService {
 
+    private trackApiRoot="api/track";
+
     @Output() onTrackAdded = new EventEmitter<Track>();
     @Output() onTrackUpdated = new EventEmitter<Track>();
 
@@ -17,14 +19,14 @@ export class TrackService {
 
     // update een track via http-request naar Trackcontroller in de backend
     updateOne(track: Track) {
-        return this.http.put("api/track/" + track.id, track);
+        return this.http.put(this.trackApiRoot+ "/" + track.id, track);
     }
 
     deleteOne(trackId: number) {
-        return this.http.delete("api/track/" + trackId);
+        return this.http.delete(this.trackApiRoot + "/" + trackId);
     }
 
     findOne(trackId: number) {
-        return this.http.get("api/track/findid/" + trackId);
+        return this.http.get(this.trackApiRoot + "/findid/" + trackId);
     }
 }

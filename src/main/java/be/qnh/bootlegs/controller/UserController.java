@@ -7,14 +7,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping("/api/user")
-public class UserControler {
+public class UserController {
 
     private final UserService userService;
 
     @Autowired
-    public UserControler(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -25,6 +27,11 @@ public class UserControler {
         @DeleteMapping
          /api/user/{id}
     */
+
+    @RequestMapping
+    public Principal getUser(Principal user) {
+        return user;
+    }
 
     @PostMapping
     public ResponseEntity<AppUser> addOne(@RequestBody AppUser user) {

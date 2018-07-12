@@ -1,9 +1,9 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {Injectable, NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {TourListComponent} from './tours/tour-list/tour-list.component';
 import {TourService} from "./tours/tour.service";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {TourAddFormComponent} from './tours/tour-add-form/tour-add-form.component';
 import {HeaderComponent} from './header/header.component';
@@ -18,6 +18,7 @@ import {TrackListComponent} from './tracks/track-list/track-list.component';
 import {TrackService} from "./tracks/track.service";
 import {TrackAddFormComponent} from './tracks/track-add-form/track-add-form.component';
 import {SearchConcertComponent} from './concerts/search-concert/search-concert.component';
+import {AuthenticationService} from "./authentication.service";
 
 const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -31,6 +32,17 @@ const routes: Routes = [
     {path: 'addupdatetrack/:concertId/:trackId', component: TrackAddFormComponent},
     {path: '**', component: HomeComponent}
 ];
+
+@Injectable()
+export class XhrInterceptor implements HttpInterceptor {
+
+    intercept(req: HttpRequest<any>, next: HttpHandler) {
+        const xhr = req.clone({
+            headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
+        });
+        return next.handle(xhr);
+    }
+}
 
 @NgModule({
     declarations: [
@@ -58,10 +70,12 @@ const routes: Routes = [
         TourService,
         ConcertService,
         TrackService,
-        AppData //voor doorgeven van objecten tussen components
+        AppData, //voor doorgeven van objecten tussen components
+        AuthenticationService,{provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true}
     ],
 
     bootstrap: [AppComponent] //dit is de component waarmee de angular-app opstart
 })
+
 export class AppModule {
 }

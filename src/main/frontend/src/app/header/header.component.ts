@@ -1,36 +1,51 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {NgForm} from "@angular/forms";
+import {AuthenticationService} from "../authentication.service";
+import {HttpClient} from "@angular/common/http";
+import "rxjs/add/operator/finally";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
 
-    @ViewChild("searchForm") private searchForm : NgForm;
+    credentials = {
+        useremail: '',
+        userpassword: ''
+    };
 
-    //searchValue : string = "vhgshfhsfhs";
+    constructor(private router: Router, private authService: AuthenticationService, private httpClient: HttpClient) {
+    }
 
-  constructor(private router : Router) {}
+    ngOnInit() {
+        this.credentials.useremail = '';
+        this.credentials.userpassword = '';
+    }
 
-  ngOnInit() {
-  }
+    authenticated(): boolean {
+        return this.authService.authenticated;
+    }
 
-    // navHome() {
-    //   this.router.navigate(['home']);
-    // }
-    //
-    // navListTour() {
-    //     //let activTourList = localStorage.getItem("tourList");
-    //     this.router.navigate(['listtour']);
-    // }
-    onSearchSubmit(searchValue : string, searchParam : string) {
-      if (searchValue.length > 0 && searchParam.length > 0){
-          console.log("searchValue =    " + searchValue);
-          console.log("searchParam =    " + searchParam);
-          this.router.navigate(['searchconcert', searchParam, searchValue]);
-       }
+    logout() {
+        //send logout request to back-end
+        this.httpClient.post('/api/logout', {}).finally(() => {
+            this.authService.authenticated = false;
+            this.router.navigate(['home']);
+        }).subscribe();
+    }
+
+    login() {
+        this.authService.authenticate(this.credentials, () => {this.router.navigateByUrl('home')});
+        return false;
+    }
+
+    onSearchSubmit(searchValue: string, searchParam: string) {
+        if (searchValue.length > 0 && searchParam.length > 0) {
+            console.log("searchValue =    " + searchValue);
+            console.log("searchParam =    " + searchParam);
+            this.router.navigate(['searchconcert', searchParam, searchValue]);
+        }
     };
 }

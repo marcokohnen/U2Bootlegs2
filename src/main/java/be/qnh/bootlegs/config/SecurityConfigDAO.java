@@ -42,6 +42,10 @@ public class SecurityConfigDAO extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
                 .and()
+                .authorizeRequests().antMatchers("/login").permitAll()
+                .and()
+                .logout()
+                .and()
                 .httpBasic();
         //Cross-Site Request Forgery (CSRF) is a type of attack that occurs when a malicious web site, email,
         // blog, instant message, or program causes a user’s web browser to perform an unwanted action

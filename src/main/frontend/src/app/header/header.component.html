@@ -43,11 +43,20 @@
             <li class="nav-item " [routerLinkActive]="['active']">
                 <a class="nav-link" [routerLink]="['home']">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item" [routerLinkActive]="['active']">
+            <li class="nav-item" [routerLinkActive]="['active']" [hidden]="!authenticated()">
                 <a class="nav-link" [routerLink]="['listtour']">Tourlist</a>
             </li>
         </ul>
-        <form #searchForm="ngForm" class="form-inline my-2 my-lg-0" (submit)="onSearchSubmit(searchValue.value, selectParam.value)">
+
+        <form #loginForm="ngForm" class="form-inline my-2 my-lg-0" (submit)="login()" [hidden]="authenticated()">
+            <button class="btn btn-outline-info my-2 my-lg-0 ml-sm-2" type="submit">Login</button>
+            <input class="form-control ml-sm-2" type="email" placeholder="email" id="useremail" name="useremail" [(ngModel)]="credentials.useremail">
+            <input class="form-control ml-sm-2" type="password" placeholder="password" id="userpassword" name="userpassword" [(ngModel)]="credentials.userpassword">
+
+            <small class="alert alert-danger mt-3" [hidden]="!error">!! Email en/of wachtwoord is onjuist</small>
+        </form>
+
+        <form #searchForm="ngForm" class="form-inline ml-sm-2 my-lg-0" (submit)="onSearchSubmit(searchValue.value, selectParam.value)" [hidden]="!authenticated()">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit" [disabled]="searchValue.length < 2">Search concert</button>
             <input class="form-control ml-sm-2" type="search" placeholder="search ..." #searchValue minlength="2" maxlength="20">
             <select class="ml-sm-2" name="selectParam" id="selectParam" #selectParam>
@@ -56,5 +65,7 @@
                 <option value="title">title</option>
             </select>
         </form>
+
+        <button class="btn btn-outline-danger my-2 my-sm-0 ml-sm-2" (click)="logout()" [hidden]="!authenticated()">Logout</button>
     </div>
 </nav>

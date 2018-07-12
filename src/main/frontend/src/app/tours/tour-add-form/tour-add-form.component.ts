@@ -53,7 +53,7 @@ export class TourAddFormComponent implements OnInit {
     tourAdd(aTour: Tour) {
         this.tourService.addOne(aTour).subscribe(
             (aTour: Tour) => {
-                localStorage.setItem("Tour" + aTour.id, JSON.stringify(aTour));
+                //localStorage.setItem("Tour" + aTour.id, JSON.stringify(aTour));
                 //trigger event onTourAdded
                 //this.tourService.onTourAdded.emit(aTour);
                 this.formReset();
@@ -65,7 +65,7 @@ export class TourAddFormComponent implements OnInit {
     tourUpdate(aTour: Tour) {
         this.tourService.updateOne(aTour.id, aTour).subscribe(
             (aTour: Tour) => {
-                localStorage.setItem("Tour" + aTour.id, JSON.stringify(aTour));
+                //localStorage.setItem("Tour" + aTour.id, JSON.stringify(aTour));
                 //trigger event onTourAdded
                 //this.tourService.ontourUpdated.emit(aTour);
                 //this.router.navigate(["listtour"]);

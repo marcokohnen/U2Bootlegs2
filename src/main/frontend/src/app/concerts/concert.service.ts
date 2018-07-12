@@ -5,6 +5,8 @@ import {Concert} from "./concert.model";
 @Injectable()
 export class ConcertService {
 
+     private concertApiRoot="api/concert";
+
     // dit event wordt getriggerd nadat een nieuw activeTour is aangemaakt in de database zodat deze kan worden
     // toegevoegd aan de array van tourList in activeTour-list.component.ts. Op deze manier moet niet de hele lijst
     // van tourList opgehaald worden uit de database
@@ -22,33 +24,31 @@ export class ConcertService {
 
     // update een concert via http-request post naar ConcertController in de backend
     updateOne(concert: Concert) {
-        return this.http.put("api/concert/" + concert.id, concert);
+        return this.http.put(this.concertApiRoot + "/" + concert.id, concert);
     }
 
     // verwijder een concert op basis van id via http-request delete naar ConcertController in de backend
     deleteOne(concertId: number) {
-        return this.http.delete("api/concert/" + concertId);
+        return this.http.delete(this.concertApiRoot + "/" + concertId);
     }
 
     findOne(concertId: number) {
-        return this.http.get("api/concert/findid/" + concertId);
+        return this.http.get(this.concertApiRoot + "/findid/" + concertId);
     }
 
     findConcertsByTitle(searchTerm: string) {
-        return this.http.get("api/concert/findtitle/" + searchTerm);
+        return this.http.get(this.concertApiRoot + "/findtitle/" + searchTerm);
     }
 
     findConcertsByCountry(searchTerm: string) {
-        return this.http.get("api/concert/findcountry/" + searchTerm);
+        return this.http.get(this.concertApiRoot+ "/findcountry/" + searchTerm);
     }
 
     findConcertsByCity(searchTerm: string) {
-        return this.http.get("api/concert/findcity/" + searchTerm);
+        return this.http.get(this.concertApiRoot + "findcity/" + searchTerm);
     }
 
     findTourIdByConcertId(concertId : number) {
-        return this.http.get("api/concert/findtour/" + concertId);
+        return this.http.get(this.concertApiRoot + "/findtour/" + concertId);
     }
-
-
 }

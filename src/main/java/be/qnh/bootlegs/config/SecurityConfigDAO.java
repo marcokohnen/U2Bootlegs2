@@ -18,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity
+// Modifying or overriding the default spring boot security.
 public class SecurityConfigDAO extends WebSecurityConfigurerAdapter {
 
     private final UserServiceImpl userService;

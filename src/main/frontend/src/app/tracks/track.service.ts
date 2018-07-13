@@ -1,11 +1,10 @@
 import {EventEmitter, Injectable, Output} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Track} from "./track";
+import {AppComponent} from "../app.component";
 
 @Injectable()
 export class TrackService {
-
-    private trackApiRoot="api/track";
 
     @Output() onTrackAdded = new EventEmitter<Track>();
     @Output() onTrackUpdated = new EventEmitter<Track>();
@@ -19,14 +18,14 @@ export class TrackService {
 
     // update een track via http-request naar Trackcontroller in de backend
     updateOne(track: Track) {
-        return this.http.put(this.trackApiRoot+ "/" + track.id, track);
+        return this.http.put(AppComponent.API_ROOT_TRACK+ "/" + track.id, track);
     }
 
     deleteOne(trackId: number) {
-        return this.http.delete(this.trackApiRoot + "/" + trackId);
+        return this.http.delete(AppComponent.API_ROOT_TRACK + "/" + trackId);
     }
 
     findOne(trackId: number) {
-        return this.http.get(this.trackApiRoot + "/findid/" + trackId);
+        return this.http.get(AppComponent.API_ROOT_TRACK + "/findid/" + trackId);
     }
 }

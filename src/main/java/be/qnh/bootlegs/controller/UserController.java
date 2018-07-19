@@ -28,9 +28,19 @@ public class UserController {
          /api/user/{id}
     */
 
-    @RequestMapping("/login")
+    @PostMapping("/login")
     public Principal getUser(Principal user) {
         return user;
+    }
+
+    @GetMapping("/findemail/{email}")
+    public ResponseEntity<AppUser> findAppUserByEmail(@PathVariable String email) {
+        AppUser foundUser = userService.findAppUserByEmailIgnoreCase(email);
+        if (foundUser == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(foundUser, HttpStatus.OK);
+        }
     }
 
     @PostMapping
@@ -43,7 +53,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<AppUser> deleteOne(@PathVariable Long id) {
         AppUser deletedUser = userService.deleteOneById(id);
         if (deletedUser == null) {

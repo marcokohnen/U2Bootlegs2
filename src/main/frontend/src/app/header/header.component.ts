@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthenticationService} from "../authentication/authentication.service";
+import {AuthenticationService, UserRoleEnum} from "../authentication/authentication.service";
 import {HttpClient} from "@angular/common/http";
 import "rxjs/add/operator/finally";
 
@@ -20,8 +20,6 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.credentials.useremail = '';
-        this.credentials.userpassword = '';
     }
 
     authenticated(): boolean {
@@ -30,8 +28,10 @@ export class HeaderComponent implements OnInit {
 
     logout() {
         //send logout request to back-end
-        this.httpClient.post('/api/logout', {}, {headers : this.authService.httpHeaders}).finally(() => {
+        this.httpClient.post('/logout', {}, {headers : this.authService.httpHeaders}).finally(() => {
             this.authService.authenticated = false;
+            this.credentials.useremail = '';
+            this.credentials.userpassword = '';
             this.router.navigate(['home']);
         }).subscribe();
     }
@@ -41,10 +41,14 @@ export class HeaderComponent implements OnInit {
         return false;
     }
 
+    getUserName(): string {
+        return this.authService.userName;
+    }
+
     onSearchSubmit(searchValue: string, searchParam: string) {
         if (searchValue.length > 0 && searchParam.length > 0) {
-            console.log("searchValue =    " + searchValue);
-            console.log("searchParam =    " + searchParam);
+            //console.log("searchValue =    " + searchValue);
+            //console.log("searchParam =    " + searchParam);
             this.router.navigate(['searchconcert', searchParam, searchValue]);
         }
     };

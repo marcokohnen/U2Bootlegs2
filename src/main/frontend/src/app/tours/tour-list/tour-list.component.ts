@@ -4,6 +4,7 @@ import {TourService} from "../tour.service";
 import {Router} from "@angular/router";
 import {AppData} from "../../data/app-data.service";
 import {Concert} from "../../concerts/concert.model";
+import {AuthenticationService} from "../../authentication/authentication.service";
 
 @Component({
     selector: 'app-tour-list',
@@ -15,7 +16,7 @@ export class TourListComponent implements OnInit {
     @Input() tourList: Tour[] = [];
 
     constructor(private tourService: TourService, private router: Router,
-                private appData: AppData) {
+                private appData: AppData, private authService: AuthenticationService) {
     }
 
     ngOnInit() {
@@ -117,5 +118,9 @@ export class TourListComponent implements OnInit {
     onConcertListClick(tourId : number) {
         //this.appData.tourObjectStorage = tour;
         this.router.navigate(['listconcertsbytour', tourId]);
+    }
+
+    getUserRole(): string {
+        return this.authService.userRole
     }
 }

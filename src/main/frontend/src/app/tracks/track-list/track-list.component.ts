@@ -8,6 +8,7 @@ import * as $ from "jquery";
 import {TrackService} from "../track.service";
 import {TourService} from "../../tours/tour.service";
 import {ConcertService} from "../../concerts/concert.service";
+import {AuthenticationService} from "../../authentication/authentication.service";
 
 @Component({
   selector: 'app-track-list',
@@ -22,7 +23,7 @@ export class TrackListComponent implements OnInit {
     tracksByConcert : Concert;
     trackList : Track[];
 
-  constructor(private appData : AppData, private tourService : TourService, private concertService : ConcertService, private trackService : TrackService, private router : Router, private activatedRoute : ActivatedRoute) {
+  constructor(private appData : AppData, private tourService : TourService, private concertService : ConcertService, private trackService : TrackService, private router : Router, private activatedRoute : ActivatedRoute, private authService: AuthenticationService) {
   }
 
   ngOnInit() {
@@ -97,5 +98,9 @@ export class TrackListComponent implements OnInit {
 
     onPlayClick(trackUrl: string) {
         console.log("onPlayClick : " + trackUrl);
+    }
+
+    getUserRole(): string {
+        return this.authService.userRole
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -42,9 +41,9 @@ public class SecurityConfigDAO extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
                 .and()
-                .authorizeRequests().antMatchers("/login").permitAll()
+                .authorizeRequests().antMatchers("/api/user/login").permitAll()
                 .and()
-                .logout()
+                .logout().permitAll()
                 .and()
                 .httpBasic();
         //Cross-Site Request Forgery (CSRF) is a type of attack that occurs when a malicious web site, email,

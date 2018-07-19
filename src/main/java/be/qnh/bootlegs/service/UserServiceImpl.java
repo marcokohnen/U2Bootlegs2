@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override // from UserService
-    public AppUser findAppUserByEmail(String email) {
-        AppUser foundUser = userRepository.findAppUserByEmail(email);
+    public AppUser findAppUserByEmailIgnoreCase(String email) {
+        AppUser foundUser = userRepository.findAppUserByEmailIgnoreCase(email);
         LOGGER.info("found appUser : {}", foundUser);
         return foundUser;
     }
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override // from UserDetailsService
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        AppUser founduser = findAppUserByEmail(email);
+        AppUser founduser = findAppUserByEmailIgnoreCase(email);
         if (founduser == null) {
             throw new UsernameNotFoundException("Invalid Username");
         }

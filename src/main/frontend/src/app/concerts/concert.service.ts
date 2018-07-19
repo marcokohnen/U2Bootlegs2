@@ -44,7 +44,7 @@ export class ConcertService {
     }
 
     findConcertsByCity(searchTerm: string) {
-        return this.http.get(AppComponent.API_ROOT_CONCERT + "findcity/" + searchTerm);
+        return this.http.get(AppComponent.API_ROOT_CONCERT + "/findcity/" + searchTerm);
     }
 
     findTourIdByConcertId(concertId : number) {

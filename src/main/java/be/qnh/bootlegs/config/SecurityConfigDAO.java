@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -18,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity
+// Modifying or overriding the default spring boot security.
 public class SecurityConfigDAO extends WebSecurityConfigurerAdapter {
 
     private final UserServiceImpl userService;
@@ -41,6 +40,10 @@ public class SecurityConfigDAO extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers(HttpMethod.PUT).hasRole("ADMIN")
                 .and()
                 .authorizeRequests().antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
+                .and()
+                .authorizeRequests().antMatchers("/api/user/login").permitAll()
+                .and()
+                .logout().permitAll()
                 .and()
                 .httpBasic();
         //Cross-Site Request Forgery (CSRF) is a type of attack that occurs when a malicious web site, email,

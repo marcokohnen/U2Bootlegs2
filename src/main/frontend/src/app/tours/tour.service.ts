@@ -1,6 +1,8 @@
 import {EventEmitter, Injectable, Output} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Tour} from "./tour.model";
+import {AuthenticationService} from "../authentication/authentication.service";
+import {AppComponent} from "../app.component";
 
 @Injectable()
 export class TourService {
@@ -12,29 +14,31 @@ export class TourService {
     @Output() ontourUpdated = new EventEmitter<Tour>();
 
     // voeg http toe via dependency injection
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private authService : AuthenticationService) {
     }
 
     // vraag alle tours op via http-request get naar TourController in de backend
     findAll() {
-        return this.http.get("/api/tour/findall");
+        return this.http.get( AppComponent.API_ROOT_TOUR + "/findall");
     }
 
+    // zoek een tour op basis van id via http-request get naar TourController in de backend
     findOne(tourId: number) {
-        return  this.http.get("api/tour/findid/" + tourId);
+        return  this.http.get(AppComponent.API_ROOT_TOUR + "/findid/" + tourId);
     }
 
     // voeg een nieuwe tour toe via http-request post naar TourController in de backend
     addOne(tour: Tour) {
-        return this.http.post("api/tour/", tour);
+        return this.http.post(AppComponent.API_ROOT_TOUR, tour);
     }
 
+    // wijzig een tour toe via http-request put naar TourController in de backend
     updateOne(id: number, tour: Tour) {
-        return this.http.put("api/tour/" + tour.id, tour);
+        return this.http.put(AppComponent.API_ROOT_TOUR + "/" + tour.id, tour);
     }
 
     // verwijder een tour op basis van id via http-request delete naar TourController in de backend
     deleteOneById(tourId: number) {
-        return this.http.delete("api/tour/" + tourId)
+        return this.http.delete(AppComponent.API_ROOT_TOUR + "/" + tourId)
     }
 }

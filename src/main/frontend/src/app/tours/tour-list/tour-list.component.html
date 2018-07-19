@@ -1,6 +1,6 @@
 <div class="card-header">Tourlist
     <a>
-        <span class="fa fa-plus" title="Add new tour" style="text-align: right" (click)="onAddClick()"></span>
+        <span class="fa fa-plus" title="Add new tour" style="text-align: right" (click)="onAddClick()" *ngIf="getUserRole()=='ROLE_ADMIN'"></span>
     </a>
 </div>
 <div class="row tour-item" *ngFor="let tour of tourList">
@@ -12,13 +12,13 @@
     -
     <div class="col-1">{{tour.endyear}}</div>
     <a>
-        <span class="fa fa-plus col" title="Add new concert" (click)="onAddConcertClick(tour.id)"></span>
+        <span class="fa fa-plus col" title="Add new concert" (click)="onAddConcertClick(tour.id)" *ngIf="getUserRole()=='ROLE_ADMIN'"></span>
     </a>
     <a>
-        <span class="fa fa-times col" title="Delete this tour" (click)="onDeleteClick(tour)"></span>
+        <span class="fa fa-times col" title="Delete this tour" (click)="onDeleteClick(tour)" *ngIf="getUserRole()=='ROLE_ADMIN'"></span>
     </a>
     <a>
-        <span class="fa fa-pencil col" title="Edit this tour" (click)="onUpdateClick(tour.id)"></span>
+        <span class="fa fa-pencil col" title="Edit this tour" (click)="onUpdateClick(tour.id)" *ngIf="getUserRole()=='ROLE_ADMIN'"></span>
     </a>
     <a>
         <span class="fa fa-arrow-down col" title="Concertlist" (click)="onConcertListClick(tour.id)"

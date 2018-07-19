@@ -6,7 +6,7 @@ public interface UserService {
 
     AppUser addOne(AppUser appUser);
 
-    AppUser findAppUserByEmail(String email);
+    AppUser findAppUserByEmailIgnoreCase(String email);
 
     AppUser deleteOneById(Long id);
 }

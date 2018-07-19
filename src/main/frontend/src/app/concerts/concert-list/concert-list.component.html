@@ -1,6 +1,6 @@
 <div class="card-header">Concertlist
     <a >
-        <span class="fa fa-plus" title="Add new concert" style="text-align: right" (click)="onAddClick()"></span>
+        <span class="fa fa-plus" title="Add new concert" style="text-align: right" (click)="onAddClick()" *ngIf="getUserRole()=='ROLE_ADMIN'"></span>
     </a>
 </div>
 <div class="row tour-item" *ngIf="activeTour != undefined">
@@ -17,13 +17,13 @@
     <!--<div class="col-3">{{concert.venue}}</div>-->
     <div class="col-1">{{concert.quality}}</div>
     <a>
-        <span class="fa fa-plus col" title="Add new track" (click)="onAddTrackClick(concert.id)"></span>
+        <span class="fa fa-plus col" title="Add new track" (click)="onAddTrackClick(concert.id)" *ngIf="getUserRole()=='ROLE_ADMIN'"></span>
     </a>
     <a>
-        <span class="fa fa-times col" title="Delete this concert" (click)="onDeleteClick(concert)"></span>
+        <span class="fa fa-times col" title="Delete this concert" (click)="onDeleteClick(concert)" *ngIf="getUserRole()=='ROLE_ADMIN'"></span>
     </a>
     <a>
-        <span class="fa fa-pencil col" title="Edit this concert" (click)="onUpdateClick(concert.id)"></span>
+        <span class="fa fa-pencil col" title="Edit this concert" (click)="onUpdateClick(concert.id)" *ngIf="getUserRole()=='ROLE_ADMIN'"></span>
     </a>
     <a>
         <span class="fa fa-arrow-down col" title="Tracklist" (click)="onTrackListClick(activeTour.id,concert.id )" *ngIf="concert.trackList.length > 0"></span>

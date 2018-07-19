@@ -1,5 +1,7 @@
 package be.qnh.bootlegs.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -18,6 +20,7 @@ public class AppUser extends AbstractEntity implements Serializable {
     @Size(min = 4, max = 15)
     private String name;
     @NotNull
+    @JsonIgnore
     private String password;
     @NotNull
     @Email

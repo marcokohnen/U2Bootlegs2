@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {TourListComponent} from './tours/tour-list/tour-list.component';
 import {TourService} from "./tours/tour.service";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {TourAddFormComponent} from './tours/tour-add-form/tour-add-form.component';
 import {HeaderComponent} from './header/header.component';
@@ -18,6 +18,8 @@ import {TrackListComponent} from './tracks/track-list/track-list.component';
 import {TrackService} from "./tracks/track.service";
 import {TrackAddFormComponent} from './tracks/track-add-form/track-add-form.component';
 import {SearchConcertComponent} from './concerts/search-concert/search-concert.component';
+import {AuthenticationService} from "./authentication/authentication.service";
+import {AuthHttpInterceptor} from "./authentication/auth-http-interceptor";
 
 const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -31,6 +33,7 @@ const routes: Routes = [
     {path: 'addupdatetrack/:concertId/:trackId', component: TrackAddFormComponent},
     {path: '**', component: HomeComponent}
 ];
+
 
 @NgModule({
     declarations: [
@@ -49,6 +52,7 @@ const routes: Routes = [
 
     imports: [
         BrowserModule,
+        // import HttpClientModule after BrowserModule !!
         HttpClientModule,
         FormsModule,
         RouterModule.forRoot(routes, {useHash: true}),
@@ -58,10 +62,16 @@ const routes: Routes = [
         TourService,
         ConcertService,
         TrackService,
-        AppData //voor doorgeven van objecten tussen components
+        AppData, //voor doorgeven van objecten tussen components
+        AuthenticationService,
+        //HTTP_INTERCEPTORS kunnen de HttpHeaders aanpassen/uitbreiden met bv. logging en authentication
+        //bij elke requestmethod van de HttpClient wordt deze aangepaste header meegegeven
+        //zie : https://angular.io/guide/http#set-default-headers
+        {provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true}
     ],
 
     bootstrap: [AppComponent] //dit is de component waarmee de angular-app opstart
 })
+
 export class AppModule {
 }

@@ -1,7 +1,6 @@
 package be.qnh.bootlegs.controller.IntegrationTests;
 
 import be.qnh.bootlegs.BootlegsApplication;
-import be.qnh.bootlegs.config.SecurityConfigDAO;
 import be.qnh.bootlegs.domain.Continent;
 import be.qnh.bootlegs.domain.Tour;
 import org.junit.Before;
@@ -11,14 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = BootlegsApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = SecurityConfigDAO.class)
 public class TourControllerIT {
 
     private static final String BASE_URI = "/api/tour";

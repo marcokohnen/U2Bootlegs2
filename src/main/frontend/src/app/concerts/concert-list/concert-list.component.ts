@@ -5,6 +5,7 @@ import {Concert} from "../concert.model";
 import {ConcertService} from "../concert.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TourService} from "../../tours/tour.service";
+import {AuthenticationService} from "../../authentication/authentication.service";
 
 @Component({
   selector: 'app-concert-list',
@@ -17,7 +18,7 @@ export class ConcertListComponent implements OnInit {
     concertsByTourId : number;
     concertList : Concert[];
 
-  constructor(private concertService : ConcertService, private tourService : TourService, private router : Router, private appData : AppData, private activatedRoute : ActivatedRoute) {
+  constructor(private concertService : ConcertService, private tourService : TourService, private router : Router, private appData : AppData, private activatedRoute : ActivatedRoute, private authService: AuthenticationService) {
 
   }
 
@@ -108,5 +109,9 @@ export class ConcertListComponent implements OnInit {
 
     onAddTrackClick(concertId: number) {
         this.router.navigate(["addupdatetrack", concertId, 0]);
+    }
+
+    getUserRole(): string {
+        return this.authService.userRole
     }
 }

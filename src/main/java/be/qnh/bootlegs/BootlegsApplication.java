@@ -1,16 +1,15 @@
 package be.qnh.bootlegs;
 
 import be.qnh.bootlegs.domain.AppUser;
-import be.qnh.bootlegs.repository.UserRepository;
 import be.qnh.bootlegs.service.UserService;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 import java.util.stream.Stream;
 
 @SpringBootApplication
+
 public class BootlegsApplication {
 
     public static void main(String[] args) {
@@ -45,9 +44,8 @@ public class BootlegsApplication {
 //    .core.Ordered interface or use the org.springframework.core.annotation.Order annotation.
 
 
-
     // adding initial users to database
-    @Bean
+    //@Bean
     ApplicationRunner initDataBaseWithUsers(UserService userService) {
         return args -> {
             Stream.of(

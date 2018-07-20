@@ -16,8 +16,6 @@
             <button class="btn btn-outline-info my-2 my-lg-0 ml-sm-2" type="submit">Login</button>
             <input class="form-control ml-sm-2" type="email" placeholder="email" id="useremail" name="useremail" [(ngModel)]="credentials.useremail">
             <input class="form-control ml-sm-2" type="password" placeholder="password" id="userpassword" name="userpassword" [(ngModel)]="credentials.userpassword">
-
-            <small class="alert alert-danger mt-3" [hidden]="!error">!! Email en/of wachtwoord is onjuist</small>
         </form>
 
         <form #searchForm="ngForm" class="form-inline ml-sm-2 my-lg-0" (submit)="onSearchSubmit(searchValue.value, selectParam.value)" *ngIf="authenticated()">

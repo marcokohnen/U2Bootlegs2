@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthenticationService, UserRoleEnum} from "../authentication/authentication.service";
+import {AuthenticationService} from "../authentication/authentication.service";
 import {HttpClient} from "@angular/common/http";
 import "rxjs/add/operator/finally";
 
@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
 
     logout() {
         //send logout request to back-end
-        this.httpClient.post('/logout', {}, {headers : this.authService.httpHeaders}).finally(() => {
+        this.httpClient.post('/logout', {}).finally(() => {
             this.authService.authenticated = false;
             this.credentials.useremail = '';
             this.credentials.userpassword = '';

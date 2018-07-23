@@ -28,7 +28,7 @@ public class UserController {
          /api/user/{id}
     */
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     public Principal getUser(Principal user) {
         return user;
     }

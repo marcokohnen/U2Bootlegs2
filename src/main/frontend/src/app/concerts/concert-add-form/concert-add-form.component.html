@@ -1,7 +1,7 @@
 <div class="card-header">Edit Concert</div>
 <div class="card" *ngIf="initialConcert != undefined">
     <form #concertaddForm="ngForm" (ngSubmit)="addOrUpdateConcert($event)" class="card-body app-form">
-        <pre>{{concertaddForm.value | json}}</pre>
+        <!--<pre>{{concertaddForm.value | json}}</pre>-->
 
         <div class="form-group">
             <input id="id" [ngModel]="initialConcert.id" name="id" #id type="number" class="form-control" hidden>

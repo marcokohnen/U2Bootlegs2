@@ -11,6 +11,7 @@ export class AppComponent implements OnInit {
     // API_ROOT URL'S
     static API_ROOT_CONCERT = "/api/concert";
     static API_ROOT_LOGIN = "/api/user/login";
+    static API_ROOT_LOGOUT = "/logout";
     static API_ROOT_TOUR = "/api/tour";
     static API_ROOT_TRACK = "/api/track";
 

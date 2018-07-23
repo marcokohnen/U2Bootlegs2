@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Concert} from "../concert.model";
 import {ConcertService} from "../concert.service";
+import {AuthenticationService} from "../../authentication/authentication.service";
 
 @Component({
     selector: 'app-search-concert',
@@ -15,7 +16,8 @@ export class SearchConcertComponent implements OnInit {
     searchParam: string;
     searchValue: string;
 
-    constructor(private router: Router, private activatedRoute: ActivatedRoute, private concertService: ConcertService) {
+    constructor(private router: Router, private activatedRoute: ActivatedRoute, private concertService: ConcertService,
+                private authService: AuthenticationService) {
     }
 
     ngOnInit() {
@@ -159,5 +161,9 @@ export class SearchConcertComponent implements OnInit {
         } else {
             this.resultList = this.copyResultList.filter(concert => concert.quality == selectQuality);
         }
+    }
+
+    getUserRole(): string {
+        return this.authService.userRole
     }
 }

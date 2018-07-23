@@ -1,7 +1,7 @@
 <div class="card-header">Edit Track</div>
 <div class="card" *ngIf="initialTrack != undefined">
     <form #trackaddForm="ngForm" (ngSubmit)="addOrUpdateTrack($event)" class="card-body app-form">
-        <pre>{{trackaddForm.value | json}}</pre>
+        <!--<pre>{{trackaddForm.value | json}}</pre>-->
 
         <div class="form-group">
             <input id="id" [(ngModel)]="initialTrack.id" name="id" #id type="number" class="form-control" hidden>

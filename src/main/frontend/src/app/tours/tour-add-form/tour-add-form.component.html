@@ -1,7 +1,7 @@
 <div class="card-header">Edit Tour</div>
 <div class="card" *ngIf="initialTour != undefined">
 <form #touraddForm="ngForm" (ngSubmit)="addOrUpdateTour($event)" class="card-body app-form">
-    <pre>{{touraddForm.value | json}}</pre>
+    <!--<pre>{{touraddForm.value | json}}</pre>-->
 
     <div class="form-group">
         <input id="id" [(ngModel)]="initialTour.id" name="id" #id type="number" class="form-control" hidden>
